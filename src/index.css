@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    /* color palette */
+    --color-red: #e94057;
+    --color-orange: #f27121;
+    --color-purple: #8a2387;
+    --color-light-gray: #f3f3f3;
+    --color-medium-gray: #e8e6ea;
+    --color-dark-gray: #adafbb;
+  }
+
+  body {
+    font-family: "Raleway", sans-serif;
+    padding: 2rem;
+  }
+}
+
+@theme inline {
+  --color-red: var(--color-red);
+  --color-orange: var(--color-orange);
+  --color-purple: var(--color-purple);
+  --color-light-gray: var(--color-light-gray);
+  --color-medium-gray: var(--color-medium-gray);
+  --color-dark-gray: var(--color-dark-gray);
+}
