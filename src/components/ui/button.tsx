@@ -31,7 +31,7 @@ const buttonVariants = cva(
           "active:bg-red active:border-transparent active:text-white active:[&>svg]:text-white",
           "data-[active=true]:bg-red data-[active=true]:border-transparent data-[active=true]:shadow-lg data-[active=true]:shadow-red/20 data-[active=true]:text-white data-[active=true]:font-medium data-[active=true]:[&>svg]:text-white",
         ],
-        ghost: "bg-transparent text-red",
+        ghost: "bg-transparent rounded-none text-red",
       },
       size: {
         default: "h-14 w-74 text-base",
