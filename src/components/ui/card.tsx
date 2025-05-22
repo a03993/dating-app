@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
 const cardVariants = cva("overflow-hidden rounded-xl", {
   variants: {
     variant: {
-      carousel: "shrink-0 w-57 h-90 opacity-70 scale-90",
-      carouselCenter: "shrink-0 w-57 h-90 opacity-100 shadow-lg shadow-black/10",
+      carouselPreview: "shrink-0 w-57 h-90 opacity-70 scale-90",
+      carouselMain: "shrink-0 w-57 h-90 opacity-100 shadow-lg shadow-black/10",
       swipeable: "relative h-112 w-74 shadow-lg shadow-black/20",
       grid: "relative h-50 w-35 overflow-hidden rounded-xl",
       match: "relative h-100 w-74",
