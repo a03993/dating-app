@@ -44,6 +44,7 @@ const buttonVariants = cva(
         smCircle: "size-19 rounded-full",
         lgSquare: "size-16 [&>svg]:size-8",
         lgCircle: "size-24 rounded-full",
+        zero: "p-0",
       },
     },
     defaultVariants: {
