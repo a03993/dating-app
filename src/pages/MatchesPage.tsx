@@ -5,10 +5,10 @@ import { UserGridCard } from "@/components/UserGridCard"
 
 export default function MatchesPage() {
   return (
-    <div className="mx-auto p-10 pb-30 md:pt-30 flex flex-col items-center gap-8">
+    <div className="mx-auto p-10 pb-30 md:pt-25 flex flex-col items-center gap-8">
       {/* mobile header */}
-      <div className="block md:hidden flex flex-col gap-2">
-        <div className="w-full flex justify-between items-center">
+      <div className="block md:hidden w-full flex flex-col gap-2">
+        <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">Matches</h1>
           <Button
             variant="outline"
