@@ -17,15 +17,18 @@ export function UserGridCard({
 }) {
   return (
     <Card variant="grid">
-      <CardImage src={src} />
+      <CardImage
+        src={src}
+        alt={name}
+      />
       <CardContent className="bottom-11 p-2 text-sm font-medium backdrop-blur-none">
         {name}, {age}
       </CardContent>
-      <CardContent className="flex p-0">
+      <div className="flex p-0 absolute bottom-0 w-full justify-around text-white backdrop-blur-md text-shadow-lg text-shadow-black/20">
         <Button
           variant="ghost"
           size="sm"
-          className="text-white border-r border-dark-gray hover:text-dark-gray">
+          className="text-white border-r border-white/20 hover:text-dark-gray">
           <CloseIcon className="size-5" />
         </Button>
         <Button
@@ -34,7 +37,7 @@ export function UserGridCard({
           className="text-white hover:text-red">
           <LikeIcon className="size-5" />
         </Button>
-      </CardContent>
+      </div>
       {isLiked && (
         <div className="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-black/20">
           <LikeIcon className="size-5 text-red rotate-12" />
