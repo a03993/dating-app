@@ -1,11 +1,44 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+
+import AppLayout from "./layouts/AppLayout"
+
+import CarouselPage from "./pages/CarouselPage"
+import DiscoverPage from "./pages/DiscoverPage"
+import MatchesPage from "./pages/MatchesPage"
+import MessagesPage from "./pages/MessagesPage"
+import ProfilePage from "./pages/ProfilePage"
+
 function App() {
   return (
-    <>
-      <div>
-        <h1 className="text-4xl font-bold">Dating App</h1>
-      </div>
-      <p>This is a dating app for people who want to find a partner.</p>
-    </>
+    <BrowserRouter>
+      <Routes>
+        {/* Home page, not include Navbar */}
+        <Route
+          path="/"
+          element={<CarouselPage />}
+        />
+
+        {/* Other pages share Navbar */}
+        <Route element={<AppLayout />}>
+          <Route
+            path="/discover"
+            element={<DiscoverPage />}
+          />
+          <Route
+            path="/matches"
+            element={<MatchesPage />}
+          />
+          <Route
+            path="/messages"
+            element={<MessagesPage />}
+          />
+          <Route
+            path="/profile"
+            element={<ProfilePage />}
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
