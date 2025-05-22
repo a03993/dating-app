@@ -11,6 +11,9 @@ const cardVariants = cva("overflow-hidden rounded-xl", {
       swipeable: "relative h-112 w-74 shadow-lg shadow-black/20",
       grid: "relative h-50 w-35 overflow-hidden rounded-xl",
       match: "relative h-100 w-74",
+      profile: "h-100 w-full md:h-screen rounded-none",
+      galleryLg: "h-70 col-span-3 row-span-1",
+      gallerySm: "h-40 col-span-2 row-span-1",
     },
   },
   defaultVariants: {
@@ -35,7 +38,7 @@ function CardImage({
   fit = "cover",
 }: {
   src: string
-  alt?: string
+  alt: string
   className?: string
   fit?: "cover" | "contain"
 }) {
