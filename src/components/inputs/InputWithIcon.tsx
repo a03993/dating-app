@@ -20,7 +20,7 @@ export function InputWithIcon({
       <input
         type="text"
         placeholder={placeholder}
-        className={`h-12 w-74 rounded-2xl border border-medium-gray bg-white px-3 text-black placeholder:text-dark-gray/70 outline-none transition-all ${inputClassName}`}
+        className={`h-12 w-full rounded-2xl border border-medium-gray bg-white px-3 text-black placeholder:text-dark-gray/70 outline-none transition-all ${inputClassName}`}
       />
       <div
         className={`absolute size-5 text-dark-gray ${iconPosition === "left" ? "left-3" : "right-3"} ${iconClassName}`}>
