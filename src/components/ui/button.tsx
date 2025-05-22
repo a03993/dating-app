@@ -35,7 +35,7 @@ const buttonVariants = cva(
           "bg-transparent rounded-none text-dark-gray font-medium border-t-2 border-b-2 border-transparent hover:text-red",
           "data-[active=true]:border-red data-[active=true]:font-bold data-[active=true]:text-red data-[active=true]:border-b-transparent data-[active=true]:md:border-b-2 data-[active=true]:md:border-red data-[active=true]:md:border-t-transparent",
         ],
-        ghost: "bg-transparent rounded-none text-red",
+        ghost: "bg-transparent rounded-none text-red font-bold",
       },
       size: {
         default: "h-14 w-74 text-base",
