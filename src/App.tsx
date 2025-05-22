@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import AppLayout from "./layouts/AppLayout"
 
-import CarouselPage from "./pages/CarouselPage"
+import CarouselPage from "./pages/OnboardingPage"
 import DiscoverPage from "./pages/DiscoverPage"
 import MatchesPage from "./pages/MatchesPage"
 import MessagesPage from "./pages/MessagesPage"

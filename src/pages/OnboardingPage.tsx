@@ -3,9 +3,10 @@ import { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { slides } from "@/lib/slides"
+import { onboardingSlides as slides } from "@/lib/onboardingSlides"
 import { cn } from "@/lib/utils"
-export default function CarouselPage() {
+
+export default function OnboardingPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const { leftIndex, rightIndex } = useMemo(() => {
