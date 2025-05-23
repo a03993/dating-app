@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
+import { DistanceBadge } from "@/components/badges/DistanceBadge"
+import { InterestBadge } from "@/components/badges/InterestBadge"
 import { UserActionPanel } from "@/components/UserActionPanel"
 
 import SendIcon from "@/assets/icons/Send.svg?react"
@@ -38,10 +40,12 @@ export default function ProfilePage() {
           </section>
 
           {/* location */}
-          <section>
-            <h2 className="text-base font-bold">Location</h2>
-            <p className="text-sm text-black/70">Taipei, Taiwan</p>
-            {/* todo: badge component */}
+          <section className="flex justify-between">
+            <div>
+              <h2 className="text-base font-bold">Location</h2>
+              <p className="text-sm text-black/70">Taipei, Taiwan</p>
+            </div>
+            <DistanceBadge distanceInMeters={850} />
           </section>
 
           {/* about */}
@@ -56,7 +60,21 @@ export default function ProfilePage() {
           {/* interests */}
           <section className="flex flex-col gap-4">
             <h2 className="text-base font-bold">Interests</h2>
-            <div>{/* todo: badge component */}</div>
+            <div className="flex flex-wrap gap-2">
+              <InterestBadge
+                label="Photography"
+                isMatch
+              />
+              <InterestBadge label="Shopping" />
+              <InterestBadge label="Karaoke" />
+              <InterestBadge label="Yoga" />
+              <InterestBadge
+                label="Art"
+                isMatch
+              />
+              <InterestBadge label="Traveling" />
+              <InterestBadge label="Drinking" />
+            </div>
           </section>
 
           {/* gallery */}
