@@ -1,9 +1,14 @@
+import CheckDoubleIcon from "@/assets/icons/CheckDouble.svg?react"
+
 import { cn } from "@/lib/utils"
 
+import { useCurrentUser } from "@/contexts/UserContext"
+
 interface MessageBubbleProps {
-  sender: "self" | "other"
-  message: string
+  senderId: string
+  content: string
   timestamp: string
+  isRead: boolean
 }
 
 const formattedTime = (timestamp: string) => {
@@ -14,16 +19,19 @@ const formattedTime = (timestamp: string) => {
   }).format(new Date(timestamp))
 }
 
-export function MessageBubble({ sender, message, timestamp }: MessageBubbleProps) {
-  const styles = {
-    self: "rounded-bl-lg bg-light-gray",
-    other: "rounded-br-lg bg-red/10",
-  }
+export function MessageBubble({ senderId, content, timestamp, isRead }: MessageBubbleProps) {
+  const currentUser = useCurrentUser()
+
+  const style = senderId === currentUser?.id ? "rounded-bl-lg bg-light-gray" : "rounded-br-lg bg-red/10"
+
   return (
-    <div className={cn("flex", sender === "self" ? "justify-end" : "justify-start")}>
-      <div className={cn("flex flex-col gap-1", sender === "self" ? "items-end" : "items-start")}>
-        <div className={cn("p-4 w-fit h-fit max-w-85 rounded-t-lg", styles[sender])}>{message}</div>
-        <p className="text-xs text-gray-500">{formattedTime(timestamp)}</p>
+    <div className={cn("flex", senderId === currentUser?.id ? "justify-end" : "justify-start")}>
+      <div className={cn("flex flex-col gap-1", senderId === currentUser?.id ? "items-end" : "items-start")}>
+        <div className={cn("p-4 w-fit h-fit max-w-85 rounded-t-lg", style)}>{content}</div>
+        <div className="flex items-center gap-1">
+          <p className="text-xs text-gray-500">{formattedTime(timestamp)}</p>
+          {senderId === currentUser?.id && isRead && <CheckDoubleIcon className="size-4 text-red" />}
+        </div>
       </div>
     </div>
   )

@@ -1,10 +1,13 @@
+import { useEffect, useRef } from "react"
+
 import { MessageBubble } from "./MessageBubble"
 
 interface Message {
   id: string
-  sender: "self" | "other"
-  message: string
+  senderId: string
+  content: string
   timestamp: string
+  isRead: boolean
 }
 
 interface MessageListProps {
@@ -12,17 +15,26 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages }: MessageListProps) {
+  const bottomRef = useRef<HTMLDivElement | null>(null)
+
+  // 聊天訊息維持在底部
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "auto" })
+  }, [messages])
+
   return (
-    <div className="flex-1 my-10 overflow-y-auto">
+    <div className="my-10 overflow-y-auto flex-1">
       <div className="flex flex-col justify-end min-h-full gap-4">
         {messages.map((message) => (
           <MessageBubble
             key={message.id}
-            sender={message.sender as "self" | "other"}
-            message={message.message}
+            senderId={message.senderId}
+            content={message.content}
             timestamp={message.timestamp}
+            isRead={message.isRead}
           />
         ))}
+        <div ref={bottomRef} />
       </div>
     </div>
   )

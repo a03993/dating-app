@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
 
@@ -20,148 +20,105 @@ import {
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery"
 import { cn } from "@/lib/utils"
 
+import { useCurrentUser } from "@/contexts/UserContext"
+
+import type { User } from "@/types/user.types"
+
+type UserMessage = Pick<User, "id" | "firstName" | "lastName" | "avatar">
+
 interface Message {
   id: string
-  sender: "self" | "other"
-  message: string
+  senderId: string
+  content: string
   timestamp: string
+  isRead: boolean
 }
 
-const mockChats = [
-  {
-    id: "1",
-    name: "Veronica",
-    avatar: "image-1.jpg",
-    lastMessage: "Hello, how are you?",
-    time: "12min",
-    unreadCount: 1,
-  },
-  {
-    id: "2",
-    name: "Veronica",
-    avatar: "image-2.jpg",
-    lastMessage: "The weather is nice today",
-    time: "12min",
-    unreadCount: 0,
-  },
-  {
-    id: "3",
-    name: "Veronica",
-    avatar: "image-3.jpg",
-    lastMessage: "Do you have a minute?",
-    time: "1min",
-    unreadCount: 0,
-  },
-  {
-    id: "4",
-    name: "Veronica",
-    avatar: "image-4.jpg",
-    lastMessage: "good night~",
-    time: "30min",
-    unreadCount: 1,
-  },
-  {
-    id: "5",
-    name: "Veronica",
-    avatar: "image-5.jpg",
-    lastMessage: "Do you want to meet up?",
-    time: "5min",
-    unreadCount: 21,
-  },
-  {
-    id: "6",
-    name: "Veronica",
-    avatar: "image-1.jpg",
-    lastMessage: "Hello, how are you?",
-    time: "12min",
-    unreadCount: 1,
-  },
-  {
-    id: "7",
-    name: "Veronica",
-    avatar: "image-2.jpg",
-    lastMessage: "The weather is nice today",
-    time: "12min",
-    unreadCount: 0,
-  },
-  {
-    id: "8",
-    name: "Veronica",
-    avatar: "image-3.jpg",
-    lastMessage: "Do you have a minute?",
-    time: "1min",
-    unreadCount: 0,
-  },
-  {
-    id: "9",
-    name: "Veronica",
-    avatar: "image-4.jpg",
-    lastMessage: "good night~",
-    time: "30min",
-    unreadCount: 1,
-  },
-  {
-    id: "10",
-    name: "Veronica",
-    avatar: "image-5.jpg",
-    lastMessage: "Do you want to meet up?",
-    time: "5min",
-    unreadCount: 21,
-  },
-]
+interface Conversation {
+  id: string
+  user1Id: string
+  user2Id: string
+  messages: Message[]
+}
 
-const mockMessages: Message[] = [
-  {
-    id: "b7e7a8cb-9f3f-4a9e-a6e2-0f8b7d2bafaa",
-    sender: "other",
-    message: "Hi Jake, how are you? I saw on the app that we’ve crossed paths several times this week 😄",
-    timestamp: "2025-05-23T14:55:00",
-  },
-  {
-    id: "fa0c1d6f-5e24-4a8a-b0b2-5c6fc7d34d70",
-    sender: "self",
-    message: "Haha truly! Nice to meet you Grace! What about a cup of coffee today evening? ☕",
-    timestamp: "2025-05-23T15:02:00",
-  },
-  {
-    id: "ac3e99e4-1bb4-4e67-bd31-d2f5b7de3a51",
-    sender: "other",
-    message: "Sure, let’s do it! 😊",
-    timestamp: "2025-05-23T15:10:00",
-  },
-  {
-    id: "127e2cd3-e202-4a7a-b9e0-fb6e60bbf63d",
-    sender: "self",
-    message: "Great I will write later the exact time and place. See you soon!",
-    timestamp: "2025-05-23T15:12:00",
-  },
-  {
-    id: "e32b85a7-51ab-46e1-9886-39f83d6c2685",
-    sender: "other",
-    message: "See you soon! 😊",
-    timestamp: "2025-05-23T15:12:00",
-  },
-]
+interface ConversationWithPartner extends Conversation {
+  partner: UserMessage
+  lastMessage: string
+  time: string
+  unreadCount: number
+}
 
 export default function MessagesPage() {
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const currentUser = useCurrentUser()
+  const [conversations, setConversations] = useState<ConversationWithPartner[]>([])
+  const [activeConversation, setActiveConversation] = useState<ConversationWithPartner | null>(null)
   const isMobile = useMediaQuery("(max-width: 768px)")
+  const [openDrawer, setOpenDrawer] = useState(false)
 
-  const handleSelectChat = () => {
-    if (isMobile) {
-      setOpenDrawer(true)
+  useEffect(() => {
+    if (!currentUser) return
+
+    async function fetchData() {
+      const res = await fetch("http://localhost:4000/conversations")
+      const data: Conversation[] = await res.json()
+
+      // 只顯示與當前用戶有關的對話
+      const related = data.filter((c) => c.user1Id === currentUser?.id || c.user2Id === currentUser?.id)
+
+      // 將對話夥伴資料與對話訊息合併
+      const enriched = await Promise.all(
+        related.map(async (c) => {
+          const partnerId = c.user1Id === currentUser?.id ? c.user2Id : c.user1Id
+          const partnerRes = await fetch(`http://localhost:4000/users/${partnerId}`)
+          const partner = await partnerRes.json()
+
+          const latest = c.messages[c.messages.length - 1]
+          const time = getFriendlyTime(latest?.timestamp)
+
+          const unreadCount = c.messages.filter((m) => m.senderId !== currentUser?.id && !m.isRead).length
+
+          return {
+            ...c,
+            partner,
+            lastMessage: latest?.content || "",
+            time,
+            unreadCount,
+          }
+        }),
+      )
+
+      // 將對話按最新訊息時間降冪排序
+      setConversations(
+        enriched.sort((a, b) => {
+          const timeA = new Date(a.messages[a.messages.length - 1]?.timestamp || 0).getTime()
+          const timeB = new Date(b.messages[b.messages.length - 1]?.timestamp || 0).getTime()
+          return timeB - timeA
+        }),
+      )
+      if (enriched.length > 0) setActiveConversation(enriched[0])
     }
+
+    fetchData()
+  }, [currentUser])
+
+  function handleSelectChat(convoId: string) {
+    const convo = conversations.find((c) => c.id === convoId)
+    if (!convo) return
+    setActiveConversation(convo)
+    if (isMobile) setOpenDrawer(true)
   }
 
+  if (!currentUser) return null
+
   return (
-    <div className="mx-auto p-10 pb-30 md:p-0 flex items-center md:flex-3">
-      {/* Sidebar Chat List */}
+    <div className="mx-auto p-10 pb-30 md:p-0 flex md:flex-row md:h-screen">
+      {/* Sidebar */}
       <div
         className={cn(
           "w-full flex flex-col gap-8",
-          "md:pt-25 md:pb-10 md:px-10 md:flex-2 md:h-screen md:overflow-y-auto md:border md:border-medium-gray",
+          "md:pt-25 md:pb-10 md:px-10 md:flex-2 md:h-full md:overflow-y-auto md:border md:border-medium-gray",
         )}>
-        <div className="flex flex-col gap-4 md:flex-1">
+        <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-medium">Messages</h1>
             <Button
@@ -174,26 +131,43 @@ export default function MessagesPage() {
         </div>
         <div>
           <ChatList
-            chats={mockChats}
+            chats={conversations.map((c) => ({
+              id: c.id,
+              name: `${c.partner.firstName} ${c.partner.lastName}`,
+              avatar: c.partner.avatar,
+              lastMessage: c.lastMessage,
+              time: c.time,
+              unreadCount: c.unreadCount,
+            }))}
             onSelectChat={handleSelectChat}
           />
         </div>
       </div>
 
-      {/* Right Panel for Desktop */}
-      <div className="hidden w-full pt-15 h-screen flex-3 md:block bg-light-gray/20">
-        <div className="flex flex-col justify-between h-full p-10">
-          <ChatHeader
-            name="Veronica"
-            lastSeen="12 minutes ago"
-            avatar="image-1.jpg"
-          />
-          <MessageList messages={mockMessages} />
-          <MessageInput />
-        </div>
+      {/* Desktop Right Panel */}
+      <div className="hidden h-full bg-light-gray/20 flex flex-3 pt-15 md:block">
+        {activeConversation && (
+          <div className="flex flex-col justify-between h-full w-full p-10">
+            <ChatHeader
+              name={`${activeConversation.partner.firstName} ${activeConversation.partner.lastName}`}
+              lastSeen="Online"
+              avatar={activeConversation.partner.avatar}
+            />
+            <MessageList
+              messages={activeConversation.messages.map((m) => ({
+                id: m.id,
+                senderId: m.senderId,
+                content: m.content,
+                timestamp: m.timestamp,
+                isRead: m.isRead,
+              }))}
+            />
+            <MessageInput />
+          </div>
+        )}
       </div>
 
-      {/* Drawer for Mobile */}
+      {/* Mobile Drawer */}
       <Drawer
         open={openDrawer}
         onOpenChange={setOpenDrawer}>
@@ -201,14 +175,24 @@ export default function MessagesPage() {
           <DrawerHeader>
             <DrawerTitle>
               <ChatHeader
-                name="Veronica"
-                lastSeen="12 minutes ago"
-                avatar="image-1.jpg"
+                name={`${activeConversation?.partner.firstName} ${activeConversation?.partner.lastName}`}
+                lastSeen="Online"
+                avatar={activeConversation?.partner.avatar || ""}
               />
             </DrawerTitle>
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
-          <MessageList messages={mockMessages} />
+          <MessageList
+            messages={
+              activeConversation?.messages.map((m) => ({
+                id: m.id,
+                senderId: m.senderId,
+                content: m.content,
+                timestamp: m.timestamp,
+                isRead: m.isRead,
+              })) || []
+            }
+          />
           <DrawerFooter>
             <MessageInput />
           </DrawerFooter>
@@ -216,4 +200,15 @@ export default function MessagesPage() {
       </Drawer>
     </div>
   )
+}
+
+function getFriendlyTime(timestamp: string): string {
+  const now = new Date()
+  const then = new Date(timestamp)
+  const diff = Math.floor((now.getTime() - then.getTime()) / 1000 / 60)
+
+  if (diff < 1) return "just now"
+  if (diff < 60) return `${diff}min`
+  if (diff < 1440) return `${Math.floor(diff / 60)}h`
+  return `${Math.floor(diff / 1440)}d`
 }

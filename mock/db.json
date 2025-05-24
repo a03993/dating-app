@@ -131,5 +131,97 @@
       "createdAt": "2025-05-22T22:00:00"
     }
   ],
-  "messages": []
+  "conversations": [
+    {
+      "id": "conversation-1",
+      "user1Id": "user-1",
+      "user2Id": "user-4",
+      "messages": [
+        {
+          "id": "message-1",
+          "senderId": "user-1",
+          "content": "Hey Julian! 😄 I noticed we’ve bumped into each other a few times this week on the app.",
+          "timestamp": "2025-05-23T14:03:00",
+          "isRead": true
+        },
+        {
+          "id": "message-2",
+          "senderId": "user-4",
+          "content": "Haha yeah, I’ve seen that too! Nice to meet you, Veronica. Wanna grab a coffee later today? ☕",
+          "timestamp": "2025-05-23T14:05:00",
+          "isRead": true
+        },
+        {
+          "id": "message-3",
+          "senderId": "user-1",
+          "content": "Sounds great! I'm free after 5 😊",
+          "timestamp": "2025-05-23T15:10:00",
+          "isRead": true
+        },
+        {
+          "id": "message-4",
+          "senderId": "user-4",
+          "content": "Perfect, I’ll text you the place around 4. Looking forward to it!",
+          "timestamp": "2025-05-23T15:12:00",
+          "isRead": true
+        }
+      ]
+    },
+    {
+      "id": "conversation-2",
+      "user1Id": "user-2",
+      "user2Id": "user-4",
+      "messages": [
+        {
+          "id": "message-5",
+          "senderId": "user-4",
+          "content": "Hey Milo, what are you up to?",
+          "timestamp": "2025-05-24T09:45:00",
+          "isRead": true
+        },
+        {
+          "id": "message-6",
+          "senderId": "user-4",
+          "content": "Just passing by the coffee shop we went to last time. Might grab a latte ☕",
+          "timestamp": "2025-05-24T09:46:00",
+          "isRead": true
+        },
+        {
+          "id": "message-7",
+          "senderId": "user-2",
+          "content": "Nice! I’m working on my new book right now. Super focused 🔥",
+          "timestamp": "2025-05-24T09:47:00",
+          "isRead": true
+        },
+        {
+          "id": "message-8",
+          "senderId": "user-2",
+          "content": "Actually… coffee sounds really good right now. Mind if I join?",
+          "timestamp": "2025-05-24T09:48:00",
+          "isRead": true
+        },
+        {
+          "id": "message-9",
+          "senderId": "user-4",
+          "content": "Already saved a seat for you 😉 just come by when you’re ready.",
+          "timestamp": "2025-05-24T09:50:00",
+          "isRead": true
+        },
+        {
+          "id": "message-10",
+          "senderId": "user-2",
+          "content": "Sweet 🩷🩷🩷",
+          "timestamp": "2025-05-24T09:51:00",
+          "isRead": false
+        },
+        {
+          "id": "message-11",
+          "senderId": "user-2",
+          "content": "I’m on my way! See you soon ✌️",
+          "timestamp": "2025-05-24T09:51:00",
+          "isRead": false
+        }
+      ]
+    }
+  ]
 }
