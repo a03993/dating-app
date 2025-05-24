@@ -139,7 +139,7 @@ export default function MessagesPage() {
               avatar={activeConversation.partner.avatar}
               isOnline={true} // todo: 從後端取得
               onClose={() => setOpenDrawer(false)}
-              onProfile={() => navigate(`/messages/profile/${activeConversation.partner.id}`)}
+              onProfile={() => navigate(`/profile/${activeConversation.partner.id}?from=messages`)}
             />
             <MessageList
               messages={activeConversation.messages.map((m) => ({
@@ -167,7 +167,7 @@ export default function MessagesPage() {
                 isOnline={true} // todo: 從後端取得
                 avatar={activeConversation?.partner.avatar || ""}
                 onClose={() => setOpenDrawer(false)}
-                onProfile={() => navigate(`/messages/profile/${activeConversation?.partner.id}`)}
+                onProfile={() => navigate(`/profile/${activeConversation?.partner.id}?from=messages`)}
               />
             </DrawerTitle>
             <DrawerDescription></DrawerDescription>

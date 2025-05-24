@@ -44,16 +44,8 @@ function App() {
                 element={<MatchesPage />}
               />
               <Route
-                path="/matches/profile/:userId"
-                element={<ProfilePage />}
-              />
-              <Route
                 path="/messages"
                 element={<MessagesPage />}
-              />
-              <Route
-                path="/messages/profile/:userId"
-                element={<ProfilePage />}
               />
               <Route
                 path="/profile/:userId"

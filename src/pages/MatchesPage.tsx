@@ -100,7 +100,7 @@ export default function MatchesPage() {
             name={`${u.firstName} ${u.lastName}`}
             age={u.age}
             isLiked={u.isMatch}
-            onClick={() => navigate(`/matches/profile/${u.id}`)}
+            onClick={() => navigate(`/profile/${u.id}?from=matches`)}
           />
         ))}
       </div>

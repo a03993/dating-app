@@ -3,7 +3,7 @@ import CardsIcon from "@/assets/icons/Cards.svg?react"
 import LikeIcon from "@/assets/icons/Like.svg?react"
 import MessageIcon from "@/assets/icons/Message.svg?react"
 import PeopleIcon from "@/assets/icons/People.svg?react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useSearchParams } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 
@@ -15,6 +15,8 @@ const iconStyle = "size-6"
 
 export function Navbar() {
   const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const from = searchParams.get("from")
   const currentUser = useCurrentUser()
 
   const navItems = [
@@ -41,7 +43,8 @@ export function Navbar() {
         <span className="font-bold text-black">Dating App</span>
       </span>
       {navItems.map((item) => {
-        const isActive = location.pathname.startsWith(item.path)
+        const isActive =
+          location.pathname === item.path || (location.pathname.startsWith("/profile") && from === item.key)
         return (
           <Link
             key={item.key}
