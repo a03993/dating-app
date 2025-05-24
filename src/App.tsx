@@ -52,6 +52,10 @@ function App() {
                 element={<MessagesPage />}
               />
               <Route
+                path="/messages/profile/:userId"
+                element={<ProfilePage />}
+              />
+              <Route
                 path="/profile/:userId"
                 element={<ProfilePage />}
               />

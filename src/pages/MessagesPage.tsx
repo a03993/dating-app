@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import { useNavigate } from "react-router-dom"
 
 import ChatHeader from "@/components/ChatHeader"
 import { ChatList } from "@/components/ChatList"
@@ -33,6 +34,7 @@ interface ConversationPreview extends Conversation {
 }
 
 export default function MessagesPage() {
+  const navigate = useNavigate()
   const isMobile = useMediaQuery("(max-width: 768px)")
   const currentUser = useCurrentUser()
   const [conversations, setConversations] = useState<ConversationPreview[]>([])
@@ -134,8 +136,10 @@ export default function MessagesPage() {
           <div className="flex flex-col justify-between h-full w-full p-10">
             <ChatHeader
               name={`${activeConversation.partner.firstName} ${activeConversation.partner.lastName}`}
-              isOnline={true} // todo: 從後端取得
               avatar={activeConversation.partner.avatar}
+              isOnline={true} // todo: 從後端取得
+              onClose={() => setOpenDrawer(false)}
+              onProfile={() => navigate(`/messages/profile/${activeConversation.partner.id}`)}
             />
             <MessageList
               messages={activeConversation.messages.map((m) => ({
@@ -162,6 +166,8 @@ export default function MessagesPage() {
                 name={`${activeConversation?.partner.firstName} ${activeConversation?.partner.lastName}`}
                 isOnline={true} // todo: 從後端取得
                 avatar={activeConversation?.partner.avatar || ""}
+                onClose={() => setOpenDrawer(false)}
+                onProfile={() => navigate(`/messages/profile/${activeConversation?.partner.id}`)}
               />
             </DrawerTitle>
             <DrawerDescription></DrawerDescription>

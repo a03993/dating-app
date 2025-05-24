@@ -10,16 +10,19 @@ interface ChatHeaderProps {
   name: string
   avatar: string
   isOnline: boolean
+  onClose: () => void
+  onProfile: () => void
 }
 
-export default function ChatHeader({ name, avatar, isOnline }: ChatHeaderProps) {
+export default function ChatHeader({ name, avatar, isOnline, onClose, onProfile }: ChatHeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <Button
           variant="outline"
           size="smSquare"
-          className="text-dark-gray hover:border-dark-gray active:bg-dark-gray">
+          className="text-dark-gray hover:border-dark-gray active:bg-dark-gray md:hidden"
+          onClick={onClose}>
           <LeftArrowIcon />
         </Button>
         <Avatar>
@@ -37,7 +40,8 @@ export default function ChatHeader({ name, avatar, isOnline }: ChatHeaderProps) 
       <Button
         variant="outline"
         size="smSquare"
-        className="text-dark-gray hover:border-dark-gray active:bg-dark-gray">
+        className="text-dark-gray hover:border-dark-gray active:bg-dark-gray"
+        onClick={onProfile}>
         <MoreIcon />
       </Button>
     </div>
