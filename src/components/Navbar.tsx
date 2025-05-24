@@ -19,7 +19,7 @@ export function Navbar() {
 
   const navItems = [
     { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
-    { key: "matches", path: "/matches", icon: <LikeIcon className={iconStyle} />, label: "Likes" },
+    { key: "matches", path: "/matches", icon: <LikeIcon className={iconStyle} />, label: "Matches" },
     { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
     {
       key: "profile",
@@ -41,7 +41,7 @@ export function Navbar() {
         <span className="font-bold text-black">Dating App</span>
       </span>
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path
+        const isActive = location.pathname.startsWith(item.path)
         return (
           <Link
             key={item.key}

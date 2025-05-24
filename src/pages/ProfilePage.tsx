@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
+import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SendIcon from "@/assets/icons/Send.svg?react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
 import { DistanceBadge } from "@/components/badges/DistanceBadge"
@@ -18,6 +19,7 @@ import type { UserProfile } from "@/types/user.types"
 
 export default function ProfilePage() {
   const { userId } = useParams()
+  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const [user, setUser] = useState<UserProfile | null>(null)
 
@@ -28,16 +30,25 @@ export default function ProfilePage() {
       .then(setUser)
   }, [userId, currentUser])
 
-  if (!user) return <div>Loading...</div>
+  if (!user) return null
 
   return (
     <div className="flex flex-col md:flex-row items-center">
-      <Card variant="profile">
+      <Card
+        variant="profile"
+        className="relative">
         <CardImage
           src={`/${user.avatar}`}
           alt={`${user.firstName} ${user.lastName}`}
         />
       </Card>
+      <Button
+        variant="outline"
+        size="smSquare"
+        className="absolute top-5 left-5 md:top-25 text-white bg-white/25 hover:border-white active:bg-white/50"
+        onClick={() => navigate(-1)}>
+        <LeftArrowIcon />
+      </Button>
 
       <div
         className={cn(
