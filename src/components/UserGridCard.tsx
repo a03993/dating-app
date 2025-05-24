@@ -1,8 +1,8 @@
-import { CardContent, CardImage, Card } from "./ui/card"
-import { Button } from "./ui/button"
-
 import CloseIcon from "@/assets/icons/Close.svg?react"
 import LikeIcon from "@/assets/icons/Like.svg?react"
+
+import { Button } from "./ui/button"
+import { Card, CardContent, CardImage } from "./ui/card"
 
 interface UserGridCardProps {
   src: string

@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { InputWithIcon } from "@/components/inputs/InputWithIcon"
-
 import StickersIcon from "@/assets/icons/Stickers.svg?react"
 import VoiceSolidIcon from "@/assets/icons/VoiceSolid.svg?react"
+
+import { InputWithIcon } from "@/components/inputs/InputWithIcon"
+import { Button } from "@/components/ui/button"
 
 export function MessageInput() {
   return (

@@ -1,5 +1,12 @@
 import { useState } from "react"
 
+import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+
+import ChatHeader from "@/components/ChatHeader"
+import { ChatList } from "@/components/ChatList"
+import { MessageList } from "@/components/MessageList"
+import { MessageInput } from "@/components/inputs/MessageInput"
+import { SearchInput } from "@/components/inputs/SearchInput"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -10,17 +17,8 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer"
 
-import ChatHeader from "@/components/ChatHeader"
-import { ChatList } from "@/components/ChatList"
-import { SearchInput } from "@/components/inputs/SearchInput"
-import { MessageInput } from "@/components/inputs/MessageInput"
-import { MessageList } from "@/components/MessageList"
-
-import { cn } from "@/lib/utils"
-
-import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
-
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery"
+import { cn } from "@/lib/utils"
 
 interface Message {
   id: string

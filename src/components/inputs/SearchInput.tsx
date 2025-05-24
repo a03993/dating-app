@@ -1,4 +1,5 @@
 import SearchIcon from "@/assets/icons/Search.svg?react"
+
 import { InputWithIcon } from "./InputWithIcon"
 
 export function SearchInput() {

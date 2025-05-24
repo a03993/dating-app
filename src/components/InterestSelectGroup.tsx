@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import { Button } from "./ui/button"
-
 import { interestList } from "@/lib/interestList"
+
+import { Button } from "./ui/button"
 
 export function InterestSelectGroup() {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])

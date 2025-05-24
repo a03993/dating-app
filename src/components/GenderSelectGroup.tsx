@@ -1,9 +1,8 @@
 import { useState } from "react"
 
-import { Button } from "./ui/button"
-
 import CheckSmallIcon from "../assets/icons/CheckSmall.svg?react"
 import RightArrowIcon from "../assets/icons/RightArrow.svg?react"
+import { Button } from "./ui/button"
 
 export function GenderSelectGroup() {
   const [selectedGender, setSelectedGender] = useState<"woman" | "man" | "other">("woman")

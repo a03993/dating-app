@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { Button } from "./ui/button"
-
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import MoreIcon from "@/assets/icons/More.svg?react"
+
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Button } from "./ui/button"
 
 interface ChatHeaderProps {
   name: string

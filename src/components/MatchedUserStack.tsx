@@ -1,7 +1,7 @@
-import { cva } from "class-variance-authority"
-import { Card, CardImage } from "./ui/card"
-
 import LikeIcon from "@/assets/icons/Like.svg?react"
+import { cva } from "class-variance-authority"
+
+import { Card, CardImage } from "./ui/card"
 
 const iconContainerVariants = cva(
   "absolute flex items-center justify-center rounded-full bg-white shadow-md shadow-black/20 z-10",

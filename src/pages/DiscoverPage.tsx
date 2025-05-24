@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardImage } from "@/components/ui/card"
-
-import { UserActionPanel } from "@/components/UserActionPanel"
-
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+
+import { UserActionPanel } from "@/components/UserActionPanel"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardImage } from "@/components/ui/card"
 
 export default function DiscoverPage() {
   return (

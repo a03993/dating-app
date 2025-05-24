@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-
-import AppLayout from "./layouts/AppLayout"
-
-import CarouselPage from "./pages/OnboardingPage"
-import DiscoverPage from "./pages/DiscoverPage"
-import MatchesPage from "./pages/MatchesPage"
-import MessagesPage from "./pages/MessagesPage"
-import ProfilePage from "./pages/ProfilePage"
 
 import { UserContext } from "@/contexts/UserContext"
 
+import AppLayout from "./layouts/AppLayout"
+import DiscoverPage from "./pages/DiscoverPage"
+import MatchesPage from "./pages/MatchesPage"
+import MessagesPage from "./pages/MessagesPage"
+import CarouselPage from "./pages/OnboardingPage"
+import ProfilePage from "./pages/ProfilePage"
 import type { User } from "./types/user.types"
 
 function App() {

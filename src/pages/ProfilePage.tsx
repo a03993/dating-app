@@ -1,17 +1,18 @@
-import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useCurrentUser } from "@/contexts/UserContext"
 
+import SendIcon from "@/assets/icons/Send.svg?react"
+import { useParams } from "react-router-dom"
+
+import { UserActionPanel } from "@/components/UserActionPanel"
+import { DistanceBadge } from "@/components/badges/DistanceBadge"
+import { InterestBadge } from "@/components/badges/InterestBadge"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { DistanceBadge } from "@/components/badges/DistanceBadge"
-import { InterestBadge } from "@/components/badges/InterestBadge"
-import { UserActionPanel } from "@/components/UserActionPanel"
-
-import SendIcon from "@/assets/icons/Send.svg?react"
-import { cn } from "@/lib/utils"
 import { interestList } from "@/lib/interestList"
+import { cn } from "@/lib/utils"
+
+import { useCurrentUser } from "@/contexts/UserContext"
 
 import type { User } from "@/types/user.types"
 

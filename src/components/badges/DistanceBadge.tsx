@@ -1,6 +1,6 @@
-import { Badge } from "../ui/badge"
-
 import LocalIcon from "@/assets/icons/Local.svg?react"
+
+import { Badge } from "../ui/badge"
 
 interface DistanceBadgeProps {
   distanceInMeters: number

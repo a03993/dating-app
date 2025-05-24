@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+
+import SortIcon from "@/assets/icons/Sort.svg?react"
+import { useNavigate } from "react-router-dom"
+
+import { UserGridCard } from "@/components/UserGridCard"
+import { Button } from "@/components/ui/button"
+
 import { useCurrentUser } from "@/contexts/UserContext"
 
-import { Button } from "@/components/ui/button"
-import { UserGridCard } from "@/components/UserGridCard"
-import SortIcon from "@/assets/icons/Sort.svg?react"
 import type { User } from "@/types/user.types"
-import { useNavigate } from "react-router-dom"
 
 interface Like {
   fromUserId: string

@@ -1,7 +1,8 @@
-import { Badge } from "../ui/badge"
+import CheckDoubleIcon from "@/assets/icons/checkDouble.svg?react"
+
 import { cn } from "@/lib/utils"
 
-import CheckDoubleIcon from "@/assets/icons/checkDouble.svg?react"
+import { Badge } from "../ui/badge"
 
 interface InterestBadgeProps {
   label: string
