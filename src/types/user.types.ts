@@ -1,4 +1,9 @@
-import type { Location } from "./location.type"
+interface Location {
+  city: string
+  country: string
+  latitude: number
+  longitude: number
+}
 
 export interface User {
   id: string
@@ -16,3 +21,12 @@ export interface User {
   avatar: string
   gallery: string[]
 }
+
+export type UserProfile = Pick<
+  User,
+  "firstName" | "lastName" | "age" | "profession" | "location" | "about" | "interests" | "avatar" | "gallery"
+>
+
+export type ChatUser = Pick<User, "id" | "firstName" | "lastName" | "avatar">
+
+export type LikedUser = Pick<User, "id" | "firstName" | "lastName" | "age" | "avatar">

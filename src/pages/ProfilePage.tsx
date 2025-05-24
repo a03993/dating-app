@@ -14,12 +14,12 @@ import { cn } from "@/lib/utils"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
-import type { User } from "@/types/user.types"
+import type { UserProfile } from "@/types/user.types"
 
 export default function ProfilePage() {
   const { userId } = useParams()
   const currentUser = useCurrentUser()
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<UserProfile | null>(null)
 
   useEffect(() => {
     const id = userId || currentUser?.id

@@ -8,24 +8,18 @@ import { Button } from "@/components/ui/button"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
-import type { User } from "@/types/user.types"
+import type { LikeRelation } from "@/types/like.type"
+import type { MatchRelation } from "@/types/match.type"
+import type { LikedUser } from "@/types/user.types"
 
-interface Like {
-  fromUserId: string
-  toUserId: string
-}
-
-interface Match {
-  user1Id: string
-  user2Id: string
+interface LikedUserWithStatus extends LikedUser {
+  isMatch: boolean
 }
 
 export default function MatchesPage() {
-  const [likedUsers, setLikedUsers] = useState<(User & { isMatch: boolean })[]>([])
-
   const navigate = useNavigate()
-
   const currentUser = useCurrentUser()
+  const [likedUsers, setLikedUsers] = useState<LikedUserWithStatus[]>([])
 
   useEffect(() => {
     if (!currentUser) return
@@ -35,8 +29,8 @@ export default function MatchesPage() {
         fetch("http://localhost:4000/likes"),
         fetch("http://localhost:4000/matches"),
       ])
-      const likes: Like[] = await likesRes.json()
-      const matches: Match[] = await matchesRes.json()
+      const likes: LikeRelation[] = await likesRes.json()
+      const matches: MatchRelation[] = await matchesRes.json()
 
       const likedByUserIds = likes.filter((like) => like.toUserId === currentUser?.id).map((like) => like.fromUserId)
 

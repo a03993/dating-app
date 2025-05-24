@@ -1,16 +1,18 @@
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import MoreIcon from "@/assets/icons/More.svg?react"
 
+import { cn } from "@/lib/utils"
+
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 
 interface ChatHeaderProps {
   name: string
-  lastSeen: string
   avatar: string
+  isOnline: boolean
 }
 
-export default function ChatHeader({ name, lastSeen, avatar }: ChatHeaderProps) {
+export default function ChatHeader({ name, avatar, isOnline }: ChatHeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -26,7 +28,10 @@ export default function ChatHeader({ name, lastSeen, avatar }: ChatHeaderProps) 
         </Avatar>
         <div>
           <h1 className="text-2xl font-bold">{name}</h1>
-          <p className="text-sm font-normal text-dark-gray">{lastSeen}</p>
+          <div className="flex items-center gap-1">
+            <div className={cn("size-2 bg-red rounded-full", isOnline ? "bg-red" : "bg-light-gray")}></div>
+            <p className="text-sm font-normal text-dark-gray">Online</p>
+          </div>
         </div>
       </div>
       <Button

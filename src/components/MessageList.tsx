@@ -1,14 +1,8 @@
 import { useEffect, useRef } from "react"
 
-import { MessageBubble } from "./MessageBubble"
+import type { Message } from "@/types/conversation.type"
 
-interface Message {
-  id: string
-  senderId: string
-  content: string
-  timestamp: string
-  isRead: boolean
-}
+import { MessageBubble } from "./MessageBubble"
 
 interface MessageListProps {
   messages: Message[]

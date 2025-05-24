@@ -22,37 +22,21 @@ import { cn } from "@/lib/utils"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
-import type { User } from "@/types/user.types"
+import type { Conversation } from "@/types/conversation.type"
+import type { ChatUser } from "@/types/user.types"
 
-type UserMessage = Pick<User, "id" | "firstName" | "lastName" | "avatar">
-
-interface Message {
-  id: string
-  senderId: string
-  content: string
-  timestamp: string
-  isRead: boolean
-}
-
-interface Conversation {
-  id: string
-  user1Id: string
-  user2Id: string
-  messages: Message[]
-}
-
-interface ConversationWithPartner extends Conversation {
-  partner: UserMessage
+interface ConversationPreview extends Conversation {
+  partner: ChatUser
   lastMessage: string
   time: string
   unreadCount: number
 }
 
 export default function MessagesPage() {
-  const currentUser = useCurrentUser()
-  const [conversations, setConversations] = useState<ConversationWithPartner[]>([])
-  const [activeConversation, setActiveConversation] = useState<ConversationWithPartner | null>(null)
   const isMobile = useMediaQuery("(max-width: 768px)")
+  const currentUser = useCurrentUser()
+  const [conversations, setConversations] = useState<ConversationPreview[]>([])
+  const [activeConversation, setActiveConversation] = useState<ConversationPreview | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
 
   useEffect(() => {
@@ -150,7 +134,7 @@ export default function MessagesPage() {
           <div className="flex flex-col justify-between h-full w-full p-10">
             <ChatHeader
               name={`${activeConversation.partner.firstName} ${activeConversation.partner.lastName}`}
-              lastSeen="Online"
+              isOnline={true} // todo: 從後端取得
               avatar={activeConversation.partner.avatar}
             />
             <MessageList
@@ -176,7 +160,7 @@ export default function MessagesPage() {
             <DrawerTitle>
               <ChatHeader
                 name={`${activeConversation?.partner.firstName} ${activeConversation?.partner.lastName}`}
-                lastSeen="Online"
+                isOnline={true} // todo: 從後端取得
                 avatar={activeConversation?.partner.avatar || ""}
               />
             </DrawerTitle>

@@ -4,12 +4,7 @@ import { cn } from "@/lib/utils"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
-interface MessageBubbleProps {
-  senderId: string
-  content: string
-  timestamp: string
-  isRead: boolean
-}
+import type { MessagePreview } from "@/types/conversation.type"
 
 const formattedTime = (timestamp: string) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -19,7 +14,7 @@ const formattedTime = (timestamp: string) => {
   }).format(new Date(timestamp))
 }
 
-export function MessageBubble({ senderId, content, timestamp, isRead }: MessageBubbleProps) {
+export function MessageBubble({ senderId, content, timestamp, isRead }: MessagePreview) {
   const currentUser = useCurrentUser()
 
   const style = senderId === currentUser?.id ? "rounded-bl-lg bg-light-gray" : "rounded-br-lg bg-red/10"
