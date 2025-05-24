@@ -1,12 +1,74 @@
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
+import { useCurrentUser } from "@/contexts/UserContext"
 
-import SortIcon from "@/assets/icons/Sort.svg?react"
+import { Button } from "@/components/ui/button"
 import { UserGridCard } from "@/components/UserGridCard"
+import SortIcon from "@/assets/icons/Sort.svg?react"
+import type { User } from "@/types/user.types"
+import { useNavigate } from "react-router-dom"
+
+interface Like {
+  fromUserId: string
+  toUserId: string
+}
+
+interface Match {
+  user1Id: string
+  user2Id: string
+}
 
 export default function MatchesPage() {
+  const [likedUsers, setLikedUsers] = useState<(User & { isMatch: boolean })[]>([])
+
+  const navigate = useNavigate()
+
+  const currentUser = useCurrentUser()
+
+  useEffect(() => {
+    if (!currentUser) return
+
+    async function fetchLikedUsers() {
+      const [likesRes, matchesRes] = await Promise.all([
+        fetch("http://localhost:4000/likes"),
+        fetch("http://localhost:4000/matches"),
+      ])
+      const likes: Like[] = await likesRes.json()
+      const matches: Match[] = await matchesRes.json()
+
+      const likedByUserIds = likes.filter((like) => like.toUserId === currentUser?.id).map((like) => like.fromUserId)
+
+      const isMutualLike = (otherUserId: string) =>
+        likes.some((like) => like.fromUserId === currentUser?.id && like.toUserId === otherUserId)
+
+      const isMatched = (otherUserId: string) =>
+        matches.some(
+          (m) =>
+            (m.user1Id === currentUser?.id && m.user2Id === otherUserId) ||
+            (m.user2Id === currentUser?.id && m.user1Id === otherUserId),
+        )
+
+      const usersWithStatus = await Promise.all(
+        likedByUserIds.map(async (id) => {
+          const res = await fetch(`http://localhost:4000/users/${id}`)
+          const userData = await res.json()
+          return {
+            ...userData,
+            isMatch: isMatched(id) || isMutualLike(id),
+          }
+        }),
+      )
+
+      setLikedUsers(usersWithStatus)
+    }
+
+    fetchLikedUsers()
+  }, [currentUser?.id])
+
+  if (!currentUser) return null
+
   return (
     <div className="mx-auto p-10 pb-30 md:pt-25 flex flex-col items-center gap-8">
-      {/* mobile header */}
+      {/* Headers */}
       <div className="block md:hidden w-full flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-medium">Matches</h1>
@@ -19,7 +81,6 @@ export default function MatchesPage() {
         <p className="text-sm text-black/70">This is a list of people who have liked you and your matches.</p>
       </div>
 
-      {/* desktop header */}
       <div className="hidden md:block">
         <div className="flex w-screen px-20 justify-between">
           <div className="flex flex-col">
@@ -34,15 +95,15 @@ export default function MatchesPage() {
         </div>
       </div>
 
-      {/* user grid cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
-        {Array.from({ length: 10 }).map((_, index) => (
+        {likedUsers.map((u) => (
           <UserGridCard
-            key={index}
-            src={`image-1.jpg`}
-            name="Veronica"
-            age={25}
-            isLiked={index % 2 === 0}
+            key={u.id}
+            src={u.avatar}
+            name={`${u.firstName} ${u.lastName}`}
+            age={u.age}
+            isLiked={u.isMatch}
+            onClick={() => navigate(`/profile/${u.id}`)}
           />
         ))}
       </div>

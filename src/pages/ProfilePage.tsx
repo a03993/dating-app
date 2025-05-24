@@ -1,3 +1,7 @@
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useCurrentUser } from "@/contexts/UserContext"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
@@ -7,16 +11,29 @@ import { UserActionPanel } from "@/components/UserActionPanel"
 
 import SendIcon from "@/assets/icons/Send.svg?react"
 import { cn } from "@/lib/utils"
-
-import type { User } from "@/types/user.types"
 import { interestList } from "@/lib/interestList"
 
-export default function ProfilePage({ user }: { user: User }) {
+import type { User } from "@/types/user.types"
+
+export default function ProfilePage() {
+  const { userId } = useParams()
+  const currentUser = useCurrentUser()
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const id = userId || currentUser?.id
+    fetch(`http://localhost:4000/users/${id}`)
+      .then((res) => res.json())
+      .then(setUser)
+  }, [userId, currentUser])
+
+  if (!user) return <div>Loading...</div>
+
   return (
     <div className="flex flex-col md:flex-row items-center">
       <Card variant="profile">
         <CardImage
-          src={user.avatar}
+          src={`/${user.avatar}`}
           alt={`${user.firstName} ${user.lastName}`}
         />
       </Card>
@@ -90,31 +107,31 @@ export default function ProfilePage({ user }: { user: User }) {
             <div className="grid grid-cols-6 gap-4">
               <Card variant="galleryLg">
                 <CardImage
-                  src={user.gallery[0]}
+                  src={`/${user.gallery[0]}`}
                   alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="galleryLg">
                 <CardImage
-                  src={user.gallery[1]}
+                  src={`/${user.gallery[1]}`}
                   alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src={user.gallery[2]}
+                  src={`/${user.gallery[2]}`}
                   alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src={user.gallery[3]}
+                  src={`/${user.gallery[3]}`}
                   alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src={user.gallery[4]}
+                  src={`/${user.gallery[4]}`}
                   alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>

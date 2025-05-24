@@ -85,6 +85,51 @@
       "gallery": ["image-16.jpg", "image-17.jpg", "image-18.jpg", "image-19.jpg", "image-20.jpg"]
     }
   ],
-  "likes": [],
+  "likes": [
+    {
+      "id": "like-1",
+      "fromUserId": "user-1",
+      "toUserId": "user-4",
+      "createdAt": "2025-05-10T10:30:00"
+    },
+    {
+      "id": "like-2",
+      "fromUserId": "user-2",
+      "toUserId": "user-4",
+      "createdAt": "2025-05-10T15:45:00"
+    },
+    {
+      "id": "like-3",
+      "fromUserId": "user-3",
+      "toUserId": "user-4",
+      "createdAt": "2025-05-10T22:10:00"
+    },
+    {
+      "id": "like-4",
+      "fromUserId": "user-4",
+      "toUserId": "user-1",
+      "createdAt": "2025-05-20T09:13:00"
+    },
+    {
+      "id": "like-5",
+      "fromUserId": "user-4",
+      "toUserId": "user-2",
+      "createdAt": "2025-05-20T07:12:00"
+    }
+  ],
+  "matches": [
+    {
+      "id": "match-1",
+      "user1Id": "user-1",
+      "user2Id": "user-4",
+      "createdAt": "2025-05-20T10:30:00"
+    },
+    {
+      "id": "match-2",
+      "user1Id": "user-2",
+      "user2Id": "user-4",
+      "createdAt": "2025-05-22T22:00:00"
+    }
+  ],
   "messages": []
 }

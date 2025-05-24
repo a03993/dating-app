@@ -4,22 +4,21 @@ import { Button } from "./ui/button"
 import CloseIcon from "@/assets/icons/Close.svg?react"
 import LikeIcon from "@/assets/icons/Like.svg?react"
 
-export function UserGridCard({
-  src,
-  name,
-  age,
-  isLiked,
-}: {
+interface UserGridCardProps {
   src: string
   name: string
   age: number
   isLiked?: boolean
-}) {
+  onClick?: () => void
+}
+
+export function UserGridCard({ src, name, age, isLiked, onClick }: UserGridCardProps) {
   return (
     <Card variant="grid">
       <CardImage
         src={src}
         alt={name}
+        onClick={onClick}
       />
       <CardContent className="bottom-11 p-2 text-sm font-medium backdrop-blur-none">
         {name}, {age}

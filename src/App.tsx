@@ -9,6 +9,8 @@ import MatchesPage from "./pages/MatchesPage"
 import MessagesPage from "./pages/MessagesPage"
 import ProfilePage from "./pages/ProfilePage"
 
+import { UserContext } from "@/contexts/UserContext"
+
 import type { User } from "./types/user.types"
 
 function App() {
@@ -22,37 +24,39 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Home page, not include Navbar */}
-        <Route
-          path="/"
-          element={<CarouselPage />}
-        />
+    <UserContext.Provider value={currentUser}>
+      <BrowserRouter>
+        <Routes>
+          {/* Home page, not include Navbar */}
+          <Route
+            path="/"
+            element={<CarouselPage />}
+          />
 
-        {/* Other pages share Navbar */}
-        {currentUser && (
-          <Route element={<AppLayout />}>
-            <Route
-              path="/discover"
-              element={<DiscoverPage />}
-            />
-            <Route
-              path="/matches"
-              element={<MatchesPage />}
-            />
-            <Route
-              path="/messages"
-              element={<MessagesPage />}
-            />
-            <Route
-              path="/profile"
-              element={<ProfilePage user={currentUser} />}
-            />
-          </Route>
-        )}
-      </Routes>
-    </BrowserRouter>
+          {/* Other pages share Navbar */}
+          {currentUser && (
+            <Route element={<AppLayout />}>
+              <Route
+                path="/discover"
+                element={<DiscoverPage />}
+              />
+              <Route
+                path="/matches"
+                element={<MatchesPage />}
+              />
+              <Route
+                path="/messages"
+                element={<MessagesPage />}
+              />
+              <Route
+                path="/profile/:userId"
+                element={<ProfilePage />}
+              />
+            </Route>
+          )}
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   )
 }
 

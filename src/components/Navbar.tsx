@@ -8,17 +8,25 @@ import LogoIcon from "@/assets/Logo.svg?react"
 import MessageIcon from "@/assets/icons/Message.svg?react"
 import PeopleIcon from "@/assets/icons/People.svg?react"
 
-const iconStyle = "size-6"
+import { useCurrentUser } from "@/contexts/UserContext"
 
-const navItems = [
-  { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
-  { key: "matches", path: "/matches", icon: <LikeIcon className={iconStyle} />, label: "Likes" },
-  { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
-  { key: "profile", path: "/profile", icon: <PeopleIcon className={iconStyle} />, label: "Profile" },
-]
+const iconStyle = "size-6"
 
 export function Navbar() {
   const location = useLocation()
+  const currentUser = useCurrentUser()
+
+  const navItems = [
+    { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
+    { key: "matches", path: "/matches", icon: <LikeIcon className={iconStyle} />, label: "Likes" },
+    { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
+    {
+      key: "profile",
+      path: `/profile/${currentUser?.id}`,
+      icon: <PeopleIcon className={iconStyle} />,
+      label: "Profile",
+    },
+  ]
 
   return (
     <nav

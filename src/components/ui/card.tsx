@@ -33,17 +33,20 @@ function CardImage({
   alt,
   className,
   fit = "cover",
+  onClick,
 }: {
   src: string
   alt: string
   className?: string
   fit?: "cover" | "contain"
+  onClick?: () => void
 }) {
   return (
     <img
       src={src}
       alt={alt}
       className={cn("h-full w-full", fit === "cover" ? "object-cover" : "object-contain", className)}
+      onClick={onClick}
     />
   )
 }
