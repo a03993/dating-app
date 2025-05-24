@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { ChatList } from "@/components/ChatList"
+import ChatRoom from "@/components/ChatRoom"
 import { SearchInput } from "@/components/inputs/SearchInput"
+
+import { cn } from "@/lib/utils"
 
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
 
-const chats = [
+const mockChats = [
   {
     id: "1",
     name: "Veronica",
@@ -46,7 +49,7 @@ const chats = [
     unreadCount: 21,
   },
   {
-    id: "1",
+    id: "6",
     name: "Veronica",
     avatar: "image-1.jpg",
     lastMessage: "Hello, how are you?",
@@ -54,7 +57,7 @@ const chats = [
     unreadCount: 1,
   },
   {
-    id: "2",
+    id: "7",
     name: "Veronica",
     avatar: "image-2.jpg",
     lastMessage: "The weather is nice today",
@@ -62,7 +65,7 @@ const chats = [
     unreadCount: 0,
   },
   {
-    id: "3",
+    id: "8",
     name: "Veronica",
     avatar: "image-3.jpg",
     lastMessage: "Do you have a minute?",
@@ -70,7 +73,7 @@ const chats = [
     unreadCount: 0,
   },
   {
-    id: "4",
+    id: "9",
     name: "Veronica",
     avatar: "image-4.jpg",
     lastMessage: "good night~",
@@ -78,7 +81,7 @@ const chats = [
     unreadCount: 1,
   },
   {
-    id: "5",
+    id: "10",
     name: "Veronica",
     avatar: "image-5.jpg",
     lastMessage: "Do you want to meet up?",
@@ -89,8 +92,12 @@ const chats = [
 
 export default function MessagesPage() {
   return (
-    <div className="mx-auto p-10 pb-30 md:pt-25 flex items-center gap-20 md:flex-3">
-      <div className="w-full flex flex-col gap-8 md:flex-2">
+    <div className="mx-auto p-10 pb-30 md:p-0 flex items-center md:flex-3">
+      <div
+        className={cn(
+          "w-full flex flex-col gap-8",
+          "md:pt-25 md:pb-10 md:px-10 md:flex-2 md:h-screen md:overflow-y-auto md:border md:border-dark-gray md:rounded-xl",
+        )}>
         {/* header */}
         <div className="flex flex-col gap-4 md:flex-1">
           <div className="flex justify-between items-center">
@@ -104,10 +111,13 @@ export default function MessagesPage() {
           <SearchInput />
         </div>
         <div>
-          <ChatList chats={chats} />
+          <ChatList chats={mockChats} />
         </div>
       </div>
-      <div className="hidden w-full flex-3  md:block">{/* todo: chat component */}</div>
+      {/* chat room */}
+      <div className="hidden w-full pt-25 px-10 pb-10 h-screen flex-3 md:block bg-light-gray/20">
+        <ChatRoom />
+      </div>
     </div>
   )
 }

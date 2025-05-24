@@ -16,7 +16,7 @@ export function InputWithIcon({
   iconClassName = "",
 }: InputWithIconProps) {
   return (
-    <div className="relative flex items-center gap-2">
+    <div className="relative flex w-full items-center gap-2">
       <input
         type="text"
         placeholder={placeholder}

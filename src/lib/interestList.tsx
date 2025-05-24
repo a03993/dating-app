@@ -11,7 +11,7 @@ import ShopBagIcon from "../assets/icons/ShopBag.svg?react"
 import SportIcon from "../assets/icons/Sport.svg?react"
 import TennisIcon from "../assets/icons/Tennis.svg?react"
 import VienchartsIcon from "../assets/icons/Viencharts.svg?react"
-import VoiceIcon from "../assets/icons/Voice.svg?react"
+import VoiceOutlineIcon from "../assets/icons/VoiceOutline.svg?react"
 
 export const interestList = [
   {
@@ -27,7 +27,7 @@ export const interestList = [
   {
     id: "karaoke",
     label: "Karaoke",
-    icon: VoiceIcon,
+    icon: VoiceOutlineIcon,
   },
   {
     id: "yoga",
