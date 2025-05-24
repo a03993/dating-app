@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import AppLayout from "./layouts/AppLayout"
@@ -8,7 +9,18 @@ import MatchesPage from "./pages/MatchesPage"
 import MessagesPage from "./pages/MessagesPage"
 import ProfilePage from "./pages/ProfilePage"
 
+import type { User } from "./types/user.types"
+
 function App() {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    // 目前先以 user-4 模擬登入
+    fetch("http://localhost:4000/users/user-4")
+      .then((res) => res.json())
+      .then(setCurrentUser)
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
@@ -19,24 +31,26 @@ function App() {
         />
 
         {/* Other pages share Navbar */}
-        <Route element={<AppLayout />}>
-          <Route
-            path="/discover"
-            element={<DiscoverPage />}
-          />
-          <Route
-            path="/matches"
-            element={<MatchesPage />}
-          />
-          <Route
-            path="/messages"
-            element={<MessagesPage />}
-          />
-          <Route
-            path="/profile"
-            element={<ProfilePage />}
-          />
-        </Route>
+        {currentUser && (
+          <Route element={<AppLayout />}>
+            <Route
+              path="/discover"
+              element={<DiscoverPage />}
+            />
+            <Route
+              path="/matches"
+              element={<MatchesPage />}
+            />
+            <Route
+              path="/messages"
+              element={<MessagesPage />}
+            />
+            <Route
+              path="/profile"
+              element={<ProfilePage user={currentUser} />}
+            />
+          </Route>
+        )}
       </Routes>
     </BrowserRouter>
   )

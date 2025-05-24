@@ -1,5 +1,90 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "user-1",
+      "email": "veronica@example.com",
+      "password": "veronica0000",
+      "sms": "0912345678",
+      "firstName": "Veronica",
+      "lastName": "Lane",
+      "age": 25,
+      "gender": "female",
+      "profession": "professional model",
+      "location": {
+        "city": "Taipei",
+        "country": "Taiwan",
+        "latitude": 25.0375,
+        "longitude": 121.5639
+      },
+      "about": "I’m a professional model based in Taipei, passionate about capturing beauty through both the lens and everyday life. I enjoy photography, yoga, and discovering new cultures through travel. Whether it’s a cozy art gallery or a lively music bar, I love exploring the vibrant side of the city. Always open to deep conversations and spontaneous adventures.",
+      "interests": ["photography", "shopping", "yoga", "art", "traveling", "music", "drinking"],
+      "avatar": "image-1.jpg",
+      "gallery": ["image-1.jpg", "image-2.jpg", "image-3.jpg", "image-4.jpg", "image-5.jpg"]
+    },
+    {
+      "id": "user-2",
+      "email": "milo@example.com",
+      "password": "milo0000",
+      "sms": "0922333444",
+      "firstName": "Milo",
+      "lastName": "Grey",
+      "age": 23,
+      "gender": "female",
+      "profession": "freelance writer",
+      "location": {
+        "city": "New Taipei",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "Quiet thinker, loud dreamer. I write about the beauty in stillness and the chaos of love. Catch me with a book and black coffee.",
+      "interests": ["photography", "yoga", "cooking", "running", "art", "traveling", "music"],
+      "avatar": "image-6.jpg",
+      "gallery": ["image-6.jpg", "image-7.jpg", "image-8.jpg", "image-9.jpg", "image-10.jpg"]
+    },
+    {
+      "id": "user-3",
+      "email": "amber@example.com",
+      "password": "amber0000",
+      "sms": "0911222333",
+      "firstName": "Amber",
+      "lastName": "Chen",
+      "age": 24,
+      "gender": "female",
+      "profession": "indie musician",
+      "location": {
+        "city": "New Taipei",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "I make beats and chase sunsets. Music is my heartbeat, and I find joy in deep convos, neon lights, and late-night ramen runs.",
+      "interests": ["karaoke", "swimming", "art", "traveling", "extreme", "music", "drinking", "videoGames"],
+      "avatar": "image-11.jpg",
+      "gallery": ["image-11.jpg", "image-12.jpg", "image-13.jpg", "image-14.jpg", "image-15.jpg"]
+    },
+    {
+      "id": "user-4",
+      "email": "julian@example.com",
+      "password": "julian0000",
+      "sms": "0933444555",
+      "firstName": "Julian",
+      "lastName": "Reyes",
+      "age": 26,
+      "gender": "male",
+      "profession": "tattoo artist",
+      "location": {
+        "city": "New Taipei",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "Ink tells stories words can’t. I’m always sketching, exploring street culture, or vibing to lo-fi beats. Let’s make something cool.",
+      "interests": ["photography", "tennis", "running", "art", "extreme", "music", "drinking", "videoGames"],
+      "avatar": "image-16.jpg",
+      "gallery": ["image-16.jpg", "image-17.jpg", "image-18.jpg", "image-19.jpg", "image-20.jpg"]
+    }
+  ],
   "likes": [],
   "messages": []
 }

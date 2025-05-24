@@ -8,13 +8,16 @@ import { UserActionPanel } from "@/components/UserActionPanel"
 import SendIcon from "@/assets/icons/Send.svg?react"
 import { cn } from "@/lib/utils"
 
-export default function ProfilePage() {
+import type { User } from "@/types/user.types"
+import { interestList } from "@/lib/interestList"
+
+export default function ProfilePage({ user }: { user: User }) {
   return (
     <div className="flex flex-col md:flex-row items-center">
       <Card variant="profile">
         <CardImage
-          src="image-1.jpg"
-          alt="Veronica"
+          src={user.avatar}
+          alt={`${user.firstName} ${user.lastName}`}
         />
       </Card>
 
@@ -29,8 +32,10 @@ export default function ProfilePage() {
           {/* base info */}
           <section className="flex justify-between">
             <div>
-              <h1 className="text-2xl font-semibold">Veronica Lane , 25</h1>
-              <p className="text-sm text-black/70">Fashion model</p>
+              <h1 className="text-2xl font-semibold">
+                {user.firstName} {user.lastName} , {user.age}
+              </h1>
+              <p className="text-sm text-black/70">{user.profession}</p>
             </div>
             <Button
               variant="outline"
@@ -43,7 +48,9 @@ export default function ProfilePage() {
           <section className="flex justify-between">
             <div>
               <h2 className="text-base font-bold">Location</h2>
-              <p className="text-sm text-black/70">Taipei, Taiwan</p>
+              <p className="text-sm text-black/70">
+                {user.location.city}, {user.location.country}
+              </p>
             </div>
             <DistanceBadge distanceInMeters={850} />
           </section>
@@ -51,29 +58,22 @@ export default function ProfilePage() {
           {/* about */}
           <section>
             <h2 className="text-base font-bold">About</h2>
-            <p className="text-sm text-black/70">
-              Passionate about classic cars and timeless fashion. I enjoy photoshoots, city drives, and good
-              conversations over coffee.
-            </p>
+            <p className="text-sm text-black/70">{user.about}</p>
           </section>
 
           {/* interests */}
           <section className="flex flex-col gap-4">
             <h2 className="text-base font-bold">Interests</h2>
             <div className="flex flex-wrap gap-2">
-              <InterestBadge
-                label="Photography"
-                isMatch
-              />
-              <InterestBadge label="Shopping" />
-              <InterestBadge label="Karaoke" />
-              <InterestBadge label="Yoga" />
-              <InterestBadge
-                label="Art"
-                isMatch
-              />
-              <InterestBadge label="Traveling" />
-              <InterestBadge label="Drinking" />
+              {user.interests.map((interest, index) => {
+                const interestLabel = interestList.find((i) => i.id === interest)?.label || "Unknown"
+                return (
+                  <InterestBadge
+                    key={index}
+                    label={interestLabel}
+                  />
+                )
+              })}
             </div>
           </section>
 
@@ -90,32 +90,32 @@ export default function ProfilePage() {
             <div className="grid grid-cols-6 gap-4">
               <Card variant="galleryLg">
                 <CardImage
-                  src="image-1.jpg"
-                  alt="Veronica"
+                  src={user.gallery[0]}
+                  alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="galleryLg">
                 <CardImage
-                  src="image-2.jpg"
-                  alt="Veronica"
+                  src={user.gallery[1]}
+                  alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src="image-3.jpg"
-                  alt="Veronica"
+                  src={user.gallery[2]}
+                  alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src="image-4.jpg"
-                  alt="Veronica"
+                  src={user.gallery[3]}
+                  alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
               <Card variant="gallerySm">
                 <CardImage
-                  src="image-5.jpg"
-                  alt="Veronica"
+                  src={user.gallery[4]}
+                  alt={`${user.firstName} ${user.lastName}`}
                 />
               </Card>
             </div>

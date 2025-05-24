@@ -1,3 +1,5 @@
+import type { Interest } from "@/types/interest.type"
+
 import CameraIcon from "../assets/icons/Camera.svg?react"
 import GameHandleIcon from "../assets/icons/GameHandle.svg?react"
 import GobletFullIcon from "../assets/icons/GobletFull.svg?react"
@@ -13,7 +15,7 @@ import TennisIcon from "../assets/icons/Tennis.svg?react"
 import VienchartsIcon from "../assets/icons/Viencharts.svg?react"
 import VoiceOutlineIcon from "../assets/icons/VoiceOutline.svg?react"
 
-export const interestList = [
+export const interestList: Interest[] = [
   {
     id: "photography",
     label: "Photography",
