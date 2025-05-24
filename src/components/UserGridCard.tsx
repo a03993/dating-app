@@ -8,11 +8,13 @@ interface UserGridCardProps {
   src: string
   name: string
   age: number
-  isLiked?: boolean
+  isMatch?: boolean
   onClick?: () => void
+  onRemove?: () => void
+  onToggleMatch?: () => void
 }
 
-export function UserGridCard({ src, name, age, isLiked, onClick }: UserGridCardProps) {
+export function UserGridCard({ src, name, age, isMatch, onClick, onRemove, onToggleMatch }: UserGridCardProps) {
   return (
     <Card variant="grid">
       <CardImage
@@ -27,17 +29,19 @@ export function UserGridCard({ src, name, age, isLiked, onClick }: UserGridCardP
         <Button
           variant="ghost"
           size="sm"
-          className="text-white border-r border-white/20 hover:text-dark-gray">
+          className="text-white border-r border-white/20 hover:text-dark-gray"
+          onClick={onRemove}>
           <CloseIcon className="size-5" />
         </Button>
         <Button
           variant="ghost"
           size="sm"
-          className="text-white hover:text-red">
+          className="text-white hover:text-red"
+          onClick={onToggleMatch}>
           <LikeIcon className="size-5" />
         </Button>
       </div>
-      {isLiked && (
+      {isMatch && (
         <div className="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-black/20">
           <LikeIcon className="size-5 text-red rotate-12" />
         </div>
