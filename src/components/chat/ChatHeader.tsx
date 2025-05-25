@@ -1,7 +1,7 @@
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import MoreIcon from "@/assets/icons/More.svg?react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Button } from "../ui/button"

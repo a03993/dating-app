@@ -5,7 +5,7 @@ import { onboardingSlides as slides } from "@/constants/onboarding-slides"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 export default function OnboardingPage() {
   const [currentIndex, setCurrentIndex] = useState(0)

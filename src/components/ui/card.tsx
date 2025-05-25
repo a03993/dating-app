@@ -2,7 +2,7 @@ import * as React from "react"
 
 import { type VariantProps, cva } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 const cardVariants = cva("overflow-hidden rounded-xl", {
   variants: {

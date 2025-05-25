@@ -7,7 +7,7 @@ import { Link, useLocation, useSearchParams } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 

@@ -2,7 +2,7 @@ import { DEFAULT_FILTER_OPTIONS } from "@/constants/filter-options"
 
 import { Button } from "@/components/ui/button"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import FilterFormContent from "./FilterFormContent"
 
@@ -34,7 +34,13 @@ export default function FilterPanel({ form, setForm, className }: FilterPanelPro
           form={form}
           setForm={setForm}
         />
-        <Button className="w-full">Continue</Button>
+        <Button
+          className="w-full"
+          onClick={() => {
+            // todo: 更新 filter
+          }}>
+          Continue
+        </Button>
       </div>
     </div>
   )

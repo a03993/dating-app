@@ -1,5 +1,6 @@
-interface LocationOption {
-  value: string
+import type { Location } from "@/types/user.types"
+
+export interface LocationOption extends Location {
   label: string
 }
 
@@ -9,11 +10,11 @@ interface GenderOption {
 }
 
 export const locationOptions: LocationOption[] = [
-  { value: "Taipei, Taiwan", label: "Taipei, Taiwan" },
-  { value: "New Taipei, Taiwan", label: "New Taipei, Taiwan" },
-  { value: "Taichung, Taiwan", label: "Taichung, Taiwan" },
-  { value: "Tainan, Taiwan", label: "Tainan, Taiwan" },
-  { value: "Kaohsiung, Taiwan", label: "Kaohsiung, Taiwan" },
+  { city: "Taipei", country: "Taiwan", latitude: 25.0375, longitude: 121.5639, label: "Taipei, Taiwan" },
+  { city: "New Taipei", country: "Taiwan", latitude: 25.0169, longitude: 121.4628, label: "New Taipei, Taiwan" },
+  { city: "Taichung", country: "Taiwan", latitude: 24.1469, longitude: 120.6819, label: "Taichung, Taiwan" },
+  { city: "Tainan", country: "Taiwan", latitude: 23.0, longitude: 120.2, label: "Tainan, Taiwan" },
+  { city: "Kaohsiung", country: "Taiwan", latitude: 22.6194, longitude: 120.3, label: "Kaohsiung, Taiwan" },
 ]
 
 export const genderOptions: GenderOption[] = [

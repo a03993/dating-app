@@ -74,10 +74,10 @@
       "gender": "male",
       "profession": "tattoo artist",
       "location": {
-        "city": "New Taipei",
+        "city": "Taipei",
         "country": "Taiwan",
-        "latitude": 25.0169,
-        "longitude": 121.4628
+        "latitude": 25.0375,
+        "longitude": 121.5639
       },
       "about": "Ink tells stories words can’t. I’m always sketching, exploring street culture, or vibing to lo-fi beats. Let’s make something cool.",
       "interests": ["photography", "tennis", "running", "art", "extreme", "music", "drinking", "videoGames"],
@@ -95,10 +95,10 @@
       "gender": "female",
       "profession": "dancer",
       "location": {
-        "city": "New Taipei",
+        "city": "Tainan",
         "country": "Taiwan",
-        "latitude": 25.0169,
-        "longitude": 121.4628
+        "latitude": 23.0,
+        "longitude": 120.2
       },
       "about": "I'm a dancer with a passion for dancing. I love dancing, reading, and exploring new places.",
       "interests": ["photography", "tennis", "running", "art", "extreme", "music", "drinking", "videoGames"],
@@ -131,10 +131,10 @@
       "gender": "male",
       "profession": "Freelance model",
       "location": {
-        "city": "New Taipei City",
+        "city": "Taichung",
         "country": "Taiwan",
-        "latitude": 25.0169,
-        "longitude": 121.4628
+        "latitude": 24.1469,
+        "longitude": 120.6819
       },
       "about": "I enjoy late-night shoots and meaningful conversations.",
       "interests": ["shopping", "yoga", "cooking", "running", "swimming", "traveling", "extreme", "music", "drinking"],
@@ -149,10 +149,10 @@
       "gender": "male",
       "profession": "Writer",
       "location": {
-        "city": "New Taipei City",
+        "city": "Tainan",
         "country": "Taiwan",
-        "latitude": 25.0169,
-        "longitude": 121.4628
+        "latitude": 23.0,
+        "longitude": 120.2
       },
       "about": "Storyteller by heart, observer by nature. Words are my medium.",
       "interests": ["photography", "cooking", "tennis", "running", "art", "music", "drinking"],
@@ -167,10 +167,10 @@
       "gender": "female",
       "profession": "Fashion designer",
       "location": {
-        "city": "New Taipei City",
+        "city": "Taipei",
         "country": "Taiwan",
-        "latitude": 25.0169,
-        "longitude": 121.4628
+        "latitude": 25.0375,
+        "longitude": 121.5639
       },
       "about": "Bold lips, bold designs. I turn cold into couture.",
       "interests": ["shopping", "yoga", "swimming", "traveling", "drinking"],

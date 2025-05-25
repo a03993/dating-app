@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/drawer"
 
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 

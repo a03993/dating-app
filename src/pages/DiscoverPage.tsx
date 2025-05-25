@@ -7,12 +7,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
+import { DistanceBadge } from "@/components/badges/DistanceBadge"
 import { FilterDrawer } from "@/components/filters/FilterDrawer"
 import FilterPanel from "@/components/filters/FilterPanel"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardImage } from "@/components/ui/card"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
@@ -141,6 +142,13 @@ export default function DiscoverPage() {
                   <CardImage
                     src={matchCandidates[currentCandidateIndex].avatar}
                     alt={matchCandidates[currentCandidateIndex].firstName}
+                  />
+                  <DistanceBadge
+                    lat={currentUser?.location.latitude ?? 0}
+                    lon={currentUser?.location.longitude ?? 0}
+                    matchCandidateLat={matchCandidates[currentCandidateIndex].location.latitude}
+                    matchCandidateLon={matchCandidates[currentCandidateIndex].location.longitude}
+                    className="absolute top-2 left-2 bg-black/20 backdrop-blur-sm text-white"
                   />
                   <CardContent>
                     <h2 className="text-2xl font-semibold">

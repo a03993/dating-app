@@ -1,17 +1,14 @@
+import type { LocationOption } from "@/constants/filter-options"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-import { cn } from "@/lib/utils"
-
-interface Option {
-  value: string
-  label: string
-}
+import { cn } from "@/lib/utils/cn"
 
 interface FloatingLabelSelectProps {
   label: string
   value: string
   onChange: (value: string) => void
-  options: Option[]
+  options: LocationOption[]
 }
 
 export function FloatingLabelSelect({ label, value, onChange, options }: FloatingLabelSelectProps) {
@@ -38,8 +35,8 @@ export function FloatingLabelSelect({ label, value, onChange, options }: Floatin
         <SelectContent>
           {options.map((opt) => (
             <SelectItem
-              key={opt.value}
-              value={opt.value}>
+              key={`${opt.latitude}-${opt.longitude}`}
+              value={opt.label}>
               {opt.label}
             </SelectItem>
           ))}

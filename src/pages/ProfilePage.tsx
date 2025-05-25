@@ -12,7 +12,7 @@ import { InterestBadge } from "@/components/badges/InterestBadge"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
@@ -90,7 +90,12 @@ export default function ProfilePage() {
                 {user.location.city}, {user.location.country}
               </p>
             </div>
-            <DistanceBadge distanceInMeters={850} />
+            <DistanceBadge
+              lat={currentUser?.location.latitude ?? 0}
+              lon={currentUser?.location.longitude ?? 0}
+              matchCandidateLat={user.location.latitude}
+              matchCandidateLon={user.location.longitude}
+            />
           </section>
 
           {/* about */}

@@ -10,7 +10,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 import FilterFormContent from "./FilterFormContent"
 
@@ -53,7 +53,10 @@ export function FilterDrawer({ open, onOpenChange, form, setForm, className }: F
         <DrawerFooter>
           <Button
             className="w-full"
-            onClick={() => onOpenChange(false)}>
+            onClick={() => {
+              onOpenChange(false)
+              // todo: 更新 filter
+            }}>
             Continue
           </Button>
         </DrawerFooter>

@@ -4,7 +4,7 @@ import StarIcon from "@/assets/icons/Star.svg?react"
 
 import { Button } from "@/components/ui/button"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
 
 interface UserActionPanelProps {
   onLike: () => void
