@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import { DEFAULT_FILTER_OPTIONS } from "@/constants/filter-options"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-import { FilterDrawer } from "@/components/FilterDrawer"
-import FilterPanel from "@/components/FilterPanel"
 import { UserActionPanel } from "@/components/UserActionPanel"
+import { FilterDrawer } from "@/components/filters/FilterDrawer"
+import FilterPanel from "@/components/filters/FilterPanel"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardImage } from "@/components/ui/card"
 
@@ -21,12 +22,7 @@ export default function DiscoverPage() {
   const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [filterForm, setFilterForm] = useState({
-    gender: "both",
-    location: "Taipei, Taiwan",
-    distance: 10,
-    ageRange: [18, 30],
-  })
+  const [filterForm, setFilterForm] = useState(DEFAULT_FILTER_OPTIONS)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
 

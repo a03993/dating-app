@@ -21,3 +21,10 @@ export const genderOptions: GenderOption[] = [
   { value: "male", label: "Boys" },
   { value: "both", label: "Both" },
 ]
+
+export const DEFAULT_FILTER_OPTIONS = {
+  gender: "both",
+  location: "Taipei, Taiwan",
+  distance: 10,
+  ageRange: [18, 30],
+}
