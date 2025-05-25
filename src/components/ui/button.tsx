@@ -12,8 +12,10 @@ const buttonVariants = cva(
       variant: {
         default: "bg-red text-white hover:shadow-lg hover:shadow-red/20 active:shadow-red/30",
         secondary: "bg-red/10 text-red hover:border hover:border-red active:bg-red/20",
-        tertiary:
-          "bg-white [&>svg]:size-7 shadow-lg shadow-black/10 hover:shadow-lg hover:shadow-black/20 active:shadow-black/30",
+        tertiary: [
+          "bg-white [&>svg]:size-7 shadow-lg shadow-black/10 hover:shadow-black/20 active:shadow-black/30",
+          "disabled:opacity-50 disabled:cursor-default disabled:hover:shadow-black/10",
+        ],
         outline: [
           "bg-white border border-medium-gray text-red",
           "hover:border-red",
@@ -60,6 +62,7 @@ function Button({
   variant,
   size,
   isActive,
+  disabled,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
@@ -74,6 +77,7 @@ function Button({
       data-slot="button"
       data-active={isActive}
       className={cn(buttonVariants({ variant, size, className }))}
+      disabled={disabled}
       {...props}
     />
   )

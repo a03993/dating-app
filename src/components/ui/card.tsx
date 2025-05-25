@@ -32,21 +32,23 @@ function Card({ className, variant, ...props }: React.ComponentProps<"div"> & Va
 function CardImage({
   src,
   alt,
-  className,
   fit = "cover",
+  blur = false,
   onClick,
+  className,
 }: {
   src: string
   alt: string
-  className?: string
   fit?: "cover" | "contain"
+  blur?: boolean
   onClick?: () => void
+  className?: string
 }) {
   return (
     <img
       src={src}
       alt={alt}
-      className={cn("h-full w-full", fit === "cover" ? "object-cover" : "object-contain", className)}
+      className={cn("h-full w-full", fit === "cover" ? "object-cover" : "object-contain", blur && "blur-sm", className)}
       onClick={onClick}
     />
   )
@@ -57,7 +59,7 @@ function CardContent({ children, className }: { children: React.ReactNode; class
     <div
       data-slot="card-content"
       className={cn(
-        "absolute bottom-0 left-0 w-full px-6 py-4 text-white backdrop-blur-md text-shadow-lg text-shadow-black/20",
+        "absolute bottom-0 w-full px-6 py-4 text-white backdrop-blur-md text-shadow-lg text-shadow-black/20",
         className,
       )}>
       {children}
