@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import SortIcon from "@/assets/icons/Sort.svg?react"
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import { RemoveConfirmDialog } from "@/components/RemoveConfirmDialog"
@@ -37,16 +38,15 @@ export default function MatchesPage() {
     setSelectedUserId(null)
   }
 
-  useEffect(() => {
-    if (!currentUser) return
-
-    async function fetchLikedUsers() {
+  async function fetchLikedUsers() {
+    try {
       const [likesRes, matchesRes] = await Promise.all([
-        fetch("http://localhost:4000/likes"),
-        fetch("http://localhost:4000/matches"),
+        axios.get<LikeRelation[]>("http://localhost:4000/likes"),
+        axios.get<MatchRelation[]>("http://localhost:4000/matches"),
       ])
-      const likes: LikeRelation[] = await likesRes.json()
-      const matches: MatchRelation[] = await matchesRes.json()
+
+      const likes = likesRes.data
+      const matches = matchesRes.data
 
       const likedByUserIds = likes.filter((like) => like.toUserId === currentUser?.id).map((like) => like.fromUserId)
 
@@ -62,20 +62,23 @@ export default function MatchesPage() {
 
       const usersWithStatus = await Promise.all(
         likedByUserIds.map(async (id) => {
-          const res = await fetch(`http://localhost:4000/users/${id}`)
-          const userData = await res.json()
+          const res = await axios.get<LikedUser>(`http://localhost:4000/users/${id}`)
           return {
-            ...userData,
+            ...res.data,
             isMatch: isMatched(id) || isMutualLike(id),
           }
         }),
       )
 
       setLikedUsers(usersWithStatus)
+    } catch (error) {
+      console.error("Failed to fetch liked users:", error)
     }
+  }
 
+  useEffect(() => {
     fetchLikedUsers()
-  }, [currentUser?.id])
+  }, [currentUser])
 
   if (!currentUser) return null
 

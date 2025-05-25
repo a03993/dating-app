@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SendIcon from "@/assets/icons/Send.svg?react"
 import { interestOptions } from "@/constants/interest-options"
+import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
@@ -25,9 +26,12 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const id = userId || currentUser?.id
-    fetch(`http://localhost:4000/users/${id}`)
-      .then((res) => res.json())
-      .then(setUser)
+    if (!id) return
+
+    axios
+      .get<UserProfile>(`http://localhost:4000/users/${id}`)
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error("Failed to fetch user:", err))
   }, [userId, currentUser])
 
   if (!user) return null
@@ -55,7 +59,12 @@ export default function ProfilePage() {
           "bg-white w-full rounded-t-3xl -mt-15 z-5 flex flex-col items-center shadow-2xl shadow-black/50",
           "md:rounded-none md:mt-0 md:h-screen md:overflow-y-auto",
         )}>
-        <UserActionPanel className="-mt-10 z-10 md:mt-0 md:pt-25" />
+        <UserActionPanel
+          className="-mt-10 z-10 md:mt-0 md:pt-25"
+          onLike={() => {}}
+          onDislike={() => {}}
+          onProfile={() => {}}
+        />
 
         <div className="p-10 pb-30 md:px-20 md:py-10 flex flex-col gap-8">
           {/* base info */}

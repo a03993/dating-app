@@ -106,6 +106,7 @@
       "gallery": ["image-21.jpg", "image-22.jpg", "image-23.jpg", "image-24.jpg", "image-25.jpg"]
     },
     {
+      "id": "user-6",
       "firstName": "Lina",
       "lastName": "Chang",
       "age": 22,
@@ -123,6 +124,7 @@
       "gallery": ["image-31.jpg", "image-32.jpg", "image-33.jpg", "image-34.jpg", "image-35.jpg"]
     },
     {
+      "id": "user-7",
       "firstName": "Ren",
       "lastName": "Yamada",
       "age": 24,
@@ -140,6 +142,7 @@
       "gallery": ["image-26.jpg", "image-27.jpg", "image-28.jpg", "image-29.jpg", "image-30.jpg"]
     },
     {
+      "id": "user-8",
       "firstName": "Oliver",
       "lastName": "Hughes",
       "age": 26,
@@ -157,6 +160,7 @@
       "gallery": ["image-36.jpg", "image-37.jpg", "image-38.jpg", "image-39.jpg", "image-40.jpg"]
     },
     {
+      "id": "user-9",
       "firstName": "Anastasia",
       "lastName": "Vladimirova",
       "age": 25,

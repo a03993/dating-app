@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import ChatHeader from "@/components/chat/ChatHeader"
@@ -45,43 +46,48 @@ export default function MessagesPage() {
     if (!currentUser) return
 
     async function fetchData() {
-      const res = await fetch("http://localhost:4000/conversations")
-      const data: Conversation[] = await res.json()
+      try {
+        const { data: conversations } = await axios.get<Conversation[]>("http://localhost:4000/conversations")
 
-      // 只顯示與當前用戶有關的對話
-      const related = data.filter((c) => c.user1Id === currentUser?.id || c.user2Id === currentUser?.id)
+        // 過濾當前使用者參與的對話
+        const related = conversations.filter((c) => c.user1Id === currentUser?.id || c.user2Id === currentUser?.id)
 
-      // 將對話夥伴資料與對話訊息合併
-      const enriched = await Promise.all(
-        related.map(async (c) => {
-          const partnerId = c.user1Id === currentUser?.id ? c.user2Id : c.user1Id
-          const partnerRes = await fetch(`http://localhost:4000/users/${partnerId}`)
-          const partner = await partnerRes.json()
+        // 合併 partner + 最後訊息時間 + unreadCount
+        const enriched = await Promise.all(
+          related.map(async (c) => {
+            const partnerId = c.user1Id === currentUser?.id ? c.user2Id : c.user1Id
+            const { data: partner } = await axios.get<ChatUser>(`http://localhost:4000/users/${partnerId}`)
 
-          const latest = c.messages[c.messages.length - 1]
-          const time = getFriendlyTime(latest?.timestamp)
+            const latest = c.messages[c.messages.length - 1]
+            const time = getFriendlyTime(latest?.timestamp)
 
-          const unreadCount = c.messages.filter((m) => m.senderId !== currentUser?.id && !m.isRead).length
+            const unreadCount = c.messages.filter((m) => m.senderId !== currentUser?.id && !m.isRead).length
 
-          return {
-            ...c,
-            partner,
-            lastMessage: latest?.content || "",
-            time,
-            unreadCount,
-          }
-        }),
-      )
+            return {
+              ...c,
+              partner,
+              lastMessage: latest?.content || "",
+              time,
+              unreadCount,
+            }
+          }),
+        )
 
-      // 將對話按最新訊息時間降冪排序
-      setConversations(
-        enriched.sort((a, b) => {
-          const timeA = new Date(a.messages[a.messages.length - 1]?.timestamp || 0).getTime()
-          const timeB = new Date(b.messages[b.messages.length - 1]?.timestamp || 0).getTime()
-          return timeB - timeA
-        }),
-      )
-      if (enriched.length > 0) setActiveConversation(enriched[0])
+        // 排序
+        setConversations(
+          enriched.sort((a, b) => {
+            const timeA = new Date(a.messages[a.messages.length - 1]?.timestamp || 0).getTime()
+            const timeB = new Date(b.messages[b.messages.length - 1]?.timestamp || 0).getTime()
+            return timeB - timeA
+          }),
+        )
+
+        if (enriched.length > 0) {
+          setActiveConversation(enriched[0])
+        }
+      } catch (err) {
+        console.error("Failed to fetch conversations or users:", err)
+      }
     }
 
     fetchData()
