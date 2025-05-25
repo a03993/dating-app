@@ -16,7 +16,7 @@ export const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLab
           ref={ref}
           placeholder=" "
           className={cn(
-            "peer h-14 w-74 appearance-none rounded-2xl border border-medium-gray bg-white px-3 text-black placeholder-transparent outline-none transition-all",
+            "peer h-14 w-74 appearance-none rounded-2xl border border-medium-gray bg-white px-4 text-black placeholder-transparent outline-none transition-all",
             className,
           )}
           {...props}
