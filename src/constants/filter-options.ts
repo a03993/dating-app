@@ -10,10 +10,10 @@ interface GenderOption {
 }
 
 export interface FilterOption {
-  gender: string
-  location: LocationOption
-  distance: number
-  ageRange: [number, number]
+  gender: { enabled: boolean; value: string }
+  location: { enabled: boolean; value: LocationOption }
+  distance: { enabled: boolean; value: number }
+  ageRange: { enabled: boolean; value: [number, number] }
 }
 
 export const locationOptions: LocationOption[] = [
@@ -31,8 +31,17 @@ export const genderOptions: GenderOption[] = [
 ]
 
 export const DEFAULT_FILTER_OPTIONS: FilterOption = {
-  gender: "both",
-  location: { city: "Taipei", country: "Taiwan", latitude: 25.0375, longitude: 121.5639, label: "Taipei, Taiwan" },
-  distance: 10,
-  ageRange: [18, 30],
+  gender: { enabled: true, value: "both" },
+  location: {
+    enabled: true,
+    value: {
+      city: "Taipei",
+      country: "Taiwan",
+      latitude: 25.0375,
+      longitude: 121.5639,
+      label: "Taipei, Taiwan",
+    },
+  },
+  distance: { enabled: true, value: 10 },
+  ageRange: { enabled: true, value: [18, 30] },
 }

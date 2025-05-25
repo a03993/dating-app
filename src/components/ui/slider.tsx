@@ -10,6 +10,7 @@ function Slider({
   value,
   min = 0,
   max = 100,
+  disabled = false,
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
   const _values = React.useMemo(
@@ -33,14 +34,20 @@ function Slider({
         )}>
         <SliderPrimitive.Range
           data-slot="slider-range"
-          className={cn("bg-red absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full")}
+          className={cn(
+            "bg-red absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
+            disabled && "bg-dark-gray cursor-default",
+          )}
         />
       </SliderPrimitive.Track>
       {Array.from({ length: _values.length }, (_, index) => (
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}
-          className="border-white bg-red block size-8 shrink-0 rounded-full border border-3 shadow-lg shadow-red/10 transition-[color,box-shadow] hover:shadow-red/20 active:shadow-lg active:shadow-red/25 cursor-pointer"
+          className={cn(
+            "border-white bg-red block size-8 shrink-0 rounded-full border border-3 shadow-lg shadow-red/10 transition-[color,box-shadow] hover:shadow-red/20 active:shadow-lg active:shadow-red/25 cursor-pointer",
+            disabled && "bg-dark-gray cursor-default",
+          )}
         />
       ))}
     </SliderPrimitive.Root>

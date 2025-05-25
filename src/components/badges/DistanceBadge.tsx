@@ -21,7 +21,7 @@ export function DistanceBadge({ lat, lon, matchCandidateLat, matchCandidateLon, 
       variant="distance"
       className={cn(className)}>
       <LocalIcon className="size-3.5" />
-      {distanceInKm}km
+      {distanceInKm == 0 ? <span>In the same area</span> : <span>{distanceInKm}km</span>}
     </Badge>
   )
 }

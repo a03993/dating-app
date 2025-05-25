@@ -72,19 +72,24 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
           if (u.id === currentUser.id || matchedUserIds.includes(u.id)) return false
 
           // gender 過濾
-          if (filterForm.gender !== "both" && u.gender !== filterForm.gender) return false
+          if (filterForm.gender.enabled && filterForm.gender.value !== "both" && u.gender !== filterForm.gender.value)
+            return false
 
           // age 過濾
-          if (u.age < filterForm.ageRange[0] || u.age > filterForm.ageRange[1]) return false
+          if (
+            filterForm.ageRange.enabled &&
+            (u.age < filterForm.ageRange.value[0] || u.age > filterForm.ageRange.value[1])
+          )
+            return false
 
           // distance 過濾
           const distance = calculateDistance(
-            filterForm.location.latitude,
-            filterForm.location.longitude,
+            filterForm.location.value.latitude,
+            filterForm.location.value.longitude,
             u.location.latitude,
             u.location.longitude,
           )
-          if (distance > filterForm.distance) return false
+          if (filterForm.distance.enabled && distance > filterForm.distance.value) return false
 
           return true
         })
@@ -168,8 +173,8 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
                     alt={matchCandidates[currentCandidateIndex].firstName}
                   />
                   <DistanceBadge
-                    lat={filterForm.location.latitude}
-                    lon={filterForm.location.longitude}
+                    lat={filterForm.location.value.latitude}
+                    lon={filterForm.location.value.longitude}
                     matchCandidateLat={matchCandidates[currentCandidateIndex].location.latitude}
                     matchCandidateLon={matchCandidates[currentCandidateIndex].location.longitude}
                     className="absolute top-2 left-2 bg-black/20 backdrop-blur-sm text-white"

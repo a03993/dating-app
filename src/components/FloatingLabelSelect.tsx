@@ -9,9 +9,10 @@ interface FloatingLabelSelectProps {
   value: string
   onChange: (value: string) => void
   options: LocationOption[]
+  disabled?: boolean
 }
 
-export function FloatingLabelSelect({ label, value, onChange, options }: FloatingLabelSelectProps) {
+export function FloatingLabelSelect({ label, value, onChange, options, disabled }: FloatingLabelSelectProps) {
   return (
     <div className="relative w-full">
       {/* Floating label */}
@@ -24,6 +25,7 @@ export function FloatingLabelSelect({ label, value, onChange, options }: Floatin
       </label>
 
       <Select
+        disabled={disabled}
         value={value}
         onValueChange={onChange}>
         <SelectTrigger

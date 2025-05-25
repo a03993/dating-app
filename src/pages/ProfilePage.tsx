@@ -96,8 +96,8 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
               </p>
             </div>
             <DistanceBadge
-              lat={filterForm.location.latitude}
-              lon={filterForm.location.longitude}
+              lat={filterForm.location.value.latitude}
+              lon={filterForm.location.value.longitude}
               matchCandidateLat={user.location.latitude}
               matchCandidateLon={user.location.longitude}
             />
