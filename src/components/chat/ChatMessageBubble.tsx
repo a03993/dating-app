@@ -14,7 +14,7 @@ const formattedTime = (timestamp: string) => {
   }).format(new Date(timestamp))
 }
 
-export function MessageBubble({ senderId, content, timestamp, isRead }: MessagePreview) {
+export function ChatMessageBubble({ senderId, content, timestamp, isRead }: MessagePreview) {
   const currentUser = useCurrentUser()
 
   const style = senderId === currentUser?.id ? "rounded-bl-lg bg-light-gray" : "rounded-br-lg bg-red/10"

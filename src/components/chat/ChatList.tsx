@@ -1,7 +1,7 @@
-import { ChatListItem } from "./ChatListItem"
-import type { ChatListItemProps } from "./ChatListItem"
+import { ChatItem } from "./ChatItem"
+import type { ChatItemProps } from "./ChatItem"
 
-interface ChatItem extends ChatListItemProps {
+interface ChatItem extends ChatItemProps {
   id: string
 }
 
@@ -18,7 +18,7 @@ export function ChatList({ chats, onSelectChat }: ChatListProps) {
           key={chat.id}
           className="flex flex-col justify-center py-4 px-2 cursor-pointer hover:bg-light-gray border-b border-medium-gray"
           onClick={() => onSelectChat?.(chat.id)}>
-          <ChatListItem {...chat} />
+          <ChatItem {...chat} />
         </div>
       ))}
     </>

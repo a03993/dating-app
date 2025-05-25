@@ -3,9 +3,9 @@ import { useEffect, useState } from "react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
 import { useNavigate } from "react-router-dom"
 
-import ChatHeader from "@/components/ChatHeader"
-import { ChatList } from "@/components/ChatList"
-import { MessageList } from "@/components/MessageList"
+import ChatHeader from "@/components/chat/ChatHeader"
+import { ChatList } from "@/components/chat/ChatList"
+import { ChatMessages } from "@/components/chat/ChatMessages"
 import { MessageInput } from "@/components/inputs/MessageInput"
 import { SearchInput } from "@/components/inputs/SearchInput"
 import { Button } from "@/components/ui/button"
@@ -141,7 +141,7 @@ export default function MessagesPage() {
               onClose={() => setOpenDrawer(false)}
               onProfile={() => navigate(`/profile/${activeConversation.partner.id}?from=messages`)}
             />
-            <MessageList
+            <ChatMessages
               messages={activeConversation.messages.map((m) => ({
                 id: m.id,
                 senderId: m.senderId,
@@ -172,7 +172,7 @@ export default function MessagesPage() {
             </DrawerTitle>
             <DrawerDescription></DrawerDescription>
           </DrawerHeader>
-          <MessageList
+          <ChatMessages
             messages={
               activeConversation?.messages.map((m) => ({
                 id: m.id,

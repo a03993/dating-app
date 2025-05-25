@@ -3,8 +3,8 @@ import MoreIcon from "@/assets/icons/More.svg?react"
 
 import { cn } from "@/lib/utils"
 
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { Button } from "./ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import { Button } from "../ui/button"
 
 interface ChatHeaderProps {
   name: string

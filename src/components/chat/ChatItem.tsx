@@ -1,7 +1,7 @@
 import { UnreadBadge } from "@/components/badges/UnreadBadge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export interface ChatListItemProps {
+export interface ChatItemProps {
   name: string
   avatar: string
   lastMessage: string
@@ -9,7 +9,7 @@ export interface ChatListItemProps {
   unreadCount: number
 }
 
-export function ChatListItem({ name, avatar, lastMessage, time, unreadCount }: ChatListItemProps) {
+export function ChatItem({ name, avatar, lastMessage, time, unreadCount }: ChatItemProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
