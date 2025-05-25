@@ -14,7 +14,7 @@ interface DistanceBadgeProps {
 }
 
 export function DistanceBadge({ lat, lon, matchCandidateLat, matchCandidateLon, className }: DistanceBadgeProps) {
-  const distanceInKm = Math.round(calculateDistance(lat, lon, matchCandidateLat, matchCandidateLon) / 1000)
+  const distanceInKm = calculateDistance(lat, lon, matchCandidateLat, matchCandidateLon)
 
   return (
     <Badge

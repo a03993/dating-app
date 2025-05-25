@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardImage } from "@/components/ui/card"
 
 import { cn } from "@/lib/utils/cn"
+import { calculateDistance } from "@/lib/utils/distance"
 
 import { useCurrentUser } from "@/contexts/UserContext"
 
@@ -30,8 +31,6 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
   const [openDrawer, setOpenDrawer] = useState(false)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
-
-  console.log("filterForm", filterForm)
 
   const handleLike = () => {
     // todo: 新增 like 到 db
@@ -61,25 +60,44 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
           axios.get("http://localhost:4000/matches"),
         ])
 
-        const allUsers = usersRes.data
+        const allUsers: User[] = usersRes.data
         const allMatches = matchesRes.data
 
-        // 找出與 currentUser 有 match 的人
         const matchedUserIds = allMatches
           .filter((m: any) => m.user1Id === currentUser.id || m.user2Id === currentUser.id)
           .flatMap((m: any) => (m.user1Id === currentUser.id ? [m.user2Id] : [m.user1Id]))
 
-        // 過濾掉 currentUser 本人 和已 match 的人
-        const result = allUsers.filter((u: User) => u.id !== currentUser.id && !matchedUserIds.includes(u.id))
+        const filteredUsers = allUsers.filter((u: User) => {
+          // 排除自己與已配對對象
+          if (u.id === currentUser.id || matchedUserIds.includes(u.id)) return false
 
-        setMatchCandidates(result)
+          // gender 過濾
+          if (filterForm.gender !== "both" && u.gender !== filterForm.gender) return false
+
+          // age 過濾
+          if (u.age < filterForm.ageRange[0] || u.age > filterForm.ageRange[1]) return false
+
+          // distance 過濾
+          const distance = calculateDistance(
+            filterForm.location.latitude,
+            filterForm.location.longitude,
+            u.location.latitude,
+            u.location.longitude,
+          )
+          if (distance > filterForm.distance) return false
+
+          return true
+        })
+
+        setMatchCandidates(filteredUsers)
+        setCurrentCandidateIndex(0) // 每次篩選後重置 index
       } catch (err) {
         console.error("Failed to fetch users or matches", err)
       }
     }
 
     fetchUnmatchedUsers()
-  }, [currentUser])
+  }, [currentUser, filterForm])
 
   return (
     <>

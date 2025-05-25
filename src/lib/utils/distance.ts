@@ -11,5 +11,5 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
   const distance = R * c // 單位：公尺
-  return distance
+  return Math.round(distance / 1000) // 轉換為公里
 }
