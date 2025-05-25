@@ -1,11 +1,10 @@
 import * as React from "react"
 
+import { countryOptions } from "@/constants/country-options"
 import { ChevronDown } from "lucide-react"
 
 import { Command, CommandGroup, CommandItem } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-
-import { countries } from "@/lib/countries"
 
 export function PhoneInput({
   value,
@@ -16,6 +15,7 @@ export function PhoneInput({
 }) {
   const [open, setOpen] = React.useState(false)
   const [selected, setSelected] = React.useState("tw")
+  const selectedOption = countryOptions.find((option) => option.key === selected)
 
   return (
     <Popover
@@ -26,8 +26,8 @@ export function PhoneInput({
           <button
             type="button"
             className="flex items-center gap-1 text-black focus:outline-none cursor-pointer">
-            <span className="text-xl">{countries.find((country) => country.key === selected)?.label}</span>
-            <span className="text-sm">{countries.find((country) => country.key === selected)?.code}</span>
+            {selectedOption?.icon && <selectedOption.icon className="size-4" />}
+            <span className="text-sm">{selectedOption?.code}</span>
             <ChevronDown className="size-4 text-dark-gray" />
           </button>
         </PopoverTrigger>
@@ -43,20 +43,20 @@ export function PhoneInput({
       <PopoverContent>
         <Command>
           <CommandGroup>
-            {countries.map((country) => (
+            {countryOptions.map((option) => (
               <CommandItem
-                key={country.key}
-                value={country.name}
+                key={option.key}
+                value={option.label}
                 onSelect={() => {
-                  if (country.key === "tw") {
-                    setSelected(country.key)
+                  if (option.key === "tw") {
+                    setSelected(option.key)
                     setOpen(false)
                   }
                 }}
-                disabled={country.key !== "tw"}>
-                <span className="mr-2 text-xl">{country.label}</span>
-                <span className="flex-1">{country.name}</span>
-                <span className="text-black">{country.code}</span>
+                disabled={option.key !== "tw"}>
+                <option.icon className="size-4" />
+                <span className="flex-1">{option.label}</span>
+                <span className="text-black">{option.code}</span>
               </CommandItem>
             ))}
           </CommandGroup>
