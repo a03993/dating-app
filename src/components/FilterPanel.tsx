@@ -1,56 +1,40 @@
 import { genderOptions, locationOptions } from "@/constants/filterOptions"
 
-import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer"
 import { Slider } from "@/components/ui/slider"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 import { cn } from "@/lib/utils"
 
 import { FloatingLabelSelect } from "./FloatingLabelSelect"
+import { Button } from "./ui/button"
 
-interface FilterDrawerProps {
-  open: boolean
-  onOpenChange: (val: boolean) => void
+interface FilterPanelProps {
   form: any
   setForm: (val: any) => void
   className?: string
 }
 
-export function FilterDrawer({ open, onOpenChange, form, setForm, className }: FilterDrawerProps) {
+export default function FilterPanel({ form, setForm, className }: FilterPanelProps) {
   return (
-    <Drawer
-      open={open}
-      onOpenChange={onOpenChange}>
-      <DrawerContent className={cn("p-10", className)}>
-        <DrawerHeader className="flex flex-row justify-between items-center">
-          <DrawerTitle className="text-2xl font-medium">Filters</DrawerTitle>
-          <DrawerDescription></DrawerDescription>
-          <div className="flex flex-row gap-2">
-            <Button
-              variant="ghost"
-              size="zero"
-              onClick={() => {
-                setForm({
-                  gender: "female",
-                  location: "Taipei, Taiwan",
-                  distance: 40,
-                  ageRange: [20, 28],
-                })
-              }}>
-              Clear
-            </Button>
-          </div>
-        </DrawerHeader>
-
-        <div className="flex flex-col gap-8 pt-10">
+    <div className={cn("w-full h-full px-10 border-r border-medium-gray", className)}>
+      <div className="flex flex-col h-full justify-around">
+        <div className="flex justify-between items-center">
+          <p className="text-2xl font-medium">Filters</p>
+          <Button
+            variant="ghost"
+            size="zero"
+            onClick={() => {
+              setForm({
+                gender: "female",
+                location: "Taipei, Taiwan",
+                distance: 40,
+                ageRange: [20, 28],
+              })
+            }}>
+            Clear
+          </Button>
+        </div>
+        <div className="flex flex-col gap-8">
           {/* Gender Toggle */}
           <FormSection label="Interested in">
             <div className="flex flex-col gap-8">
@@ -106,16 +90,9 @@ export function FilterDrawer({ open, onOpenChange, form, setForm, className }: F
             </div>
           </FormSection>
         </div>
-
-        <DrawerFooter>
-          <Button
-            className="w-full"
-            onClick={() => onOpenChange(false)}>
-            Continue
-          </Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+        <Button className="w-full">Continue</Button>
+      </div>
+    </div>
   )
 }
 

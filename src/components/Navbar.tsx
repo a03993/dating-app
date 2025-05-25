@@ -34,9 +34,9 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "z-50 flex w-full items-center bg-light-gray border-t border-medium-gray px-4",
+        "z-50 flex w-full h-20 items-center bg-light-gray border-t border-medium-gray",
         "fixed bottom-0 pb-5 justify-around",
-        "md:top-0 md:bottom-auto md:border-t-0 md:border-b md:justify-start md:gap-2 md:px-6 md:pb-0",
+        "md:h-15 md:top-0 md:bottom-auto md:border-t-0 md:border-b md:justify-start md:gap-2 md:px-6 md:pb-0",
       )}>
       <span className="hidden md:flex items-center gap-2 pr-10">
         <LogoIcon className="size-7" />

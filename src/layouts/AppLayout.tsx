@@ -6,9 +6,7 @@ export default function AppLayout() {
   return (
     <main>
       <Navbar />
-      <section className="">
-        <Outlet />
-      </section>
+      <Outlet />
     </main>
   )
 }
