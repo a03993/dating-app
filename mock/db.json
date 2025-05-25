@@ -83,6 +83,95 @@
       "interests": ["photography", "tennis", "running", "art", "extreme", "music", "drinking", "videoGames"],
       "avatar": "image-16.jpg",
       "gallery": ["image-16.jpg", "image-17.jpg", "image-18.jpg", "image-19.jpg", "image-20.jpg"]
+    },
+    {
+      "id": "user-5",
+      "email": "jessica@example.com",
+      "password": "jessica0000",
+      "sms": "0944555666",
+      "firstName": "Jessica",
+      "lastName": "Parker",
+      "age": 27,
+      "gender": "female",
+      "profession": "dancer",
+      "location": {
+        "city": "New Taipei",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "I'm a dancer with a passion for dancing. I love dancing, reading, and exploring new places.",
+      "interests": ["photography", "tennis", "running", "art", "extreme", "music", "drinking", "videoGames"],
+      "avatar": "image-21.jpg",
+      "gallery": ["image-21.jpg", "image-22.jpg", "image-23.jpg", "image-24.jpg", "image-25.jpg"]
+    },
+    {
+      "firstName": "Lina",
+      "lastName": "Chang",
+      "age": 22,
+      "gender": "female",
+      "profession": "Art student",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "Lover of sunshine, colors, and tattoos. Always chasing the light.",
+      "interests": ["photography", "yoga", "art", "traveling", "music", "videoGames"],
+      "avatar": "image-31.jpg",
+      "gallery": ["image-31.jpg", "image-32.jpg", "image-33.jpg", "image-34.jpg", "image-35.jpg"]
+    },
+    {
+      "firstName": "Ren",
+      "lastName": "Yamada",
+      "age": 24,
+      "gender": "male",
+      "profession": "Freelance model",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "I enjoy late-night shoots and meaningful conversations.",
+      "interests": ["shopping", "yoga", "cooking", "running", "swimming", "traveling", "extreme", "music", "drinking"],
+      "avatar": "image-26.jpg",
+      "gallery": ["image-26.jpg", "image-27.jpg", "image-28.jpg", "image-29.jpg", "image-30.jpg"]
+    },
+    {
+      "firstName": "Oliver",
+      "lastName": "Hughes",
+      "age": 26,
+      "gender": "male",
+      "profession": "Writer",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "Storyteller by heart, observer by nature. Words are my medium.",
+      "interests": ["photography", "cooking", "tennis", "running", "art", "music", "drinking"],
+      "avatar": "image-36.jpg",
+      "gallery": ["image-36.jpg", "image-37.jpg", "image-38.jpg", "image-39.jpg", "image-40.jpg"]
+    },
+    {
+      "firstName": "Anastasia",
+      "lastName": "Vladimirova",
+      "age": 25,
+      "gender": "female",
+      "profession": "Fashion designer",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0169,
+        "longitude": 121.4628
+      },
+      "about": "Bold lips, bold designs. I turn cold into couture.",
+      "interests": ["shopping", "yoga", "swimming", "traveling", "drinking"],
+      "avatar": "image-41.jpg",
+      "gallery": ["image-41.jpg", "image-42.jpg", "image-43.jpg", "image-44.jpg", "image-45.jpg"]
     }
   ],
   "likes": [
