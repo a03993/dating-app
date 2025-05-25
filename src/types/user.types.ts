@@ -13,7 +13,7 @@ export interface User {
   firstName: string
   lastName: string
   age: number
-  gender: string
+  gender: "male" | "female" | "other"
   profession: string
   location: Location
   about: string

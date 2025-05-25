@@ -1,4 +1,4 @@
-import { genderOptions, locationOptions } from "@/constants/filterOptions"
+import { genderOptions, locationOptions } from "@/constants/filter-options"
 
 import { Slider } from "@/components/ui/slider"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"

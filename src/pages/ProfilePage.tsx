@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SendIcon from "@/assets/icons/Send.svg?react"
+import { interestOptions } from "@/constants/interest-options"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
@@ -10,7 +11,6 @@ import { InterestBadge } from "@/components/badges/InterestBadge"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { interestList } from "@/lib/interestList"
 import { cn } from "@/lib/utils"
 
 import { useCurrentUser } from "@/contexts/UserContext"
@@ -95,7 +95,7 @@ export default function ProfilePage() {
             <h2 className="text-base font-bold">Interests</h2>
             <div className="flex flex-wrap gap-2">
               {user.interests.map((interest, index) => {
-                const interestLabel = interestList.find((i) => i.id === interest)?.label || "Unknown"
+                const interestLabel = interestOptions.find((i) => i.id === interest)?.label || "Unknown"
                 return (
                   <InterestBadge
                     key={index}

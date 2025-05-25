@@ -1,4 +1,11 @@
-export const onboardingSlides = [
+interface OnboardingSlide {
+  key: string
+  image: string
+  title: string
+  desc: string
+}
+
+export const onboardingSlides: OnboardingSlide[] = [
   {
     key: "algorithm",
     image: "src/assets/images/image01.jpg",

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { interestList } from "@/lib/interestList"
+import { interestOptions } from "@/constants/interest-options"
 
 import { Button } from "./ui/button"
 
@@ -17,15 +17,15 @@ export function InterestSelectGroup() {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {interestList.map(({ id, label, icon: Icon }) => (
+      {interestOptions.map((option) => (
         <Button
-          key={id}
+          key={option.id}
           variant="interestSelected"
           size="sm"
-          isActive={selectedInterests.includes(id)}
-          onClick={() => toggleInterest(id)}>
-          <Icon />
-          {label}
+          isActive={selectedInterests.includes(option.id)}
+          onClick={() => toggleInterest(option.id)}>
+          <option.icon />
+          {option.label}
         </Button>
       ))}
     </div>

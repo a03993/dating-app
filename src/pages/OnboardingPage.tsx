@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react"
 
+import { onboardingSlides as slides } from "@/constants/onboarding-slides"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
-import { onboardingSlides as slides } from "@/lib/onboardingSlides"
 import { cn } from "@/lib/utils"
 
 export default function OnboardingPage() {

@@ -1,4 +1,4 @@
-import { genderOptions, locationOptions } from "@/constants/filterOptions"
+import { genderOptions, locationOptions } from "@/constants/filter-options"
 
 import { Button } from "@/components/ui/button"
 import {
