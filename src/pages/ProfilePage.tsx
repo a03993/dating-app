@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SendIcon from "@/assets/icons/Send.svg?react"
+import type { FilterOption } from "@/constants/filter-options"
 import { interestOptions } from "@/constants/interest-options"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
@@ -18,7 +19,11 @@ import { useCurrentUser } from "@/contexts/UserContext"
 
 import type { UserProfile } from "@/types/user.types"
 
-export default function ProfilePage() {
+interface ProfilePageProps {
+  filterForm: FilterOption
+}
+
+export default function ProfilePage({ filterForm }: ProfilePageProps) {
   const { userId } = useParams()
   const navigate = useNavigate()
   const currentUser = useCurrentUser()
@@ -91,8 +96,8 @@ export default function ProfilePage() {
               </p>
             </div>
             <DistanceBadge
-              lat={currentUser?.location.latitude ?? 0}
-              lon={currentUser?.location.longitude ?? 0}
+              lat={filterForm.location.latitude}
+              lon={filterForm.location.longitude}
               matchCandidateLat={user.location.latitude}
               matchCandidateLon={user.location.longitude}
             />

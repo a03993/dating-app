@@ -9,6 +9,13 @@ interface GenderOption {
   label: string
 }
 
+export interface FilterOption {
+  gender: string
+  location: LocationOption
+  distance: number
+  ageRange: [number, number]
+}
+
 export const locationOptions: LocationOption[] = [
   { city: "Taipei", country: "Taiwan", latitude: 25.0375, longitude: 121.5639, label: "Taipei, Taiwan" },
   { city: "New Taipei", country: "Taiwan", latitude: 25.0169, longitude: 121.4628, label: "New Taipei, Taiwan" },
@@ -18,14 +25,14 @@ export const locationOptions: LocationOption[] = [
 ]
 
 export const genderOptions: GenderOption[] = [
-  { value: "female", label: "Girls" },
-  { value: "male", label: "Boys" },
+  { value: "female", label: "Female" },
+  { value: "male", label: "Male" },
   { value: "both", label: "Both" },
 ]
 
-export const DEFAULT_FILTER_OPTIONS = {
+export const DEFAULT_FILTER_OPTIONS: FilterOption = {
   gender: "both",
-  location: "Taipei, Taiwan",
+  location: { city: "Taipei", country: "Taiwan", latitude: 25.0375, longitude: 121.5639, label: "Taipei, Taiwan" },
   distance: 10,
   ageRange: [18, 30],
 }

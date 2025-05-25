@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import { UserContext } from "@/contexts/UserContext"
 
+import { DEFAULT_FILTER_OPTIONS } from "./constants/filter-options"
 import AppLayout from "./layouts/AppLayout"
 import DiscoverPage from "./pages/DiscoverPage"
 import MatchesPage from "./pages/MatchesPage"
@@ -14,6 +15,7 @@ import type { User } from "./types/user.types"
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [filterForm, setFilterForm] = useState(DEFAULT_FILTER_OPTIONS)
 
   useEffect(() => {
     // 目前先以 user-4 模擬登入
@@ -37,7 +39,12 @@ function App() {
             <Route element={<AppLayout />}>
               <Route
                 path="/discover"
-                element={<DiscoverPage />}
+                element={
+                  <DiscoverPage
+                    filterForm={filterForm}
+                    setFilterForm={setFilterForm}
+                  />
+                }
               />
               <Route
                 path="/matches"
@@ -49,7 +56,7 @@ function App() {
               />
               <Route
                 path="/profile/:userId"
-                element={<ProfilePage />}
+                element={<ProfilePage filterForm={filterForm} />}
               />
             </Route>
           )}

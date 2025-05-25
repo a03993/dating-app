@@ -26,9 +26,14 @@ export default function FilterFormContent({ form, setForm }: { form: any; setFor
           </ToggleGroup>
           <FloatingLabelSelect
             label="Location"
-            value={form.location}
+            value={form.location.label}
             options={locationOptions}
-            onChange={(val) => setForm({ ...form, location: val })}
+            onChange={(val) => {
+              const selectedLocation = locationOptions.find((option) => option.label === val)
+              if (selectedLocation) {
+                setForm({ ...form, location: selectedLocation })
+              }
+            }}
           />
         </div>
       </FormSection>

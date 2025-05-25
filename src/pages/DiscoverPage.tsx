@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
-import { DEFAULT_FILTER_OPTIONS } from "@/constants/filter-options"
+import type { FilterOption } from "@/constants/filter-options"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
@@ -19,13 +19,19 @@ import { useCurrentUser } from "@/contexts/UserContext"
 
 import type { User } from "@/types/user.types"
 
-export default function DiscoverPage() {
+interface DiscoverPageProps {
+  filterForm: FilterOption
+  setFilterForm: (val: FilterOption) => void
+}
+
+export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPageProps) {
   const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [filterForm, setFilterForm] = useState(DEFAULT_FILTER_OPTIONS)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
+
+  console.log("filterForm", filterForm)
 
   const handleLike = () => {
     // todo: 新增 like 到 db
@@ -144,8 +150,8 @@ export default function DiscoverPage() {
                     alt={matchCandidates[currentCandidateIndex].firstName}
                   />
                   <DistanceBadge
-                    lat={currentUser?.location.latitude ?? 0}
-                    lon={currentUser?.location.longitude ?? 0}
+                    lat={filterForm.location.latitude}
+                    lon={filterForm.location.longitude}
                     matchCandidateLat={matchCandidates[currentCandidateIndex].location.latitude}
                     matchCandidateLon={matchCandidates[currentCandidateIndex].location.longitude}
                     className="absolute top-2 left-2 bg-black/20 backdrop-blur-sm text-white"

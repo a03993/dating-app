@@ -1,4 +1,5 @@
 import { DEFAULT_FILTER_OPTIONS } from "@/constants/filter-options"
+import type { FilterOption } from "@/constants/filter-options"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,8 +18,8 @@ import FilterFormContent from "./FilterFormContent"
 interface FilterDrawerProps {
   open: boolean
   onOpenChange: (val: boolean) => void
-  form: any
-  setForm: (val: any) => void
+  form: FilterOption
+  setForm: (val: FilterOption) => void
   className?: string
 }
 
@@ -55,7 +56,6 @@ export function FilterDrawer({ open, onOpenChange, form, setForm, className }: F
             className="w-full"
             onClick={() => {
               onOpenChange(false)
-              // todo: 更新 filter
             }}>
             Continue
           </Button>
