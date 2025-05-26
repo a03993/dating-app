@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import fallbackImage from "@/assets/images/image01.jpg"
 import type { FilterOption } from "@/constants/filter-options"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
@@ -13,8 +13,9 @@ import FilterPanel from "@/components/filters/FilterPanel"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardImage } from "@/components/ui/card"
 
+import { getFilteredCandidates } from "@/lib/helpers/getFilteredCandidates"
+import { useMatchedUserIds } from "@/lib/hooks/useMatchedUserIds"
 import { cn } from "@/lib/utils/cn"
-import { calculateDistance } from "@/lib/utils/distance"
 
 import { useUserData } from "@/contexts/UserDataContext"
 
@@ -27,62 +28,30 @@ interface DiscoverPageProps {
 
 export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPageProps) {
   const navigate = useNavigate()
-  const { currentUser, allUsers, isLoading } = useUserData()
+  const { currentUser, allUsers, isLoading: isLoadingUsers } = useUserData()
+  const { matchedUserIds, isLoading: isLoadingMatches } = useMatchedUserIds(currentUser?.id)
+
   const [openDrawer, setOpenDrawer] = useState(false)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
 
-  const handleLike = () => setCurrentCandidateIndex((prev) => prev + 1)
-  const handleDislike = () => setCurrentCandidateIndex((prev) => prev + 1)
-  const handleProfile = () => navigate(`/profile/${matchCandidates[currentCandidateIndex].id}?from=discover`)
-  const handleBack = () => setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
-
   useEffect(() => {
-    if (!currentUser || isLoading) return
+    if (!currentUser || isLoadingUsers || isLoadingMatches) return
+    const filtered = getFilteredCandidates(allUsers, currentUser.id, matchedUserIds, filterForm)
+    setMatchCandidates(filtered)
+    setCurrentCandidateIndex(0)
+  }, [currentUser, allUsers, matchedUserIds, filterForm, isLoadingUsers, isLoadingMatches])
 
-    const fetchMatchesAndFilter = async () => {
-      try {
-        const matchesRes = await axios.get("http://localhost:4000/matches")
-        const allMatches = matchesRes.data
+  if (!currentUser || isLoadingUsers || isLoadingMatches) {
+    return <div className="p-10 text-center">Loading...</div>
+  }
 
-        const matchedUserIds = allMatches
-          .filter((m: any) => m.user1Id === currentUser.id || m.user2Id === currentUser.id)
-          .flatMap((m: any) => (m.user1Id === currentUser.id ? [m.user2Id] : [m.user1Id]))
+  const currentCandidate = matchCandidates[currentCandidateIndex]
+  const nextCandidate = matchCandidates[currentCandidateIndex + 1]
 
-        const filtered = allUsers.filter((u) => {
-          if (u.id === currentUser.id || matchedUserIds.includes(u.id)) return false
-
-          if (filterForm.gender.enabled && filterForm.gender.value !== "both" && u.gender !== filterForm.gender.value)
-            return false
-
-          if (
-            filterForm.ageRange.enabled &&
-            (u.age < filterForm.ageRange.value[0] || u.age > filterForm.ageRange.value[1])
-          )
-            return false
-
-          const distance = calculateDistance(
-            filterForm.location.value.latitude,
-            filterForm.location.value.longitude,
-            u.location.latitude,
-            u.location.longitude,
-          )
-          if (filterForm.distance.enabled && distance > filterForm.distance.value) return false
-
-          return true
-        })
-
-        setMatchCandidates(filtered)
-        setCurrentCandidateIndex(0)
-      } catch (err) {
-        console.error("Failed to fetch matches:", err)
-      }
-    }
-
-    fetchMatchesAndFilter()
-  }, [currentUser, allUsers, filterForm, isLoading])
-
-  if (!currentUser || isLoading) return null
+  const handleNext = () => setCurrentCandidateIndex((prev) => prev + 1)
+  const handleBack = () => setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
+  const handleProfile = () => navigate(`/profile/${currentCandidate.id}?from=discover`)
 
   return (
     <>
@@ -96,9 +65,9 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
           setForm={setFilterForm}
           className="w-1/3 hidden md:block"
         />
+
         <div className="flex justify-center h-full w-full md:w-2/3">
           <div className="flex flex-col h-full justify-around">
-            {/* Header */}
             <div className="flex w-full justify-between items-center">
               <Button
                 variant="outline"
@@ -123,40 +92,38 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
               </div>
             </div>
 
-            {/* 卡片區塊 */}
             <div className="relative h-112 flex justify-center items-center">
-              {matchCandidates.length > currentCandidateIndex + 1 && (
+              {nextCandidate && (
                 <Card
                   variant="swipeable"
                   className="absolute -top-10 z-0 scale-85 opacity-50 transition-all duration-300">
                   <CardImage
-                    src={matchCandidates[currentCandidateIndex + 1].avatar}
-                    alt={matchCandidates[currentCandidateIndex + 1].firstName}
+                    src={nextCandidate.avatar}
+                    alt={nextCandidate.firstName}
                   />
                 </Card>
               )}
 
-              {matchCandidates.length > 0 && currentCandidateIndex < matchCandidates.length ? (
+              {currentCandidate ? (
                 <Card
                   variant="swipeable"
                   className="absolute top-2 z-10 transition-all duration-300">
                   <CardImage
-                    src={matchCandidates[currentCandidateIndex].avatar}
-                    alt={matchCandidates[currentCandidateIndex].firstName}
+                    src={currentCandidate.avatar}
+                    alt={currentCandidate.firstName}
                   />
                   <DistanceBadge
                     lat={filterForm.location.value.latitude}
                     lon={filterForm.location.value.longitude}
-                    matchCandidateLat={matchCandidates[currentCandidateIndex].location.latitude}
-                    matchCandidateLon={matchCandidates[currentCandidateIndex].location.longitude}
+                    matchCandidateLat={currentCandidate.location.latitude}
+                    matchCandidateLon={currentCandidate.location.longitude}
                     className="absolute top-2 left-2 bg-black/20 backdrop-blur-sm text-white"
                   />
                   <CardContent>
                     <h2 className="text-2xl font-semibold">
-                      {matchCandidates[currentCandidateIndex].firstName}{" "}
-                      {matchCandidates[currentCandidateIndex].lastName}, {matchCandidates[currentCandidateIndex].age}
+                      {currentCandidate.firstName} {currentCandidate.lastName}, {currentCandidate.age}
                     </h2>
-                    <p className="text-sm">{matchCandidates[currentCandidateIndex].profession}</p>
+                    <p className="text-sm">{currentCandidate.profession}</p>
                   </CardContent>
                 </Card>
               ) : (
@@ -164,7 +131,7 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
                   variant="swipeable"
                   className="absolute top-0 left-0 z-10 transition-all duration-300">
                   <CardImage
-                    src="/src/assets/images/image01.jpg"
+                    src={fallbackImage}
                     alt="No more users"
                     blur
                   />
@@ -177,8 +144,8 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
             </div>
 
             <UserActionPanel
-              onLike={handleLike}
-              onDislike={handleDislike}
+              onLike={handleNext}
+              onDislike={handleNext}
               onProfile={handleProfile}
               disabled={currentCandidateIndex === matchCandidates.length}
             />
