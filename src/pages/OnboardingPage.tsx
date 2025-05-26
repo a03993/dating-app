@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react"
 
 import { onboardingSlides as slides } from "@/constants/onboarding-slides"
+import { ROUTES } from "@/constants/routes"
+import { useNavigate } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
@@ -9,6 +11,7 @@ import { cn } from "@/lib/utils/cn"
 
 export default function OnboardingPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const navigate = useNavigate()
 
   const { leftIndex, rightIndex } = useMemo(() => {
     const leftIndex = (currentIndex - 1 + slides.length) % slides.length
@@ -55,8 +58,8 @@ export default function OnboardingPage() {
           ))}
         </div>
         <div className="flex flex-col gap-4 justify-center items-center">
-          <Button>
-            <p>Create Account</p>
+          <Button onClick={() => navigate(ROUTES.DISCOVER)}>
+            <p>Explore Demo</p>
           </Button>
           <div className="flex justify-center items-center gap-1">
             <p>Already have an account?</p>
