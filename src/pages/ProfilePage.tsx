@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 
 import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
 import SendIcon from "@/assets/icons/Send.svg?react"
 import type { FilterOption } from "@/constants/filter-options"
 import { interestOptions } from "@/constants/interest-options"
-import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { UserActionPanel } from "@/components/UserActionPanel"
@@ -15,9 +14,7 @@ import { Card, CardImage } from "@/components/ui/card"
 
 import { cn } from "@/lib/utils/cn"
 
-import { useCurrentUser } from "@/contexts/UserContext"
-
-import type { UserProfile } from "@/types/user.types"
+import { useUserData } from "@/contexts/UserDataContext"
 
 interface ProfilePageProps {
   filterForm: FilterOption
@@ -26,20 +23,14 @@ interface ProfilePageProps {
 export default function ProfilePage({ filterForm }: ProfilePageProps) {
   const { userId } = useParams()
   const navigate = useNavigate()
-  const currentUser = useCurrentUser()
-  const [user, setUser] = useState<UserProfile | null>(null)
+  const { currentUser, allUsers, isLoading } = useUserData()
 
-  useEffect(() => {
-    const id = userId || currentUser?.id
-    if (!id) return
+  const user = useMemo(() => {
+    const targetId = userId ?? currentUser?.id
+    return allUsers.find((u) => u.id === targetId) ?? null
+  }, [userId, currentUser, allUsers])
 
-    axios
-      .get<UserProfile>(`http://localhost:4000/users/${id}`)
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error("Failed to fetch user:", err))
-  }, [userId, currentUser])
-
-  if (!user) return null
+  if (!user || isLoading) return null
 
   return (
     <div className="flex flex-col md:flex-row items-center">
@@ -51,6 +42,7 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
           alt={`${user.firstName} ${user.lastName}`}
         />
       </Card>
+
       <Button
         variant="outline"
         size="smSquare"
@@ -76,7 +68,7 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
           <section className="flex justify-between">
             <div>
               <h1 className="text-2xl font-semibold">
-                {user.firstName} {user.lastName} , {user.age}
+                {user.firstName} {user.lastName}, {user.age}
               </h1>
               <p className="text-sm text-black/70">{user.profession}</p>
             </div>
@@ -114,11 +106,11 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
             <h2 className="text-base font-bold">Interests</h2>
             <div className="flex flex-wrap gap-2">
               {user.interests.map((interest, index) => {
-                const interestLabel = interestOptions.find((i) => i.id === interest)?.label || "Unknown"
+                const label = interestOptions.find((i) => i.id === interest)?.label || "Unknown"
                 return (
                   <InterestBadge
                     key={index}
-                    label={interestLabel}
+                    label={label}
                   />
                 )
               })}

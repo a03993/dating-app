@@ -8,7 +8,7 @@ import { RemoveConfirmDialog } from "@/components/RemoveConfirmDialog"
 import { UserGridCard } from "@/components/UserGridCard"
 import { Button } from "@/components/ui/button"
 
-import { useCurrentUser } from "@/contexts/UserContext"
+import { useUserData } from "@/contexts/UserDataContext"
 
 import type { LikeRelation } from "@/types/like.type"
 import type { MatchRelation } from "@/types/match.type"
@@ -20,17 +20,18 @@ interface LikedUserWithStatus extends LikedUser {
 
 export default function MatchesPage() {
   const navigate = useNavigate()
-  const currentUser = useCurrentUser()
+  const { currentUser, allUsers, isLoading } = useUserData()
+
   const [likedUsers, setLikedUsers] = useState<LikedUserWithStatus[]>([])
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
 
-  function handleRemoveRequest(userId: string) {
+  const handleRemoveRequest = (userId: string) => {
     setSelectedUserId(userId)
     setConfirmOpen(true)
   }
 
-  function handleRemoveConfirm() {
+  const handleRemoveConfirm = () => {
     if (selectedUserId) {
       setLikedUsers((prev) => prev.filter((user) => user.id !== selectedUserId))
     }
@@ -38,49 +39,51 @@ export default function MatchesPage() {
     setSelectedUserId(null)
   }
 
-  async function fetchLikedUsers() {
-    try {
-      const [likesRes, matchesRes] = await Promise.all([
-        axios.get<LikeRelation[]>("http://localhost:4000/likes"),
-        axios.get<MatchRelation[]>("http://localhost:4000/matches"),
-      ])
-
-      const likes = likesRes.data
-      const matches = matchesRes.data
-
-      const likedByUserIds = likes.filter((like) => like.toUserId === currentUser?.id).map((like) => like.fromUserId)
-
-      const isMutualLike = (otherUserId: string) =>
-        likes.some((like) => like.fromUserId === currentUser?.id && like.toUserId === otherUserId)
-
-      const isMatched = (otherUserId: string) =>
-        matches.some(
-          (m) =>
-            (m.user1Id === currentUser?.id && m.user2Id === otherUserId) ||
-            (m.user2Id === currentUser?.id && m.user1Id === otherUserId),
-        )
-
-      const usersWithStatus = await Promise.all(
-        likedByUserIds.map(async (id) => {
-          const res = await axios.get<LikedUser>(`http://localhost:4000/users/${id}`)
-          return {
-            ...res.data,
-            isMatch: isMatched(id) || isMutualLike(id),
-          }
-        }),
-      )
-
-      setLikedUsers(usersWithStatus)
-    } catch (error) {
-      console.error("Failed to fetch liked users:", error)
-    }
-  }
-
   useEffect(() => {
-    fetchLikedUsers()
-  }, [currentUser])
+    if (!currentUser || isLoading) return
 
-  if (!currentUser) return null
+    const fetchLikedUsers = async () => {
+      try {
+        const [likesRes, matchesRes] = await Promise.all([
+          axios.get<LikeRelation[]>("http://localhost:4000/likes"),
+          axios.get<MatchRelation[]>("http://localhost:4000/matches"),
+        ])
+
+        const likes = likesRes.data
+        const matches = matchesRes.data
+
+        const likedByUserIds = likes.filter((like) => like.toUserId === currentUser.id).map((like) => like.fromUserId)
+
+        const isMutualLike = (id: string) =>
+          likes.some((like) => like.fromUserId === currentUser.id && like.toUserId === id)
+
+        const isMatched = (id: string) =>
+          matches.some(
+            (m) =>
+              (m.user1Id === currentUser.id && m.user2Id === id) || (m.user2Id === currentUser.id && m.user1Id === id),
+          )
+
+        const usersWithStatus: LikedUserWithStatus[] = likedByUserIds
+          .map((id) => {
+            const user = allUsers.find((u) => u.id === id)
+            if (!user) return null
+            return {
+              ...user,
+              isMatch: isMatched(id) || isMutualLike(id),
+            }
+          })
+          .filter(Boolean) as LikedUserWithStatus[]
+
+        setLikedUsers(usersWithStatus)
+      } catch (err) {
+        console.error("Failed to fetch liked users:", err)
+      }
+    }
+
+    fetchLikedUsers()
+  }, [currentUser, allUsers, isLoading])
+
+  if (!currentUser || isLoading) return null
 
   return (
     <>
@@ -122,11 +125,11 @@ export default function MatchesPage() {
               isMatch={u.isMatch}
               onClick={() => navigate(`/profile/${u.id}?from=matches`)}
               onRemove={() => handleRemoveRequest(u.id)}
-              onToggleMatch={() => {
+              onToggleMatch={() =>
                 setLikedUsers((prev) =>
                   prev.map((user) => (user.id === u.id ? { ...user, isMatch: !user.isMatch } : user)),
                 )
-              }}
+              }
             />
           ))}
         </div>
@@ -134,8 +137,8 @@ export default function MatchesPage() {
 
       <RemoveConfirmDialog
         open={confirmOpen}
-        avatar={likedUsers.find((user) => user.id === selectedUserId)?.avatar ?? ""}
-        userName={likedUsers.find((user) => user.id === selectedUserId)?.firstName ?? ""}
+        avatar={likedUsers.find((u) => u.id === selectedUserId)?.avatar ?? ""}
+        userName={likedUsers.find((u) => u.id === selectedUserId)?.firstName ?? ""}
         onCancel={() => setConfirmOpen(false)}
         onConfirm={handleRemoveConfirm}
       />

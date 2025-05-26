@@ -16,7 +16,7 @@ import { Card, CardContent, CardImage } from "@/components/ui/card"
 import { cn } from "@/lib/utils/cn"
 import { calculateDistance } from "@/lib/utils/distance"
 
-import { useCurrentUser } from "@/contexts/UserContext"
+import { useUserData } from "@/contexts/UserDataContext"
 
 import type { User } from "@/types/user.types"
 
@@ -27,62 +27,40 @@ interface DiscoverPageProps {
 
 export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPageProps) {
   const navigate = useNavigate()
-  const currentUser = useCurrentUser()
+  const { currentUser, allUsers, isLoading } = useUserData()
   const [openDrawer, setOpenDrawer] = useState(false)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
 
-  const handleLike = () => {
-    // todo: 新增 like 到 db
-    setCurrentCandidateIndex((prev) => prev + 1)
-  }
-
-  const handleDislike = () => {
-    // todo: 送出 dislike 到 db
-    setCurrentCandidateIndex((prev) => prev + 1)
-  }
-
-  const handleProfile = () => {
-    navigate(`/profile/${matchCandidates[currentCandidateIndex].id}?from=discover`)
-  }
-
-  const handleBack = () => {
-    setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
-  }
+  const handleLike = () => setCurrentCandidateIndex((prev) => prev + 1)
+  const handleDislike = () => setCurrentCandidateIndex((prev) => prev + 1)
+  const handleProfile = () => navigate(`/profile/${matchCandidates[currentCandidateIndex].id}?from=discover`)
+  const handleBack = () => setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
 
   useEffect(() => {
-    if (!currentUser) return
+    if (!currentUser || isLoading) return
 
-    const fetchUnmatchedUsers = async () => {
+    const fetchMatchesAndFilter = async () => {
       try {
-        const [usersRes, matchesRes] = await Promise.all([
-          axios.get("http://localhost:4000/users"),
-          axios.get("http://localhost:4000/matches"),
-        ])
-
-        const allUsers: User[] = usersRes.data
+        const matchesRes = await axios.get("http://localhost:4000/matches")
         const allMatches = matchesRes.data
 
         const matchedUserIds = allMatches
           .filter((m: any) => m.user1Id === currentUser.id || m.user2Id === currentUser.id)
           .flatMap((m: any) => (m.user1Id === currentUser.id ? [m.user2Id] : [m.user1Id]))
 
-        const filteredUsers = allUsers.filter((u: User) => {
-          // 排除自己與已配對對象
+        const filtered = allUsers.filter((u) => {
           if (u.id === currentUser.id || matchedUserIds.includes(u.id)) return false
 
-          // gender 過濾
           if (filterForm.gender.enabled && filterForm.gender.value !== "both" && u.gender !== filterForm.gender.value)
             return false
 
-          // age 過濾
           if (
             filterForm.ageRange.enabled &&
             (u.age < filterForm.ageRange.value[0] || u.age > filterForm.ageRange.value[1])
           )
             return false
 
-          // distance 過濾
           const distance = calculateDistance(
             filterForm.location.value.latitude,
             filterForm.location.value.longitude,
@@ -94,15 +72,17 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
           return true
         })
 
-        setMatchCandidates(filteredUsers)
-        setCurrentCandidateIndex(0) // 每次篩選後重置 index
+        setMatchCandidates(filtered)
+        setCurrentCandidateIndex(0)
       } catch (err) {
-        console.error("Failed to fetch users or matches", err)
+        console.error("Failed to fetch matches:", err)
       }
     }
 
-    fetchUnmatchedUsers()
-  }, [currentUser, filterForm])
+    fetchMatchesAndFilter()
+  }, [currentUser, allUsers, filterForm, isLoading])
+
+  if (!currentUser || isLoading) return null
 
   return (
     <>
@@ -118,6 +98,7 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
         />
         <div className="flex justify-center h-full w-full md:w-2/3">
           <div className="flex flex-col h-full justify-around">
+            {/* Header */}
             <div className="flex w-full justify-between items-center">
               <Button
                 variant="outline"
@@ -128,7 +109,9 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
               </Button>
               <div className="flex flex-col justify-center items-center">
                 <h1 className="text-xl font-semibold">Discover</h1>
-                <p className="text-xs">Taiwan, Taipei</p>
+                <p className="text-xs">
+                  {filterForm.location.value.city}, {filterForm.location.value.country}
+                </p>
               </div>
               <div className="block md:hidden">
                 <Button
@@ -140,8 +123,8 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
               </div>
             </div>
 
+            {/* 卡片區塊 */}
             <div className="relative h-112 flex justify-center items-center">
-              {/* 下一張卡片:底層 */}
               {matchCandidates.length > currentCandidateIndex + 1 && (
                 <Card
                   variant="swipeable"
@@ -152,18 +135,7 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
                   />
                 </Card>
               )}
-              {currentCandidateIndex === matchCandidates.length - 1 && (
-                <Card
-                  variant="swipeable"
-                  className="absolute -top-10 z-0 scale-85 opacity-50 transition-all duration-300">
-                  <CardImage
-                    src="/src/assets/images/image01.jpg"
-                    alt="No more users"
-                  />
-                </Card>
-              )}
 
-              {/* 當前卡片: 上層 */}
               {matchCandidates.length > 0 && currentCandidateIndex < matchCandidates.length ? (
                 <Card
                   variant="swipeable"
@@ -188,7 +160,6 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
                   </CardContent>
                 </Card>
               ) : (
-                // 沒有更多使用者
                 <Card
                   variant="swipeable"
                   className="absolute top-0 left-0 z-10 transition-all duration-300">

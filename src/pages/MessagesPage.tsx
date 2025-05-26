@@ -22,7 +22,7 @@ import {
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery"
 import { cn } from "@/lib/utils/cn"
 
-import { useCurrentUser } from "@/contexts/UserContext"
+import { useUserData } from "@/contexts/UserDataContext"
 
 import type { Conversation } from "@/types/conversation.type"
 import type { ChatUser } from "@/types/user.types"
@@ -37,13 +37,14 @@ interface ConversationPreview extends Conversation {
 export default function MessagesPage() {
   const navigate = useNavigate()
   const isMobile = useMediaQuery("(max-width: 768px)")
-  const currentUser = useCurrentUser()
+  const { currentUser, allUsers, isLoading } = useUserData()
+
   const [conversations, setConversations] = useState<ConversationPreview[]>([])
   const [activeConversation, setActiveConversation] = useState<ConversationPreview | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
 
   useEffect(() => {
-    if (!currentUser) return
+    if (!currentUser || isLoading) return
 
     async function fetchData() {
       try {
@@ -52,15 +53,15 @@ export default function MessagesPage() {
         // 過濾當前使用者參與的對話
         const related = conversations.filter((c) => c.user1Id === currentUser?.id || c.user2Id === currentUser?.id)
 
-        // 合併 partner + 最後訊息時間 + unreadCount
-        const enriched = await Promise.all(
-          related.map(async (c) => {
+        // 合併聊天對象資訊 + 最新訊息時間 + unreadCount
+        const enriched = related
+          .map((c) => {
             const partnerId = c.user1Id === currentUser?.id ? c.user2Id : c.user1Id
-            const { data: partner } = await axios.get<ChatUser>(`http://localhost:4000/users/${partnerId}`)
+            const partner = allUsers.find((u) => u.id === partnerId)
+            if (!partner) return null
 
             const latest = c.messages[c.messages.length - 1]
             const time = getFriendlyTime(latest?.timestamp)
-
             const unreadCount = c.messages.filter((m) => m.senderId !== currentUser?.id && !m.isRead).length
 
             return {
@@ -70,8 +71,8 @@ export default function MessagesPage() {
               time,
               unreadCount,
             }
-          }),
-        )
+          })
+          .filter(Boolean) as ConversationPreview[]
 
         // 排序
         setConversations(
@@ -86,21 +87,21 @@ export default function MessagesPage() {
           setActiveConversation(enriched[0])
         }
       } catch (err) {
-        console.error("Failed to fetch conversations or users:", err)
+        console.error("Failed to fetch conversations:", err)
       }
     }
 
     fetchData()
-  }, [currentUser])
+  }, [currentUser, allUsers, isLoading])
 
-  function handleSelectChat(convoId: string) {
+  const handleSelectChat = (convoId: string) => {
     const convo = conversations.find((c) => c.id === convoId)
     if (!convo) return
     setActiveConversation(convo)
     if (isMobile) setOpenDrawer(true)
   }
 
-  if (!currentUser) return null
+  if (!currentUser || isLoading) return null
 
   return (
     <div className="mx-auto p-10 pb-30 md:p-0 flex md:flex-row md:h-screen">
@@ -121,19 +122,17 @@ export default function MessagesPage() {
           </div>
           <SearchInput />
         </div>
-        <div>
-          <ChatList
-            chats={conversations.map((c) => ({
-              id: c.id,
-              name: `${c.partner.firstName} ${c.partner.lastName}`,
-              avatar: c.partner.avatar,
-              lastMessage: c.lastMessage,
-              time: c.time,
-              unreadCount: c.unreadCount,
-            }))}
-            onSelectChat={handleSelectChat}
-          />
-        </div>
+        <ChatList
+          chats={conversations.map((c) => ({
+            id: c.id,
+            name: `${c.partner.firstName} ${c.partner.lastName}`,
+            avatar: c.partner.avatar,
+            lastMessage: c.lastMessage,
+            time: c.time,
+            unreadCount: c.unreadCount,
+          }))}
+          onSelectChat={handleSelectChat}
+        />
       </div>
 
       {/* Desktop Right Panel */}
@@ -176,7 +175,7 @@ export default function MessagesPage() {
                 onProfile={() => navigate(`/profile/${activeConversation?.partner.id}?from=messages`)}
               />
             </DrawerTitle>
-            <DrawerDescription></DrawerDescription>
+            <DrawerDescription />
           </DrawerHeader>
           <ChatMessages
             messages={

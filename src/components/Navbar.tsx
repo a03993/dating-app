@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import { cn } from "@/lib/utils/cn"
 
-import { useCurrentUser } from "@/contexts/UserContext"
+import { useUserData } from "@/contexts/UserDataContext"
 
 const iconStyle = "size-6"
 
@@ -17,7 +17,7 @@ export function Navbar() {
   const location = useLocation()
   const [searchParams] = useSearchParams()
   const from = searchParams.get("from")
-  const currentUser = useCurrentUser()
+  const { currentUser } = useUserData()
 
   const navItems = [
     { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
