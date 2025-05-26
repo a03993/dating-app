@@ -1,30 +1,25 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import SortIcon from "@/assets/icons/Sort.svg?react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import { RemoveConfirmDialog } from "@/components/RemoveConfirmDialog"
 import { UserGridCard } from "@/components/UserGridCard"
 import { Button } from "@/components/ui/button"
 
+import { useIncomingLikes } from "@/lib/hooks/useIncomingLikes"
+
 import { useUserData } from "@/contexts/UserDataContext"
-
-import type { LikeRelation } from "@/types/like.type"
-import type { MatchRelation } from "@/types/match.type"
-import type { LikedUser } from "@/types/user.types"
-
-interface LikedUserWithStatus extends LikedUser {
-  isMatch: boolean
-}
 
 export default function MatchesPage() {
   const navigate = useNavigate()
-  const { currentUser, allUsers, isLoading } = useUserData()
+  const { currentUser, allUsers } = useUserData()
+  const { incomingLikes, isLoading, removeUserById, toggleMatchStatus } = useIncomingLikes(currentUser?.id, allUsers)
 
-  const [likedUsers, setLikedUsers] = useState<LikedUserWithStatus[]>([])
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
+
+  const selectedUser = incomingLikes.find((u) => u.id === selectedUserId)
 
   const handleRemoveRequest = (userId: string) => {
     setSelectedUserId(userId)
@@ -33,55 +28,15 @@ export default function MatchesPage() {
 
   const handleRemoveConfirm = () => {
     if (selectedUserId) {
-      setLikedUsers((prev) => prev.filter((user) => user.id !== selectedUserId))
+      removeUserById(selectedUserId)
+      setSelectedUserId(null)
     }
     setConfirmOpen(false)
-    setSelectedUserId(null)
   }
 
-  useEffect(() => {
-    if (!currentUser || isLoading) return
-
-    const fetchLikedUsers = async () => {
-      try {
-        const [likesRes, matchesRes] = await Promise.all([
-          axios.get<LikeRelation[]>("http://localhost:4000/likes"),
-          axios.get<MatchRelation[]>("http://localhost:4000/matches"),
-        ])
-
-        const likes = likesRes.data
-        const matches = matchesRes.data
-
-        const likedByUserIds = likes.filter((like) => like.toUserId === currentUser.id).map((like) => like.fromUserId)
-
-        const isMutualLike = (id: string) =>
-          likes.some((like) => like.fromUserId === currentUser.id && like.toUserId === id)
-
-        const isMatched = (id: string) =>
-          matches.some(
-            (m) =>
-              (m.user1Id === currentUser.id && m.user2Id === id) || (m.user2Id === currentUser.id && m.user1Id === id),
-          )
-
-        const usersWithStatus: LikedUserWithStatus[] = likedByUserIds
-          .map((id) => {
-            const user = allUsers.find((u) => u.id === id)
-            if (!user) return null
-            return {
-              ...user,
-              isMatch: isMatched(id) || isMutualLike(id),
-            }
-          })
-          .filter(Boolean) as LikedUserWithStatus[]
-
-        setLikedUsers(usersWithStatus)
-      } catch (err) {
-        console.error("Failed to fetch liked users:", err)
-      }
-    }
-
-    fetchLikedUsers()
-  }, [currentUser, allUsers, isLoading])
+  const handleToggleMatch = (userId: string) => {
+    toggleMatchStatus(userId)
+  }
 
   if (!currentUser || isLoading) return null
 
@@ -116,7 +71,7 @@ export default function MatchesPage() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 justify-items-center">
-          {likedUsers.map((u) => (
+          {incomingLikes.map((u) => (
             <UserGridCard
               key={u.id}
               src={u.avatar}
@@ -125,23 +80,21 @@ export default function MatchesPage() {
               isMatch={u.isMatch}
               onClick={() => navigate(`/profile/${u.id}?from=matches`)}
               onRemove={() => handleRemoveRequest(u.id)}
-              onToggleMatch={() =>
-                setLikedUsers((prev) =>
-                  prev.map((user) => (user.id === u.id ? { ...user, isMatch: !user.isMatch } : user)),
-                )
-              }
+              onToggleMatch={() => handleToggleMatch(u.id)}
             />
           ))}
         </div>
       </div>
 
-      <RemoveConfirmDialog
-        open={confirmOpen}
-        avatar={likedUsers.find((u) => u.id === selectedUserId)?.avatar ?? ""}
-        userName={likedUsers.find((u) => u.id === selectedUserId)?.firstName ?? ""}
-        onCancel={() => setConfirmOpen(false)}
-        onConfirm={handleRemoveConfirm}
-      />
+      {selectedUser && (
+        <RemoveConfirmDialog
+          open={confirmOpen}
+          avatar={selectedUser.avatar}
+          userName={selectedUser.firstName}
+          onCancel={() => setConfirmOpen(false)}
+          onConfirm={handleRemoveConfirm}
+        />
+      )}
     </>
   )
 }
