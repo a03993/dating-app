@@ -17,7 +17,7 @@ export function Navbar() {
   const location = useLocation()
   const [searchParams] = useSearchParams()
   const from = searchParams.get("from")
-  const { currentUser } = useUserData()
+  const { loggedInUser } = useUserData()
 
   const navItems = [
     { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
@@ -25,7 +25,7 @@ export function Navbar() {
     { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
     {
       key: "profile",
-      path: `/profile/${currentUser?.id}`,
+      path: `/profile/${loggedInUser?.id}`,
       icon: <PeopleIcon className={iconStyle} />,
       label: "Profile",
     },

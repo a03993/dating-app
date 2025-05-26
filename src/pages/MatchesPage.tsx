@@ -13,8 +13,8 @@ import { useUserData } from "@/contexts/UserDataContext"
 
 export default function MatchesPage() {
   const navigate = useNavigate()
-  const { currentUser, allUsers } = useUserData()
-  const { incomingLikes, isLoading, removeUserById, toggleMatchStatus } = useIncomingLikes(currentUser?.id, allUsers)
+  const { loggedInUser, allUsers } = useUserData()
+  const { incomingLikes, isLoading, removeUserById, toggleMatchStatus } = useIncomingLikes(loggedInUser?.id, allUsers)
 
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
@@ -38,7 +38,7 @@ export default function MatchesPage() {
     toggleMatchStatus(userId)
   }
 
-  if (!currentUser || isLoading) return null
+  if (!loggedInUser || isLoading) return null
 
   return (
     <>

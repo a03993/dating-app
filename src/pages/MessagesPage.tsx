@@ -37,32 +37,32 @@ interface ConversationPreview extends Conversation {
 export default function MessagesPage() {
   const navigate = useNavigate()
   const isMobile = useMediaQuery("(max-width: 768px)")
-  const { currentUser, allUsers, isLoading } = useUserData()
+  const { loggedInUser, allUsers, isLoading } = useUserData()
 
   const [conversations, setConversations] = useState<ConversationPreview[]>([])
   const [activeConversation, setActiveConversation] = useState<ConversationPreview | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
 
   useEffect(() => {
-    if (!currentUser || isLoading) return
+    if (!loggedInUser || isLoading) return
 
     async function fetchData() {
       try {
         const { data: conversations } = await axios.get<Conversation[]>("http://localhost:4000/conversations")
 
         // 過濾當前使用者參與的對話
-        const related = conversations.filter((c) => c.user1Id === currentUser?.id || c.user2Id === currentUser?.id)
+        const related = conversations.filter((c) => c.user1Id === loggedInUser?.id || c.user2Id === loggedInUser?.id)
 
         // 合併聊天對象資訊 + 最新訊息時間 + unreadCount
         const enriched = related
           .map((c) => {
-            const partnerId = c.user1Id === currentUser?.id ? c.user2Id : c.user1Id
+            const partnerId = c.user1Id === loggedInUser?.id ? c.user2Id : c.user1Id
             const partner = allUsers.find((u) => u.id === partnerId)
             if (!partner) return null
 
             const latest = c.messages[c.messages.length - 1]
             const time = getFriendlyTime(latest?.timestamp)
-            const unreadCount = c.messages.filter((m) => m.senderId !== currentUser?.id && !m.isRead).length
+            const unreadCount = c.messages.filter((m) => m.senderId !== loggedInUser?.id && !m.isRead).length
 
             return {
               ...c,
@@ -92,7 +92,7 @@ export default function MessagesPage() {
     }
 
     fetchData()
-  }, [currentUser, allUsers, isLoading])
+  }, [loggedInUser, allUsers, isLoading])
 
   const handleSelectChat = (convoId: string) => {
     const convo = conversations.find((c) => c.id === convoId)
@@ -101,7 +101,7 @@ export default function MessagesPage() {
     if (isMobile) setOpenDrawer(true)
   }
 
-  if (!currentUser || isLoading) return null
+  if (!loggedInUser || isLoading) return null
 
   return (
     <div className="mx-auto p-10 pb-30 md:p-0 flex md:flex-row md:h-screen">

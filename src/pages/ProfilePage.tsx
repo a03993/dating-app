@@ -23,12 +23,12 @@ interface ProfilePageProps {
 export default function ProfilePage({ filterForm }: ProfilePageProps) {
   const { userId } = useParams()
   const navigate = useNavigate()
-  const { currentUser, allUsers, isLoading } = useUserData()
+  const { loggedInUser, allUsers, isLoading } = useUserData()
 
   const user = useMemo(() => {
-    const targetId = userId ?? currentUser?.id
+    const targetId = userId ?? loggedInUser?.id
     return allUsers.find((u) => u.id === targetId) ?? null
-  }, [userId, currentUser, allUsers])
+  }, [userId, loggedInUser, allUsers])
 
   if (!user || isLoading) return null
 

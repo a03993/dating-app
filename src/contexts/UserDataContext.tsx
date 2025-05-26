@@ -5,13 +5,13 @@ import axios from "axios"
 import type { User } from "@/types/user.types"
 
 interface UserDataContextType {
-  currentUser: User | null
+  loggedInUser: User | null
   allUsers: User[]
   isLoading: boolean
 }
 
 const UserDataContext = createContext<UserDataContextType>({
-  currentUser: null,
+  loggedInUser: null,
   allUsers: [],
   isLoading: true,
 })
@@ -19,7 +19,7 @@ const UserDataContext = createContext<UserDataContextType>({
 export const useUserData = () => useContext(UserDataContext)
 
 export function UserDataProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null)
   const [allUsers, setAllUsers] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -31,7 +31,7 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
           axios.get("http://localhost:4000/users/user-4"),
           axios.get("http://localhost:4000/users"),
         ])
-        setCurrentUser(userRes.data)
+        setLoggedInUser(userRes.data)
         setAllUsers(usersRes.data)
       } catch (err) {
         console.error("Failed to fetch user data", err)
@@ -43,5 +43,5 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
     fetchData()
   }, [])
 
-  return <UserDataContext.Provider value={{ currentUser, allUsers, isLoading }}>{children}</UserDataContext.Provider>
+  return <UserDataContext.Provider value={{ loggedInUser, allUsers, isLoading }}>{children}</UserDataContext.Provider>
 }

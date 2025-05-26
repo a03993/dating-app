@@ -15,9 +15,9 @@ const formattedTime = (timestamp: string) => {
 }
 
 export function ChatMessageBubble({ senderId, content, timestamp, isRead }: MessagePreview) {
-  const { currentUser } = useUserData()
+  const { loggedInUser } = useUserData()
 
-  const isSelf = senderId === currentUser?.id
+  const isSelf = senderId === loggedInUser?.id
   const style = isSelf ? "rounded-bl-lg bg-light-gray" : "rounded-br-lg bg-red/10"
 
   return (

@@ -28,21 +28,21 @@ interface DiscoverPageProps {
 
 export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPageProps) {
   const navigate = useNavigate()
-  const { currentUser, allUsers, isLoading: isLoadingUsers } = useUserData()
-  const { matchedUserIds, isLoading: isLoadingMatches } = useMatchedUserIds(currentUser?.id)
+  const { loggedInUser, allUsers, isLoading: isLoadingUsers } = useUserData()
+  const { matchedUserIds, isLoading: isLoadingMatches } = useMatchedUserIds(loggedInUser?.id)
 
   const [openDrawer, setOpenDrawer] = useState(false)
   const [matchCandidates, setMatchCandidates] = useState<User[]>([])
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState(0)
 
   useEffect(() => {
-    if (!currentUser || isLoadingUsers || isLoadingMatches) return
-    const filtered = getFilteredCandidates(allUsers, currentUser.id, matchedUserIds, filterForm)
+    if (!loggedInUser || isLoadingUsers || isLoadingMatches) return
+    const filtered = getFilteredCandidates(allUsers, loggedInUser.id, matchedUserIds, filterForm)
     setMatchCandidates(filtered)
     setCurrentCandidateIndex(0)
-  }, [currentUser, allUsers, matchedUserIds, filterForm, isLoadingUsers, isLoadingMatches])
+  }, [loggedInUser, allUsers, matchedUserIds, filterForm, isLoadingUsers, isLoadingMatches])
 
-  if (!currentUser || isLoadingUsers || isLoadingMatches) {
+  if (!loggedInUser || isLoadingUsers || isLoadingMatches) {
     return <div className="p-10 text-center">Loading...</div>
   }
 
