@@ -10,12 +10,12 @@ interface LikedUserWithStatus extends LikedUser {
   isMatch: boolean
 }
 
-export function useIncomingLikes(currentUserId?: string, allUsers: User[] = []) {
+export function useIncomingLikes(loggedInUserId?: string, allUsers: User[] = []) {
   const [incomingLikes, setIncomingLikes] = useState<LikedUserWithStatus[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (!currentUserId) return
+    if (!loggedInUserId) return
 
     const fetchData = async () => {
       try {
@@ -27,18 +27,19 @@ export function useIncomingLikes(currentUserId?: string, allUsers: User[] = []) 
         const likes = likesRes.data
         const matches = matchesRes.data
 
-        const likedByUserIds = likes.filter((like) => like.toUserId === currentUserId).map((like) => like.fromUserId)
+        const likedByUserIds = likes.filter((like) => like.toUserId === loggedInUserId).map((like) => like.fromUserId)
 
         const usersWithStatus = likedByUserIds
           .map((id) => {
             const user = allUsers.find((u) => u.id === id)
             if (!user) return null
 
-            const isMutualLike = likes.some((like) => like.fromUserId === currentUserId && like.toUserId === id)
+            const isMutualLike = likes.some((like) => like.fromUserId === loggedInUserId && like.toUserId === id)
 
             const isMatched = matches.some(
               (m) =>
-                (m.user1Id === currentUserId && m.user2Id === id) || (m.user2Id === currentUserId && m.user1Id === id),
+                (m.user1Id === loggedInUserId && m.user2Id === id) ||
+                (m.user2Id === loggedInUserId && m.user1Id === id),
             )
 
             return {
@@ -57,7 +58,7 @@ export function useIncomingLikes(currentUserId?: string, allUsers: User[] = []) 
     }
 
     fetchData()
-  }, [currentUserId, allUsers])
+  }, [loggedInUserId, allUsers])
 
   const removeUserById = useCallback((userId: string) => {
     setIncomingLikes((prev) => prev.filter((u) => u.id !== userId))

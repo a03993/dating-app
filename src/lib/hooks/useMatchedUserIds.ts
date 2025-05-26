@@ -4,20 +4,20 @@ import axios from "axios"
 
 import type { MatchRelation } from "@/types/match.type"
 
-export function useMatchedUserIds(currentUserId?: string) {
+export function useMatchedUserIds(loggedInUserId?: string) {
   const [matchedUserIds, setMatchedUserIds] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (!currentUserId) return
+    if (!loggedInUserId) return
 
     const fetchMatches = async () => {
       try {
         const { data: matches } = await axios.get<MatchRelation[]>("http://localhost:4000/matches")
 
         const ids = matches
-          .filter((m) => m.user1Id === currentUserId || m.user2Id === currentUserId)
-          .flatMap((m) => (m.user1Id === currentUserId ? [m.user2Id] : [m.user1Id]))
+          .filter((m) => m.user1Id === loggedInUserId || m.user2Id === loggedInUserId)
+          .flatMap((m) => (m.user1Id === loggedInUserId ? [m.user2Id] : [m.user1Id]))
 
         setMatchedUserIds(ids)
       } catch (err) {
@@ -28,7 +28,7 @@ export function useMatchedUserIds(currentUserId?: string) {
     }
 
     fetchMatches()
-  }, [currentUserId])
+  }, [loggedInUserId])
 
   return { matchedUserIds, isLoading }
 }

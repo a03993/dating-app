@@ -6,12 +6,12 @@ import type { User } from "@/types/user.types"
 
 export function getFilteredCandidates(
   allUsers: User[],
-  currentUserId: string,
+  loggedInUserId: string,
   matchedUserIds: string[],
   filterForm: FilterOption,
 ): User[] {
   return allUsers.filter((u) => {
-    if (u.id === currentUserId || matchedUserIds.includes(u.id)) return false
+    if (u.id === loggedInUserId || matchedUserIds.includes(u.id)) return false
 
     if (filterForm.gender.enabled && filterForm.gender.value !== "both" && u.gender !== filterForm.gender.value)
       return false
