@@ -75,7 +75,7 @@ export default function MatchesPage() {
             <UserGridCard
               key={u.id}
               src={u.avatar}
-              name={`${u.firstName} ${u.lastName}`}
+              name={u.firstName}
               age={u.age}
               isMatch={u.isMatch}
               onClick={() => navigate(`/profile/${u.id}?from=matches`)}

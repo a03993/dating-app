@@ -1,6 +1,8 @@
 import CloseIcon from "@/assets/icons/Close.svg?react"
 import LikeIcon from "@/assets/icons/Like.svg?react"
 
+import { cn } from "@/lib/utils/cn"
+
 import { Button } from "./ui/button"
 import { Card, CardContent, CardImage } from "./ui/card"
 
@@ -22,10 +24,15 @@ export function UserGridCard({ src, name, age, isMatch, onClick, onRemove, onTog
         alt={name}
         onClick={onClick}
       />
-      <CardContent className="bottom-11 p-2 text-sm font-medium backdrop-blur-none">
+      <CardContent className={cn("p-2 text-lg font-medium backdrop-blur-none", !isMatch && "bottom-11")}>
         {name}, {age}
       </CardContent>
-      <div className="flex p-0 absolute bottom-0 w-full justify-around text-white backdrop-blur-md text-shadow-lg text-shadow-black/20">
+
+      <div
+        className={cn(
+          "flex p-0 absolute bottom-0 w-full justify-around text-white backdrop-blur-md text-shadow-lg text-shadow-black/20",
+          isMatch && "hidden",
+        )}>
         <Button
           variant="ghost"
           size="sm"
@@ -41,6 +48,7 @@ export function UserGridCard({ src, name, age, isMatch, onClick, onRemove, onTog
           <LikeIcon className="size-5" />
         </Button>
       </div>
+
       {isMatch && (
         <div className="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-black/20">
           <LikeIcon className="size-5 text-red rotate-12" />
