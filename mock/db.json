@@ -531,14 +531,14 @@
           "senderId": "user-8",
           "content": "You’re the best. Be there in 10 🏃‍♂️",
           "timestamp": "2025-05-24T09:51:00",
-          "isRead": false
+          "isRead": true
         },
         {
           "id": "message-15",
           "senderId": "user-8",
           "content": "Hope they still have that raspberry tart I liked last time 😅",
           "timestamp": "2025-05-24T09:52:00",
-          "isRead": false
+          "isRead": true
         },
         {
           "id": "message-16",
@@ -580,6 +580,13 @@
           "senderId": "user-12",
           "content": "Hey Veronica! 😄",
           "timestamp": "2025-05-26T10:02:00",
+          "isRead": false
+        },
+        {
+          "id": "message-21",
+          "senderId": "user-12",
+          "content": "Do you have plans for the weekend?",
+          "timestamp": "2025-05-26T10:05:00",
           "isRead": false
         }
       ]

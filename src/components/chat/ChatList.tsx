@@ -12,7 +12,7 @@ interface ChatListProps {
 
 export function ChatList({ chats, onSelectChat }: ChatListProps) {
   return (
-    <>
+    <div className="flex flex-col">
       {chats.map((chat) => (
         <div
           key={chat.id}
@@ -21,6 +21,6 @@ export function ChatList({ chats, onSelectChat }: ChatListProps) {
           <ChatItem {...chat} />
         </div>
       ))}
-    </>
+    </div>
   )
 }
