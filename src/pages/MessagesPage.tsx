@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+import ChatIcon from "@/assets/icons/Chat.svg?react"
 import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
 import { useNavigate } from "react-router-dom"
 
@@ -83,7 +84,7 @@ export default function MessagesPage() {
 
       {/* Desktop Right Panel */}
       <div className="hidden h-full bg-light-gray/20 flex flex-3 pt-15 md:block">
-        {activeConversation && (
+        {activeConversation ? (
           <div className="flex flex-col justify-between h-full w-full p-10">
             <ChatHeader
               name={`${activeConversation.partner.firstName} ${activeConversation.partner.lastName}`}
@@ -92,8 +93,20 @@ export default function MessagesPage() {
               onClose={() => setOpenDrawer(false)}
               onProfile={() => navigate(`/profile/${activeConversation.partner.id}?from=messages`)}
             />
-            <ChatMessages messages={activeConversation.messages} />
+            {activeConversation.messages.length === 0 ? (
+              <div className="flex flex-col justify-center items-center h-full w-full">
+                <h1 className="text-lg font-medium text-dark-gray/50">No messages, say hi!</h1>
+              </div>
+            ) : (
+              <ChatMessages messages={activeConversation.messages} />
+            )}
+
             <MessageInput />
+          </div>
+        ) : (
+          <div className="flex flex-col justify-center items-center h-full w-full">
+            <ChatIcon className="size-20" />
+            <h1 className="text-lg font-medium text-dark-gray/50">Select one of the messages</h1>
           </div>
         )}
       </div>

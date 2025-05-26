@@ -1,6 +1,6 @@
 import CloseIcon from "@/assets/icons/Close.svg?react"
 import LikeIcon from "@/assets/icons/Like.svg?react"
-import StarIcon from "@/assets/icons/Star.svg?react"
+import PeopleIcon from "@/assets/icons/People.svg?react"
 
 import { Button } from "@/components/ui/button"
 
@@ -37,7 +37,7 @@ export function UserActionPanel({ onLike, onDislike, onProfile, disabled, classN
         size="smCircle"
         onClick={onProfile}
         disabled={disabled}>
-        <StarIcon className="text-purple" />
+        <PeopleIcon className="text-purple" />
       </Button>
     </div>
   )

@@ -6,12 +6,12 @@ import type { FilterOption } from "@/constants/filter-options"
 import { interestOptions } from "@/constants/interest-options"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { UserActionPanel } from "@/components/UserActionPanel"
 import { DistanceBadge } from "@/components/badges/DistanceBadge"
 import { InterestBadge } from "@/components/badges/InterestBadge"
 import { Button } from "@/components/ui/button"
 import { Card, CardImage } from "@/components/ui/card"
 
+import { useMatchedUserIds } from "@/lib/hooks/useMatchedUserIds"
 import { cn } from "@/lib/utils/cn"
 
 import { useUserData } from "@/contexts/UserDataContext"
@@ -24,6 +24,7 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
   const { userId } = useParams()
   const navigate = useNavigate()
   const { loggedInUser, allUsers, isLoading } = useUserData()
+  const { matchedUserIds } = useMatchedUserIds(loggedInUser?.id)
 
   const user = useMemo(() => {
     const targetId = userId ?? loggedInUser?.id
@@ -31,6 +32,12 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
   }, [userId, loggedInUser, allUsers])
 
   if (!user || isLoading) return null
+
+  const isOtherProfile = user.id !== loggedInUser?.id
+  const hasMatched = matchedUserIds.includes(user.id)
+  const sharedInterests = isOtherProfile
+    ? user.interests.filter((interest) => loggedInUser?.interests.includes(interest))
+    : []
 
   return (
     <div className="flex flex-col md:flex-row items-center">
@@ -56,14 +63,7 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
           "bg-white w-full rounded-t-3xl -mt-15 z-5 flex flex-col items-center shadow-2xl shadow-black/50",
           "md:rounded-none md:mt-0 md:h-screen md:overflow-y-auto",
         )}>
-        <UserActionPanel
-          className="-mt-10 z-10 md:mt-0 md:pt-25"
-          onLike={() => {}}
-          onDislike={() => {}}
-          onProfile={() => {}}
-        />
-
-        <div className="p-10 pb-30 md:px-20 md:py-10 flex flex-col gap-8">
+        <div className="p-10 pb-30 md:px-20 md:pt-25 md:pb-10 flex flex-col gap-8">
           {/* base info */}
           <section className="flex justify-between">
             <div>
@@ -72,11 +72,13 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
               </h1>
               <p className="text-sm text-black/70">{user.profession}</p>
             </div>
-            <Button
-              variant="outline"
-              size="smSquare">
-              <SendIcon />
-            </Button>
+            {isOtherProfile && hasMatched && (
+              <Button
+                variant="outline"
+                size="smSquare">
+                <SendIcon />
+              </Button>
+            )}
           </section>
 
           {/* location */}
@@ -87,12 +89,14 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
                 {user.location.city}, {user.location.country}
               </p>
             </div>
-            <DistanceBadge
-              lat={filterForm.location.value.latitude}
-              lon={filterForm.location.value.longitude}
-              matchCandidateLat={user.location.latitude}
-              matchCandidateLon={user.location.longitude}
-            />
+            {isOtherProfile && (
+              <DistanceBadge
+                lat={filterForm.location.value.latitude}
+                lon={filterForm.location.value.longitude}
+                matchCandidateLat={user.location.latitude}
+                matchCandidateLon={user.location.longitude}
+              />
+            )}
           </section>
 
           {/* about */}
@@ -107,10 +111,13 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
             <div className="flex flex-wrap gap-2">
               {user.interests.map((interest, index) => {
                 const label = interestOptions.find((i) => i.id === interest)?.label || "Unknown"
+                const isMatch = sharedInterests.includes(interest)
+
                 return (
                   <InterestBadge
                     key={index}
                     label={label}
+                    isMatch={isMatch}
                   />
                 )
               })}
