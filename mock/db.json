@@ -107,6 +107,9 @@
     },
     {
       "id": "user-6",
+      "email": "lina@example.com",
+      "password": "lina0000",
+      "sms": "0955666777",
       "firstName": "Lina",
       "lastName": "Chang",
       "age": 22,
@@ -125,6 +128,9 @@
     },
     {
       "id": "user-7",
+      "email": "ren@example.com",
+      "password": "ren0000",
+      "sms": "0966777888",
       "firstName": "Ren",
       "lastName": "Yamada",
       "age": 24,
@@ -143,6 +149,9 @@
     },
     {
       "id": "user-8",
+      "email": "oliver@example.com",
+      "password": "oliver0000",
+      "sms": "0977888999",
       "firstName": "Oliver",
       "lastName": "Hughes",
       "age": 26,
@@ -161,6 +170,9 @@
     },
     {
       "id": "user-9",
+      "email": "anastasia@example.com",
+      "password": "anastasia0000",
+      "sms": "0988999000",
       "firstName": "Anastasia",
       "lastName": "Vladimirova",
       "age": 25,
@@ -176,37 +188,205 @@
       "interests": ["shopping", "yoga", "swimming", "traveling", "drinking"],
       "avatar": "image-41.jpg",
       "gallery": ["image-41.jpg", "image-42.jpg", "image-43.jpg", "image-44.jpg", "image-45.jpg"]
+    },
+    {
+      "id": "user-10",
+      "email": "ethan@example.com",
+      "password": "ethan0000",
+      "sms": "0999000111",
+      "firstName": "Ethan",
+      "lastName": "Kang",
+      "age": 27,
+      "gender": "male",
+      "profession": "UX Designer",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Morning coffee, minimal aesthetics, and meaningful user flows.",
+      "interests": ["photography", "art", "traveling", "yoga", "music"],
+      "avatar": "image-46.jpg",
+      "gallery": ["image-46.jpg", "image-47.jpg", "image-48.jpg", "image-49.jpg", "image-50.jpg"]
+    },
+    {
+      "id": "user-11",
+      "email": "jay@example.com",
+      "password": "jay0000",
+      "sms": "0911111222",
+      "firstName": "Jay",
+      "lastName": "Lin",
+      "age": 26,
+      "gender": "male",
+      "profession": "Streetwear Stylist",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Black-on-black and always on beat.",
+      "interests": ["music", "photography", "shopping", "traveling", "drinking"],
+      "avatar": "image-51.jpg",
+      "gallery": ["image-51.jpg", "image-52.jpg", "image-53.jpg", "image-54.jpg", "image-55.jpg"]
+    },
+    {
+      "id": "user-12",
+      "email": "lucas@example.com",
+      "password": "lucas0000",
+      "sms": "0911111222",
+      "firstName": "Lucas",
+      "lastName": "Bennett",
+      "age": 28,
+      "gender": "male",
+      "profession": "Content Creator",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Witty lines, cozy fits, and a touch of vintage vibes.",
+      "interests": ["videoGames", "art", "traveling", "music", "cooking"],
+      "avatar": "image-56.jpg",
+      "gallery": ["image-56.jpg", "image-57.jpg", "image-58.jpg", "image-59.jpg", "image-60.jpg"]
+    },
+    {
+      "id": "user-13",
+      "email": "lina@example.com",
+      "password": "lina0000",
+      "sms": "0955666777",
+      "firstName": "Lina",
+      "lastName": "Moretti",
+      "age": 24,
+      "gender": "female",
+      "profession": "Visual Artist",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Sky gazer, ink lover, and color chaser.",
+      "interests": ["art", "photography", "yoga", "traveling", "extreme"],
+      "avatar": "image-66.jpg",
+      "gallery": ["image-66.jpg", "image-67.jpg", "image-68.jpg", "image-69.jpg", "image-70.jpg"]
+    },
+    {
+      "id": "user-14",
+      "email": "nathan@example.com",
+      "password": "nathan0000",
+      "sms": "0911111222",
+      "firstName": "Nathan",
+      "lastName": "Cole",
+      "age": 29,
+      "gender": "male",
+      "profession": "Architect",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Function meets form. Always sketching ideas.",
+      "interests": ["photography", "tennis", "traveling", "music", "yoga"],
+      "avatar": "image-71.jpg",
+      "gallery": ["image-71.jpg", "image-72.jpg", "image-73.jpg", "image-74.jpg", "image-75.jpg"]
+    },
+    {
+      "id": "user-15",
+      "email": "mina@example.com",
+      "password": "mina0000",
+      "sms": "0911111222",
+      "firstName": "Mina",
+      "lastName": "Takeda",
+      "age": 30,
+      "gender": "female",
+      "profession": "Wedding Planner",
+      "location": {
+        "city": "New Taipei City",
+        "country": "Taiwan",
+        "latitude": 25.0123,
+        "longitude": 121.4657
+      },
+      "about": "Every detail tells a story, every sip is a celebration.",
+      "interests": ["cooking", "shopping", "swimming", "drinking", "art"],
+      "avatar": "image-61.jpg",
+      "gallery": ["image-61.jpg", "image-62.jpg", "image-63.jpg", "image-64.jpg", "image-65.jpg"]
     }
   ],
   "likes": [
     {
       "id": "like-1",
-      "fromUserId": "user-1",
-      "toUserId": "user-4",
+      "fromUserId": "user-4",
+      "toUserId": "user-1",
       "createdAt": "2025-05-10T10:30:00"
     },
     {
       "id": "like-2",
-      "fromUserId": "user-2",
-      "toUserId": "user-4",
+      "fromUserId": "user-7",
+      "toUserId": "user-1",
       "createdAt": "2025-05-10T15:45:00"
     },
     {
       "id": "like-3",
-      "fromUserId": "user-3",
-      "toUserId": "user-4",
+      "fromUserId": "user-8",
+      "toUserId": "user-1",
       "createdAt": "2025-05-10T22:10:00"
     },
     {
       "id": "like-4",
-      "fromUserId": "user-4",
+      "fromUserId": "user-10",
       "toUserId": "user-1",
       "createdAt": "2025-05-20T09:13:00"
     },
     {
       "id": "like-5",
-      "fromUserId": "user-4",
-      "toUserId": "user-2",
+      "fromUserId": "user-11",
+      "toUserId": "user-1",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-6",
+      "fromUserId": "user-12",
+      "toUserId": "user-1",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-7",
+      "fromUserId": "user-14",
+      "toUserId": "user-1",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-8",
+      "fromUserId": "user-1",
+      "toUserId": "user-7",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-9",
+      "fromUserId": "user-1",
+      "toUserId": "user-8",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-10",
+      "fromUserId": "user-1",
+      "toUserId": "user-12",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-11",
+      "fromUserId": "user-1",
+      "toUserId": "user-14",
+      "createdAt": "2025-05-20T07:12:00"
+    },
+    {
+      "id": "like-12",
+      "fromUserId": "user-1",
+      "toUserId": "user-11",
       "createdAt": "2025-05-20T07:12:00"
     }
   ],
@@ -214,104 +394,192 @@
     {
       "id": "match-1",
       "user1Id": "user-1",
-      "user2Id": "user-4",
+      "user2Id": "user-7",
       "createdAt": "2025-05-20T10:30:00"
     },
     {
       "id": "match-2",
-      "user1Id": "user-2",
-      "user2Id": "user-4",
+      "user1Id": "user-1",
+      "user2Id": "user-8",
       "createdAt": "2025-05-22T22:00:00"
+    },
+    {
+      "id": "match-3",
+      "user1Id": "user-1",
+      "user2Id": "user-12",
+      "createdAt": "2025-05-23T10:30:00"
+    },
+    {
+      "id": "match-4",
+      "user1Id": "user-1",
+      "user2Id": "user-14",
+      "createdAt": "2025-05-23T10:30:00"
+    },
+    {
+      "id": "match-5",
+      "user1Id": "user-1",
+      "user2Id": "user-11",
+      "createdAt": "2025-05-23T10:30:00"
     }
   ],
   "conversations": [
     {
       "id": "conversation-1",
       "user1Id": "user-1",
-      "user2Id": "user-4",
+      "user2Id": "user-7",
       "messages": [
         {
           "id": "message-1",
-          "senderId": "user-1",
-          "content": "Hey Julian! 😄 I noticed we’ve bumped into each other a few times this week on the app.",
+          "senderId": "user-7",
+          "content": "Hey Veronica! 😄 I noticed we’ve bumped into each other a few times this week on the app.",
           "timestamp": "2025-05-23T14:03:00",
           "isRead": true
         },
         {
           "id": "message-2",
-          "senderId": "user-4",
-          "content": "Haha yeah, I’ve seen that too! Nice to meet you, Veronica. Wanna grab a coffee later today? ☕",
+          "senderId": "user-1",
+          "content": "Haha I know right? 👀 It’s nice to finally chat with you, Ren. Wanna grab a coffee later today? ☕",
           "timestamp": "2025-05-23T14:05:00",
           "isRead": true
         },
         {
           "id": "message-3",
-          "senderId": "user-1",
-          "content": "Sounds great! I'm free after 5 😊",
+          "senderId": "user-7",
+          "content": "Sounds great! I’m off work around 5. Got a favorite spot in mind?",
           "timestamp": "2025-05-23T15:10:00",
           "isRead": true
         },
         {
           "id": "message-4",
-          "senderId": "user-4",
-          "content": "Perfect, I’ll text you the place around 4. Looking forward to it!",
+          "senderId": "user-1",
+          "content": "Yesss! There’s this cozy little cafe near the station. I’ll text you the name around 4 💌",
           "timestamp": "2025-05-23T15:12:00",
           "isRead": true
+        },
+        {
+          "id": "message-5",
+          "senderId": "user-7",
+          "content": "Looking forward to it. I’ll be there on time 😉",
+          "timestamp": "2025-05-23T16:01:00",
+          "isRead": true
+        },
+        {
+          "id": "message-6",
+          "senderId": "user-1",
+          "content": "Same here 🥰 Can’t wait!",
+          "timestamp": "2025-05-23T16:15:00",
+          "isRead": true
+        },
+        {
+          "id": "message-7",
+          "senderId": "user-1",
+          "content": "Thanks for the coffee and laughs today. I really enjoyed your company 💖",
+          "timestamp": "2025-05-23T21:45:00",
+          "isRead": true
+        },
+        {
+          "id": "message-8",
+          "senderId": "user-7",
+          "content": "Me too. Let’s do it again soon. Maybe dinner next time? 🍜",
+          "timestamp": "2025-05-23T21:50:00",
+          "isRead": false
         }
       ]
     },
     {
       "id": "conversation-2",
-      "user1Id": "user-2",
-      "user2Id": "user-4",
+      "user1Id": "user-1",
+      "user2Id": "user-8",
       "messages": [
         {
-          "id": "message-5",
-          "senderId": "user-4",
-          "content": "Hey Milo, what are you up to?",
+          "id": "message-9",
+          "senderId": "user-1",
+          "content": "Hey Oliver 🌿 What are you up to this lovely morning?",
           "timestamp": "2025-05-24T09:45:00",
           "isRead": true
         },
         {
-          "id": "message-6",
-          "senderId": "user-4",
-          "content": "Just passing by the coffee shop we went to last time. Might grab a latte ☕",
+          "id": "message-10",
+          "senderId": "user-1",
+          "content": "Just walked past the coffee shop we went to last time… totally craving a latte ☕",
           "timestamp": "2025-05-24T09:46:00",
           "isRead": true
         },
         {
-          "id": "message-7",
-          "senderId": "user-2",
-          "content": "Nice! I’m working on my new book right now. Super focused 🔥",
+          "id": "message-11",
+          "senderId": "user-8",
+          "content": "Nice! I'm deep in writing mode right now—cranking out chapters like a madman 😂",
           "timestamp": "2025-05-24T09:47:00",
           "isRead": true
         },
         {
-          "id": "message-8",
-          "senderId": "user-2",
-          "content": "Actually… coffee sounds really good right now. Mind if I join?",
+          "id": "message-12",
+          "senderId": "user-8",
+          "content": "But damn… a latte does sound tempting. Wanna meet there?",
           "timestamp": "2025-05-24T09:48:00",
           "isRead": true
         },
         {
-          "id": "message-9",
-          "senderId": "user-4",
-          "content": "Already saved a seat for you 😉 just come by when you’re ready.",
+          "id": "message-13",
+          "senderId": "user-1",
+          "content": "Of course! I already snagged our favorite window seat 😉",
           "timestamp": "2025-05-24T09:50:00",
           "isRead": true
         },
         {
-          "id": "message-10",
-          "senderId": "user-2",
-          "content": "Sweet 🩷🩷🩷",
+          "id": "message-14",
+          "senderId": "user-8",
+          "content": "You’re the best. Be there in 10 🏃‍♂️",
           "timestamp": "2025-05-24T09:51:00",
           "isRead": false
         },
         {
-          "id": "message-11",
-          "senderId": "user-2",
-          "content": "I’m on my way! See you soon ✌️",
-          "timestamp": "2025-05-24T09:51:00",
+          "id": "message-15",
+          "senderId": "user-8",
+          "content": "Hope they still have that raspberry tart I liked last time 😅",
+          "timestamp": "2025-05-24T09:52:00",
+          "isRead": false
+        },
+        {
+          "id": "message-16",
+          "senderId": "user-1",
+          "content": "Haha I already ordered it for you 😋",
+          "timestamp": "2025-05-24T09:53:00",
+          "isRead": true
+        },
+        {
+          "id": "message-17",
+          "senderId": "user-8",
+          "content": "Okay now you’ve officially won my heart 😂",
+          "timestamp": "2025-05-24T09:55:00",
+          "isRead": true
+        },
+        {
+          "id": "message-18",
+          "senderId": "user-1",
+          "content": "Took you long enough 💅",
+          "timestamp": "2025-05-24T09:56:00",
+          "isRead": false
+        },
+        {
+          "id": "message-19",
+          "senderId": "user-1",
+          "content": "Next time’s on you though! 😘",
+          "timestamp": "2025-05-25T10:02:00",
+          "isRead": false
+        }
+      ]
+    },
+    {
+      "id": "conversation-3",
+      "user1Id": "user-1",
+      "user2Id": "user-12",
+      "messages": [
+        {
+          "id": "message-20",
+          "senderId": "user-12",
+          "content": "Hey Veronica! 😄",
+          "timestamp": "2025-05-26T10:02:00",
           "isRead": false
         }
       ]

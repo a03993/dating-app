@@ -27,8 +27,8 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
     const fetchData = async () => {
       try {
         const [userRes, usersRes] = await Promise.all([
-          // 目前先以 user-4 模擬登入
-          axios.get("http://localhost:4000/users/user-4"),
+          // 目前先以 user-1 模擬登入
+          axios.get("http://localhost:4000/users/user-1"),
           axios.get("http://localhost:4000/users"),
         ])
         setLoggedInUser(userRes.data)
