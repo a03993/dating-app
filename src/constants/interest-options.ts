@@ -1,17 +1,17 @@
-import CameraIcon from "../assets/icons/Camera.svg?react"
-import GameHandleIcon from "../assets/icons/GameHandle.svg?react"
-import GobletFullIcon from "../assets/icons/GobletFull.svg?react"
-import MusicIcon from "../assets/icons/Music.svg?react"
-import NoodlesIcon from "../assets/icons/Noodles.svg?react"
-import OutdoorIcon from "../assets/icons/Outdoor.svg?react"
-import ParachuteIcon from "../assets/icons/Parachute.svg?react"
-import PlatteIcon from "../assets/icons/Platte.svg?react"
-import RippleIcon from "../assets/icons/Ripple.svg?react"
-import ShopBagIcon from "../assets/icons/ShopBag.svg?react"
-import SportIcon from "../assets/icons/Sport.svg?react"
-import TennisIcon from "../assets/icons/Tennis.svg?react"
-import VienchartsIcon from "../assets/icons/Viencharts.svg?react"
-import VoiceOutlineIcon from "../assets/icons/VoiceOutline.svg?react"
+import CameraIcon from "../assets/icons/camera.svg?react"
+import GameHandleIcon from "../assets/icons/game-handle.svg?react"
+import GobletFullIcon from "../assets/icons/goblet-full.svg?react"
+import MusicIcon from "../assets/icons/music.svg?react"
+import NoodlesIcon from "../assets/icons/noodles.svg?react"
+import OutdoorIcon from "../assets/icons/outdoor.svg?react"
+import ParachuteIcon from "../assets/icons/parachute.svg?react"
+import PersonRunningIcon from "../assets/icons/person-running.svg?react"
+import PlatteIcon from "../assets/icons/platte.svg?react"
+import RippleIcon from "../assets/icons/ripple.svg?react"
+import ShopBagIcon from "../assets/icons/shop-bag.svg?react"
+import TennisIcon from "../assets/icons/tennis.svg?react"
+import VienchartsIcon from "../assets/icons/viencharts.svg?react"
+import VoiceOutlineIcon from "../assets/icons/voice-outline.svg?react"
 
 interface Interest {
   id:
@@ -67,7 +67,7 @@ export const interestOptions: Interest[] = [
   {
     id: "running",
     label: "Running",
-    icon: SportIcon,
+    icon: PersonRunningIcon,
   },
   {
     id: "swimming",

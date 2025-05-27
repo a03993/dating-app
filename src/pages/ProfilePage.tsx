@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
-import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
-import SendIcon from "@/assets/icons/Send.svg?react"
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import SendIcon from "@/assets/icons/send.svg?react"
 import type { FilterOption } from "@/constants/filter-options"
 import { interestOptions } from "@/constants/interest-options"
 import { useNavigate, useParams } from "react-router-dom"
@@ -55,7 +55,7 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
         size="smSquare"
         className="absolute top-5 left-5 md:top-25 text-white bg-white/25 hover:border-white active:bg-white/50"
         onClick={() => navigate(-1)}>
-        <LeftArrowIcon />
+        <ArrowLeftIcon />
       </Button>
 
       <div

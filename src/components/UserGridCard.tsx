@@ -1,5 +1,5 @@
-import CloseIcon from "@/assets/icons/Close.svg?react"
-import LikeIcon from "@/assets/icons/Like.svg?react"
+import HeartIcon from "@/assets/icons/heart.svg?react"
+import RemoveIcon from "@/assets/icons/remove.svg?react"
 
 import { cn } from "@/lib/utils/cn"
 
@@ -38,20 +38,20 @@ export function UserGridCard({ src, name, age, isMatch, onClick, onRemove, onTog
           size="sm"
           className="text-white border-r border-white/20 hover:text-dark-gray"
           onClick={onRemove}>
-          <CloseIcon className="size-5" />
+          <RemoveIcon className="size-5" />
         </Button>
         <Button
           variant="ghost"
           size="sm"
           className="text-white hover:text-red"
           onClick={onToggleMatch}>
-          <LikeIcon className="size-5" />
+          <HeartIcon className="size-5" />
         </Button>
       </div>
 
       {isMatch && (
         <div className="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md shadow-black/20">
-          <LikeIcon className="size-5 text-red rotate-12" />
+          <HeartIcon className="size-5 text-red rotate-12" />
         </div>
       )}
     </Card>

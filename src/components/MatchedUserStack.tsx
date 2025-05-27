@@ -1,4 +1,4 @@
-import LikeIcon from "@/assets/icons/Like.svg?react"
+import HeartIcon from "@/assets/icons/heart.svg?react"
 import { cva } from "class-variance-authority"
 
 import { Card, CardImage } from "./ui/card"
@@ -57,10 +57,10 @@ export function MatchUserStack({
   return (
     <Card variant="match">
       <div className={`${iconContainerVariants({ size })} top-1 right-1`}>
-        <LikeIcon className={`${likeIconVariants({ size })} rotate-12`} />
+        <HeartIcon className={`${likeIconVariants({ size })} rotate-12`} />
       </div>
       <div className={`${iconContainerVariants({ size })} bottom-1 left-5`}>
-        <LikeIcon className={`${likeIconVariants({ size })} -rotate-12`} />
+        <HeartIcon className={`${likeIconVariants({ size })} -rotate-12`} />
       </div>
       <CardImage
         src={user2}

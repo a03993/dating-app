@@ -1,4 +1,4 @@
-import CheckDoubleIcon from "@/assets/icons/checkDouble.svg?react"
+import DoubleCheckIcon from "@/assets/icons/double-check.svg?react"
 
 import { cn } from "@/lib/utils/cn"
 
@@ -14,7 +14,7 @@ export function InterestBadge({ label, isMatch }: InterestBadgeProps) {
     <Badge
       variant="interest"
       className={cn(isMatch && "text-red font-bold border-red")}>
-      {isMatch && <CheckDoubleIcon className="size-4" />}
+      {isMatch && <DoubleCheckIcon className="size-4" />}
       {label}
     </Badge>
   )

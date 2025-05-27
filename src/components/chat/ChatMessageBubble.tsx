@@ -1,4 +1,4 @@
-import CheckDoubleIcon from "@/assets/icons/CheckDouble.svg?react"
+import DoubleCheckIcon from "@/assets/icons/double-check.svg?react"
 
 import { cn } from "@/lib/utils/cn"
 
@@ -26,7 +26,7 @@ export function ChatMessageBubble({ senderId, content, timestamp, isRead }: Mess
         <div className={cn("p-4 w-fit h-fit max-w-85 rounded-t-lg", style)}>{content}</div>
         <div className="flex items-center gap-1">
           <p className="text-xs text-gray-500">{formattedTime(timestamp)}</p>
-          {isSelf && isRead && <CheckDoubleIcon className="size-4 text-red" />}
+          {isSelf && isRead && <DoubleCheckIcon className="size-4 text-red" />}
         </div>
       </div>
     </div>

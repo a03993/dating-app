@@ -1,6 +1,6 @@
-import CloseIcon from "@/assets/icons/Close.svg?react"
-import LikeIcon from "@/assets/icons/Like.svg?react"
-import PeopleIcon from "@/assets/icons/People.svg?react"
+import HeartIcon from "@/assets/icons/heart.svg?react"
+import RemoveIcon from "@/assets/icons/remove.svg?react"
+import UserIcon from "@/assets/icons/user.svg?react"
 
 import { Button } from "@/components/ui/button"
 
@@ -22,7 +22,7 @@ export function UserActionPanel({ onLike, onDislike, onProfile, disabled, classN
         size="smCircle"
         onClick={onDislike}
         disabled={disabled}>
-        <CloseIcon className="text-orange" />
+        <RemoveIcon className="text-orange" />
       </Button>
       <Button
         variant="tertiary"
@@ -30,14 +30,14 @@ export function UserActionPanel({ onLike, onDislike, onProfile, disabled, classN
         className="bg-red [&>svg]:size-13 shadow-red/20 hover:shadow-red/40 active:shadow-red/50"
         onClick={onLike}
         disabled={disabled}>
-        <LikeIcon className="text-white" />
+        <HeartIcon className="text-white" />
       </Button>
       <Button
         variant="tertiary"
         size="smCircle"
         onClick={onProfile}
         disabled={disabled}>
-        <PeopleIcon className="text-purple" />
+        <UserIcon className="text-purple" />
       </Button>
     </div>
   )

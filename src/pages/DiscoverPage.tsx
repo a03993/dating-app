@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
-import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import SettingConfigIcon from "@/assets/icons/setting-config.svg?react"
 import fallbackImage from "@/assets/images/image01.jpg"
 import type { FilterOption } from "@/constants/filter-options"
 import { useNavigate } from "react-router-dom"
@@ -74,7 +74,7 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
                 size="smSquare"
                 onClick={handleBack}
                 disabled={currentCandidateIndex === 0}>
-                <LeftArrowIcon />
+                <ArrowLeftIcon />
               </Button>
               <div className="flex flex-col justify-center items-center">
                 <h1 className="text-xl font-semibold">Discover</h1>

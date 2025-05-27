@@ -1,8 +1,8 @@
 import LogoIcon from "@/assets/Logo.svg?react"
-import CardsIcon from "@/assets/icons/Cards.svg?react"
-import LikeIcon from "@/assets/icons/Like.svg?react"
-import MessageIcon from "@/assets/icons/Message.svg?react"
-import PeopleIcon from "@/assets/icons/People.svg?react"
+import CardsIcon from "@/assets/icons/cards.svg?react"
+import HeartIcon from "@/assets/icons/heart.svg?react"
+import MessageIcon from "@/assets/icons/message.svg?react"
+import UserIcon from "@/assets/icons/user.svg?react"
 import { Link, useLocation, useSearchParams } from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
@@ -21,12 +21,12 @@ export function Navbar() {
 
   const navItems = [
     { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
-    { key: "matches", path: "/matches", icon: <LikeIcon className={iconStyle} />, label: "Matches" },
+    { key: "matches", path: "/matches", icon: <HeartIcon className={iconStyle} />, label: "Matches" },
     { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
     {
       key: "profile",
       path: `/profile/${loggedInUser?.id}`,
-      icon: <PeopleIcon className={iconStyle} />,
+      icon: <UserIcon className={iconStyle} />,
       label: "Profile",
     },
   ]

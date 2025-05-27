@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import CheckSmallIcon from "../assets/icons/CheckSmall.svg?react"
-import RightArrowIcon from "../assets/icons/RightArrow.svg?react"
+import ArrowRightIcon from "../assets/icons/arrow-right.svg?react"
+import CheckIcon from "../assets/icons/check.svg?react"
 import { Button } from "./ui/button"
 
 export function GenderSelectGroup() {
@@ -14,14 +14,14 @@ export function GenderSelectGroup() {
         isActive={selectedGender === "woman"}
         onClick={() => setSelectedGender("woman")}>
         Woman
-        <CheckSmallIcon />
+        <CheckIcon />
       </Button>
       <Button
         variant="selected"
         isActive={selectedGender === "man"}
         onClick={() => setSelectedGender("man")}>
         Man
-        <CheckSmallIcon />
+        <CheckIcon />
       </Button>
       {/* TODO: add selection for other gender */}
       <Button
@@ -29,7 +29,7 @@ export function GenderSelectGroup() {
         isActive={selectedGender === "other"}
         onClick={() => setSelectedGender("other")}>
         Other
-        <RightArrowIcon />
+        <ArrowRightIcon />
       </Button>
     </div>
   )

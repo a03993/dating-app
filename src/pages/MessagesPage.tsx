@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import ChatIcon from "@/assets/icons/Chat.svg?react"
-import SettingConfigIcon from "@/assets/icons/SettingConfig.svg?react"
+import ChatBubbleIcon from "@/assets/icons/chat-bubble.svg?react"
+import SettingConfigIcon from "@/assets/icons/setting-config.svg?react"
 import { useNavigate } from "react-router-dom"
 
 import ChatHeader from "@/components/chat/ChatHeader"
@@ -105,7 +105,7 @@ export default function MessagesPage() {
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center h-full w-full">
-            <ChatIcon className="size-20" />
+            <ChatBubbleIcon className="size-20" />
             <h1 className="text-lg font-medium text-dark-gray/50">Select one of the messages</h1>
           </div>
         )}

@@ -1,5 +1,5 @@
-import StickersIcon from "@/assets/icons/Stickers.svg?react"
-import VoiceSolidIcon from "@/assets/icons/VoiceSolid.svg?react"
+import StickersIcon from "@/assets/icons/stickers.svg?react"
+import VoiceSolidIcon from "@/assets/icons/voice-solid.svg?react"
 
 import { InputWithIcon } from "@/components/inputs/InputWithIcon"
 import { Button } from "@/components/ui/button"

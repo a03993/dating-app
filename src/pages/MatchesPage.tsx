@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import SortIcon from "@/assets/icons/Sort.svg?react"
+import SortIcon from "@/assets/icons/sort.svg?react"
 import { useNavigate } from "react-router-dom"
 
 import { RemoveConfirmDialog } from "@/components/RemoveConfirmDialog"

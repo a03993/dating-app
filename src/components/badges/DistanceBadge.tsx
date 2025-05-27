@@ -1,4 +1,4 @@
-import LocalIcon from "@/assets/icons/Local.svg?react"
+import MapPinIcon from "@/assets/icons/map-pin.svg?react"
 
 import { cn } from "@/lib/utils/cn"
 import { calculateDistance } from "@/lib/utils/distance"
@@ -20,7 +20,7 @@ export function DistanceBadge({ lat, lon, matchCandidateLat, matchCandidateLon, 
     <Badge
       variant="distance"
       className={cn(className)}>
-      <LocalIcon className="size-3.5" />
+      <MapPinIcon className="size-3.5" />
       {distanceInKm == 0 ? <span>In the same area</span> : <span>{distanceInKm}km</span>}
     </Badge>
   )

@@ -1,5 +1,5 @@
-import LeftArrowIcon from "@/assets/icons/LeftArrow.svg?react"
-import MoreIcon from "@/assets/icons/More.svg?react"
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import MoreIcon from "@/assets/icons/more.svg?react"
 
 import { cn } from "@/lib/utils/cn"
 
@@ -23,7 +23,7 @@ export default function ChatHeader({ name, avatar, isOnline, onClose, onProfile 
           size="smSquare"
           className="text-dark-gray hover:border-dark-gray active:bg-dark-gray md:hidden"
           onClick={onClose}>
-          <LeftArrowIcon />
+          <ArrowLeftIcon />
         </Button>
         <Avatar>
           <AvatarImage src={avatar} />
