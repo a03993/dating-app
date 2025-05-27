@@ -1,7 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import ChatBubbleIcon from "@/assets/icons/chat-bubble.svg?react"
-import SettingConfigIcon from "@/assets/icons/setting-config.svg?react"
 import { useNavigate } from "react-router-dom"
 
 import ChatHeader from "@/components/chat/ChatHeader"
@@ -9,7 +8,6 @@ import { ChatList } from "@/components/chat/ChatList"
 import { ChatMessages } from "@/components/chat/ChatMessages"
 import { MessageInput } from "@/components/inputs/MessageInput"
 import { SearchInput } from "@/components/inputs/SearchInput"
-import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerContent,
@@ -26,26 +24,54 @@ import { cn } from "@/lib/utils/cn"
 
 import { useUserData } from "@/contexts/UserDataContext"
 
+import type { Conversation } from "@/types/conversation.type"
+import type { ChatUser } from "@/types/user.types"
+
+interface ConversationPreview extends Conversation {
+  partner: ChatUser
+  lastMessage: string
+  time: string
+  unreadCount: number
+}
 export default function MessagesPage() {
   const navigate = useNavigate()
   const isMobile = useMediaQuery("(max-width: 768px)")
   const { loggedInUser, allUsers, isLoading } = useUserData()
   const { matchedUserIds, isLoading: isLoadingMatches } = useMatchedUserIds(loggedInUser?.id)
-  const { conversations, isLoading: isLoadingConversations } = useConversationPreviews({
+  const { conversations: initialConversations, isLoading: isLoadingConversations } = useConversationPreviews({
     loggedInUserId: loggedInUser?.id,
     allUsers,
     matchedUserIds,
     isLoadingMatches,
   })
 
-  const [activeConversation, setActiveConversation] = useState<(typeof conversations)[0] | null>(null)
+  const [conversations, setConversations] = useState<ConversationPreview[]>([])
+  const [activeConversation, setActiveConversation] = useState<ConversationPreview | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [message, setMessage] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
+
+  useEffect(() => {
+    if (!isLoadingConversations && initialConversations.length > 0) {
+      setConversations(initialConversations)
+    }
+  }, [initialConversations, isLoadingConversations])
 
   const handleSelectChat = (convoId: string) => {
     const convo = conversations.find((c) => c.id === convoId)
     if (!convo) return
+
+    // todo: update unreadCount to 0 in conversations data
+    const updatedConversations = conversations.map((c) => (c.id === convoId ? { ...c, unreadCount: 0 } : c))
+    setConversations(updatedConversations)
+
     setActiveConversation(convo)
     if (isMobile) setOpenDrawer(true)
+  }
+
+  const handleSendMessage = (msg: string) => {
+    // todo: send message to server
+    console.log(`Send to ${activeConversation?.partner.firstName}:`, msg)
   }
 
   if (!loggedInUser || isLoading || isLoadingMatches || isLoadingConversations) return null
@@ -59,25 +85,25 @@ export default function MessagesPage() {
           "md:pt-25 md:pb-10 md:px-10 md:flex-2 md:h-full md:overflow-y-auto md:border md:border-medium-gray",
         )}>
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-medium">Messages</h1>
-            <Button
-              variant="outline"
-              size="smSquare">
-              <SettingConfigIcon />
-            </Button>
-          </div>
-          <SearchInput />
+          <h1 className="text-3xl font-medium">Messages</h1>
+          <SearchInput
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
         <ChatList
-          chats={conversations.map((c) => ({
-            id: c.id,
-            name: `${c.partner.firstName} ${c.partner.lastName}`,
-            avatar: c.partner.avatar,
-            lastMessage: c.lastMessage,
-            time: c.time,
-            unreadCount: c.unreadCount,
-          }))}
+          chats={conversations
+            .filter((c) =>
+              `${c.partner.firstName} ${c.partner.lastName}`.toLowerCase().includes(searchQuery.toLowerCase()),
+            )
+            .map((c) => ({
+              id: c.id,
+              name: `${c.partner.firstName} ${c.partner.lastName}`,
+              avatar: c.partner.avatar,
+              lastMessage: c.lastMessage,
+              time: c.time,
+              unreadCount: c.unreadCount,
+            }))}
           onSelectChat={handleSelectChat}
         />
       </div>
@@ -101,7 +127,11 @@ export default function MessagesPage() {
               <ChatMessages messages={activeConversation.messages} />
             )}
 
-            <MessageInput />
+            <MessageInput
+              message={message}
+              setMessage={setMessage}
+              onSend={handleSendMessage}
+            />
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center h-full w-full">
@@ -130,7 +160,11 @@ export default function MessagesPage() {
           </DrawerHeader>
           <ChatMessages messages={activeConversation?.messages || []} />
           <DrawerFooter>
-            <MessageInput />
+            <MessageInput
+              message={message}
+              setMessage={setMessage}
+              onSend={handleSendMessage}
+            />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
