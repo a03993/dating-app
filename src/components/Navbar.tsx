@@ -1,7 +1,9 @@
 import LogoIcon from "@/assets/Logo.svg?react"
 import CardsIcon from "@/assets/icons/cards.svg?react"
-import HeartIcon from "@/assets/icons/heart.svg?react"
-import MessageIcon from "@/assets/icons/message.svg?react"
+import HeartNotificationIcon from "@/assets/icons/heart-notification.svg?react"
+// import HeartIcon from "@/assets/icons/heart.svg?react"
+import MessageNotificationIcon from "@/assets/icons/message-notification.svg?react"
+// import MessageIcon from "@/assets/icons/message.svg?react"
 import UserIcon from "@/assets/icons/user.svg?react"
 import { Link, useLocation, useSearchParams } from "react-router-dom"
 
@@ -19,10 +21,23 @@ export function Navbar() {
   const from = searchParams.get("from")
   const { loggedInUser } = useUserData()
 
+  // todo: transform to default icon
   const navItems = [
     { key: "discover", path: "/discover", icon: <CardsIcon className={iconStyle} />, label: "Discover" },
-    { key: "matches", path: "/matches", icon: <HeartIcon className={iconStyle} />, label: "Matches" },
-    { key: "messages", path: "/messages", icon: <MessageIcon className={iconStyle} />, label: "Messages" },
+    {
+      key: "matches",
+      path: "/matches",
+      icon: <HeartNotificationIcon className={iconStyle} />,
+      // <HeartIcon className={iconStyle} />,
+      label: "Matches",
+    },
+    {
+      key: "messages",
+      path: "/messages",
+      icon: <MessageNotificationIcon className={iconStyle} />,
+      // <MessageIcon className={iconStyle} />,
+      label: "Messages",
+    },
     {
       key: "profile",
       path: `/profile/${loggedInUser?.id}`,
