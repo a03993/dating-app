@@ -4,17 +4,17 @@ import { type VariantProps, cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils/cn"
 
-const cardVariants = cva("overflow-hidden rounded-xl", {
+const cardVariants = cva("overflow-hidden rounded-xl transition-all duration-300", {
   variants: {
     variant: {
       carouselPreview: "shrink-0 w-57 h-90 opacity-70 scale-90",
       carouselMain: "shrink-0 w-57 h-90 opacity-100 shadow-lg shadow-black/10",
-      swipeable: "relative h-112 w-74 shadow-lg shadow-black/20",
-      grid: "relative aspect-[3/4] cursor-pointer",
+      swipeable: "relative h-112 w-74 shadow-lg shadow-black/20 cursor-pointer hover:scale-102",
+      grid: "relative aspect-[3/4] cursor-pointer hover:scale-102",
       match: "relative h-100 w-74",
       profile: "h-100 w-full md:h-screen rounded-none",
-      galleryLg: "h-70 col-span-3",
-      gallerySm: "h-40 col-span-2",
+      galleryLg: "h-70 col-span-3 cursor-pointer hover:scale-102",
+      gallerySm: "h-40 col-span-2 cursor-pointer hover:scale-102",
     },
   },
 })

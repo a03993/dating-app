@@ -49,9 +49,21 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
   const currentCandidate = matchCandidates[currentCandidateIndex]
   const nextCandidate = matchCandidates[currentCandidateIndex + 1]
 
-  const handleNext = () => setCurrentCandidateIndex((prev) => prev + 1)
-  const handleBack = () => setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
-  const handleProfile = () => navigate(`/profile/${currentCandidate.id}?from=discover`)
+  const handleNext = () => {
+    setCurrentCandidateIndex((prev) => prev + 1)
+    // todo: add like logic
+    console.log(`like ${matchCandidates[currentCandidateIndex].firstName}`)
+  }
+  const handleBack = () => {
+    setCurrentCandidateIndex((prev) => Math.max(prev - 1, 0))
+    // todo: add skip logic
+    console.log(`skip ${matchCandidates[currentCandidateIndex].firstName}`)
+  }
+  const handleProfile = () => {
+    setCurrentCandidateIndex((prev) => prev + 1)
+    // todo: add super like logic
+    console.log(`super like ${matchCandidates[currentCandidateIndex].firstName}`)
+  }
 
   return (
     <>
@@ -107,7 +119,10 @@ export default function DiscoverPage({ filterForm, setFilterForm }: DiscoverPage
               {currentCandidate ? (
                 <Card
                   variant="swipeable"
-                  className="absolute top-2 z-10 transition-all duration-300">
+                  className="absolute top-2 z-10 transition-all duration-300"
+                  onClick={() => {
+                    navigate(`/profile/${currentCandidate.id}?from=discover`)
+                  }}>
                   <CardImage
                     src={currentCandidate.avatar}
                     alt={currentCandidate.firstName}

@@ -1,6 +1,6 @@
 import HeartIcon from "@/assets/icons/heart.svg?react"
 import RemoveIcon from "@/assets/icons/remove.svg?react"
-import UserIcon from "@/assets/icons/user.svg?react"
+import StarSolidIcon from "@/assets/icons/star-solid.svg?react"
 
 import { Button } from "@/components/ui/button"
 
@@ -37,7 +37,7 @@ export function UserActionPanel({ onLike, onDislike, onProfile, disabled, classN
         size="smCircle"
         onClick={onProfile}
         disabled={disabled}>
-        <UserIcon className="text-purple" />
+        <StarSolidIcon className="text-purple" />
       </Button>
     </div>
   )

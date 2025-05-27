@@ -6,7 +6,7 @@ import { type VariantProps, cva } from "class-variance-authority"
 import { cn } from "@/lib/utils/cn"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap font-medium rounded-2xl cursor-pointer disabled:cursor-default transition-colors",
+  "inline-flex items-center justify-center whitespace-nowrap font-medium rounded-2xl cursor-pointer disabled:opacity-50 disabled:cursor-default transition-colors",
   {
     variants: {
       variant: {
@@ -14,13 +14,12 @@ const buttonVariants = cva(
         secondary: "bg-red/10 text-red hover:border hover:border-red active:bg-red/20",
         tertiary: [
           "bg-white [&>svg]:size-7 shadow-lg shadow-black/10 hover:shadow-black/20 active:shadow-black/30",
-          "disabled:opacity-50 disabled:cursor-default disabled:hover:shadow-black/10",
+          "disabled:hover:shadow-black/10",
         ],
         outline: [
           "bg-white border border-medium-gray text-red",
-          "hover:border-red",
-          "disabled:hover:border-medium-gray disabled:bg-light-gray disabled:text-medium-gray",
-          "active:bg-red active:border-transparent active:text-white",
+          "hover:border-red disabled:hover:border-medium-gray",
+          "active:bg-red active:border-transparent active:text-white disabled:active:bg-white disabled:active:text-red",
         ],
         selected: [
           "bg-white border border-medium-gray text-black font-normal justify-between w-full px-6 [&>svg]:size-4 [&>svg]:text-dark-gray",

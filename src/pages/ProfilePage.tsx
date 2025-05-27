@@ -1,11 +1,13 @@
 import { useMemo } from "react"
 
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg?react"
+import EditIcon from "@/assets/icons/edit.svg?react"
 import SendIcon from "@/assets/icons/send.svg?react"
 import type { FilterOption } from "@/constants/filter-options"
 import { interestOptions } from "@/constants/interest-options"
 import { useNavigate, useParams } from "react-router-dom"
 
+import { ProfileGallery } from "@/components/ProfileGallery"
 import { DistanceBadge } from "@/components/badges/DistanceBadge"
 import { InterestBadge } from "@/components/badges/InterestBadge"
 import { Button } from "@/components/ui/button"
@@ -72,11 +74,21 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
               </h1>
               <p className="text-sm text-black/70">{user.profession}</p>
             </div>
-            {isOtherProfile && hasMatched && (
+
+            {isOtherProfile ? (
               <Button
                 variant="outline"
-                size="smSquare">
+                size="smSquare"
+                disabled={!hasMatched}>
                 <SendIcon />
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="smSquare"
+                // todo: add edit profile page
+                onClick={() => console.log("edit profile")}>
+                <EditIcon />
               </Button>
             )}
           </section>
@@ -126,46 +138,11 @@ export default function ProfilePage({ filterForm }: ProfilePageProps) {
 
           {/* gallery */}
           <section className="flex flex-col gap-4">
-            <div className="flex justify-between">
-              <h2 className="text-base font-bold">Gallery</h2>
-              <Button
-                variant="ghost"
-                size="zero">
-                See all
-              </Button>
-            </div>
-            <div className="grid grid-cols-6 gap-4">
-              <Card variant="galleryLg">
-                <CardImage
-                  src={`/${user.gallery[0]}`}
-                  alt={`${user.firstName} ${user.lastName}`}
-                />
-              </Card>
-              <Card variant="galleryLg">
-                <CardImage
-                  src={`/${user.gallery[1]}`}
-                  alt={`${user.firstName} ${user.lastName}`}
-                />
-              </Card>
-              <Card variant="gallerySm">
-                <CardImage
-                  src={`/${user.gallery[2]}`}
-                  alt={`${user.firstName} ${user.lastName}`}
-                />
-              </Card>
-              <Card variant="gallerySm">
-                <CardImage
-                  src={`/${user.gallery[3]}`}
-                  alt={`${user.firstName} ${user.lastName}`}
-                />
-              </Card>
-              <Card variant="gallerySm">
-                <CardImage
-                  src={`/${user.gallery[4]}`}
-                  alt={`${user.firstName} ${user.lastName}`}
-                />
-              </Card>
-            </div>
+            <h2 className="text-base font-bold">Gallery</h2>
+            <ProfileGallery
+              images={user.gallery}
+              userName={`${user.firstName} ${user.lastName}`}
+            />
           </section>
         </div>
       </div>
